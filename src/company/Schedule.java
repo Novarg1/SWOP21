@@ -14,10 +14,10 @@ public class Schedule {
 	private static final int BUILD_TIME = 180;
 	
 	private TimeStamp currentTime;
-	private LinkedList<CarInProduction> schedule;
+	private LinkedList<CarOrder> schedule;
 	
 	public Schedule() {
-		schedule = new LinkedList<CarInProduction>();
+		schedule = new LinkedList<CarOrder>();
 	}
 	
 	//TODO what if there are no car orders left?
@@ -26,8 +26,8 @@ public class Schedule {
 	 * 		next car to be assembled on assembly line;
 	 * 		null if no next car is scheduled for the current day
 	 */
-	public CarInProduction next() {
-		CarInProduction next = schedule.peek();
+	public CarOrder next() {
+		CarOrder next = schedule.peek();
 		
 		//TODO
 		
@@ -35,6 +35,6 @@ public class Schedule {
 	}
 	
 	public void addOrder(CarOrder order) {
-		schedule.add(new CarInProduction(new Car(order.), order));
+		schedule.add(order);
 	}
 }

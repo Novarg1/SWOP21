@@ -1,25 +1,30 @@
 package car;
 
-public class CarModel {
+public abstract class CarModel {
 	
-	private CarModelSpecification  carModelSpecification;
-	private String model;
-	
+	private final String MODEL;
 	
 	public CarModel(String model) {
-		this.model = model;
+		MODEL = model;
 	}
 	
-	public CarModelSpecification getCarModelSpecification() {
-		if (this.carModelSpecification == null) {
-			this.carModelSpecification = new CarModelSpecification();
-		}
-		return this.carModelSpecification;
-	}
+	public abstract CarBody[] getPossibleBodies();
+	
+	public abstract CarAirco[] getPossibleAircos();
+	
+	public abstract CarColor[] getPossibleColors();
+	
+	public abstract CarEngine[] getPossibleEngines();
+	
+	public abstract CarGearbox[] getPossibleGearboxes();
+	
+	public abstract CarSeats[] getPossibleSeats();
+	
+	public abstract CarWheels[] getPossibleWheels();
 	
 	@Override
 	public String toString() {
-		return this.model;
+		return MODEL;
 	}
-	
+
 }

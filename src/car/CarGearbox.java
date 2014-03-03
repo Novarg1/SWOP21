@@ -1,6 +1,6 @@
 package car;
 
-public enum CarGearbox {
+public enum CarGearbox implements CarPart {
 	MANUAL,
 	AUTOMATIC;
 	

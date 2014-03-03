@@ -1,6 +1,6 @@
 package car;
 
-public enum CarWheels {
+public enum CarWheels implements CarPart {
 	COMFORT,
 	SPORTS;
 	

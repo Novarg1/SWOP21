@@ -82,8 +82,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="10" language="java" name="car.CarModelSpecification" project="SWOP1314" 
-    file="/SWOP1314/src/car/CarModelSpecification.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="car.StandardModel" project="SWOP1314" file="/SWOP1314/src/car/StandardModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="802" y="706"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

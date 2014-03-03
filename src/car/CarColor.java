@@ -1,6 +1,6 @@
 package car;
 
-public enum CarColor {
+public enum CarColor implements CarPart {
 	RED,
 	BLUE,
 	BLACK,

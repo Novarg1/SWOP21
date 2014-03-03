@@ -1,6 +1,6 @@
 package car;
 
-public enum CarEngine {
+public enum CarEngine implements CarPart {
 	STANDARD,
 	PERFORMANCE;
 	

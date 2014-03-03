@@ -1,35 +1,22 @@
 package car;
 
 public class Car {
-	
-	private CarModel carModel;
-	private CarBody body;
-	private CarColor color;
-	private CarEngine engine;
-	private CarGearbox gearbox;
-	private CarSeats seats;
-	private CarAirco airco;
-	private CarWheels wheels;
-	
-	public Car(String model) {
-		this.carModel = new CarModel(model);
+
+	private CarBody body = null;
+	private CarColor color = null;
+	private CarEngine engine = null;
+	private CarGearbox gearbox = null;
+	private CarSeats seats = null;
+	private CarAirco airco = null;
+	private CarWheels wheels = null;
+
+	public Car() {
+
 	}
-	
-//	public Car(String model, CarBody body, CarColor color, CarEngine engine, CarGearbox gearbox, CarSeats seats, CarAirco airco, CarWheels wheels) {
-//		this.carModel = new CarModel(model);
-//		this.body = body;
-//		this.color = color;
-//		this.engine = engine;
-//		this.gearbox = gearbox;
-//		this.seats = seats;
-//		this.airco = airco;
-//		this.wheels = wheels;
-//	}
-	
+
 	@Override
 	public String toString() {
-		return "Model: " + this.carModel +
-				"\nBody: " + this.body +
+		return "Body: " + this.body +
 				"\nColor: " + this.color + 
 				"\nEngine: " + this.engine +
 				"\nGearbox: " + this.gearbox +
@@ -37,74 +24,64 @@ public class Car {
 				"\nAirco: " + this.airco +
 				"\nWheels: " + this.wheels;
 	}
-	
-	//Setters
-	
-	public void setBody(CarBody body) {
-		this.body = body;
+
+	public boolean isComplete() {
+		return (body != null &&
+				color != null &&
+				engine != null &&
+				gearbox != null &&
+				seats != null &&
+				airco != null &&
+				wheels != null);
 	}
-	
-	public void setColor(CarColor color) {
-		this.color = color;
+
+	public void install(CarPart part) {
+		if(part.getClass() == CarBody.class) {
+			this.body = (CarBody)part;
+		}
+		else if(part.getClass() == CarColor.class) {
+			this.color = (CarColor)part;
+		}
+		else if(part.getClass() == CarEngine.class) {
+			this.engine = (CarEngine)part;
+		}
+		else if(part.getClass() == CarGearbox.class) {
+			this.gearbox = (CarGearbox)part;
+		}
+		else if(part.getClass() == CarSeats.class) {
+			this.seats = (CarSeats)part;
+		}
+		else if(part.getClass() == CarAirco.class) {
+			this.airco = (CarAirco)part;
+		}
+		else if(part.getClass() == CarWheels.class) {
+			this.wheels = (CarWheels)part;
+		}
+		throw new IllegalArgumentException();
 	}
-	
-	public void setEngine(CarEngine engine) {
-		this.engine = engine;
+
+	public boolean hasPart(CarPart part) {
+		if(part.getClass() == CarBody.class) {
+			return this.body == (CarBody)part;
+		}
+		else if(part.getClass() == CarColor.class) {
+			return this.color == (CarColor)part;
+		}
+		else if(part.getClass() == CarEngine.class) {
+			return this.engine == (CarEngine)part;
+		}
+		else if(part.getClass() == CarGearbox.class) {
+			return this.gearbox == (CarGearbox)part;
+		}
+		else if(part.getClass() == CarSeats.class) {
+			return this.seats == (CarSeats)part;
+		}
+		else if(part.getClass() == CarAirco.class) {
+			return this.airco == (CarAirco)part;
+		}
+		else if(part.getClass() == CarWheels.class) {
+			return this.wheels == (CarWheels)part;
+		}
+		throw new IllegalArgumentException();
 	}
-	
-	public void setGearbox(CarGearbox gearbox) {
-		this.gearbox = gearbox;
-	}
-	
-	public void setSeats(CarSeats seats) {
-		this.seats = seats;
-	}
-	
-	public void setAirco(CarAirco airco) {
-		this.airco = airco;
-	}
-	
-	public void setWheels(CarWheels wheels) {
-		this.wheels = wheels;
-	}
-	
-	public void setModel(CarModel model) {
-		this.carModel = model;
-	}
-	
-	//Getters
-	
-	public CarBody getBody() {
-		return this.body;
-	}
-	
-	public CarColor getColor() {
-		return this.color;
-	}
-	
-	public CarEngine getEngine() {
-		return this.engine;
-	}
-	
-	public CarGearbox getGearbox() {
-		return this.gearbox;
-	}
-	
-	public CarSeats getSeats() {
-		return this.seats;
-	}
-	
-	public CarAirco getAirco() {
-		return this.airco;
-	}
-	
-	public CarWheels getWheels() {
-		return this.wheels;
-	}
-	
-	public CarModel getModel() {
-		return this.carModel;
-	}
-	
-	
 }

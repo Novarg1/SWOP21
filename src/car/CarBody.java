@@ -1,6 +1,6 @@
 package car;
 
-public enum CarBody {
+public enum CarBody implements CarPart {
 	BODY_SEDAN,
 	BODY_BREAK;
 	

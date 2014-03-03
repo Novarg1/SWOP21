@@ -1,6 +1,6 @@
 package car;
 
-public enum CarSeats {
+public enum CarSeats implements CarPart {
 	LEATHER_BLACK,
 	LEATHER_WHITE,
 	VINYL_GREY;

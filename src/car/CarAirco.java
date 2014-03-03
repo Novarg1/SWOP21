@@ -1,6 +1,6 @@
 package car;
 
-public enum CarAirco {
+public enum CarAirco implements CarPart {
 	MANUAL,
 	CLIMATE_CONTROL;
 	
