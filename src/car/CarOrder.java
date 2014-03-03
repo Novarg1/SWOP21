@@ -1,7 +1,7 @@
 package car;
 
 public class CarOrder {
-	
+
 	private CarBody body;
 	private CarColor color;
 	private CarEngine engine;
@@ -9,10 +9,17 @@ public class CarOrder {
 	private CarSeats seats;
 	private CarAirco airco;
 	private CarWheels wheels;
-	
-//	private CarModelSpecification specification;
-	
-	public CarOrder(CarBody body, CarColor color, CarEngine engine, CarGearbox gearbox, CarSeats seats, CarAirco airco, CarWheels wheels) {
+
+	//	private CarModelSpecification specification;
+
+	public CarOrder(CarBody body,
+			CarColor color,
+			CarEngine engine,
+			CarGearbox gearbox,
+			CarSeats seats,
+			CarAirco airco,
+			CarWheels wheels)
+	{
 		this.body = body;
 		this.color = color;
 		this.engine = engine;
@@ -21,11 +28,11 @@ public class CarOrder {
 		this.airco = airco;
 		this.wheels = wheels;
 	}
-	
-//	public void addCarModelSpecification(CarModelSpecification spec) {
-//		this.specification = spec;
-//	}
-	
+
+	//	public void addCarModelSpecification(CarModelSpecification spec) {
+	//		this.specification = spec;
+	//	}
+
 	@Override
 	public String toString() {
 		return "Color: " + this.color +
