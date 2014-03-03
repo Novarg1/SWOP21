@@ -1,6 +1,6 @@
-package userinterface;
+package system.userinterface;
 
-import usecases.UseCase;
+import system.usecases.UseCase;
 
 public class UserInterfaceUseCaseTester implements UserInterface
 {

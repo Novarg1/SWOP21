@@ -1,4 +1,4 @@
-package session;
+package system.user;
 
 public enum UserRole {
 	USERROLE_MANAGER,

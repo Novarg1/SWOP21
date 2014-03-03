@@ -1,4 +1,4 @@
-package userinterface;
+package system.userinterface;
 
 import java.io.BufferedReader;
 import java.io.Console;

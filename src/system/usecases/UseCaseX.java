@@ -1,8 +1,8 @@
-package usecases;
+package system.usecases;
 
 import java.util.LinkedList;
 
-import userinterface.UserInterfaceUseCaseTester;
+import system.userinterface.UserInterfaceUseCaseTester;
 
 public class UseCaseX implements UseCase
 {
@@ -13,6 +13,9 @@ public class UseCaseX implements UseCase
 		// login in user 1
 		inputs.add("user1");
 		inputs.add(" ");
+		
+		// tell the system you want to advance the AL
+		inputs.add("1");
 		
 		// login in user 2
 		inputs.add("user2");

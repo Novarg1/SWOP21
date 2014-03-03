@@ -1,11 +1,12 @@
 package supportingfiles;
 
-import controller.Controller;
-import session.UserSession;
-import usecases.UseCaseX;
-import userinterface.UserInterface;
-import userinterface.UserInterfaceTerminal;
-import userinterface.UserInterfaceUseCaseTester;
+import system.SystemController;
+import system.functionality.FunctionalityController;
+import system.usecases.UseCaseX;
+import system.user.UserController;
+import system.userinterface.UserInterface;
+import system.userinterface.UserInterfaceTerminal;
+import system.userinterface.UserInterfaceUseCaseTester;
 
 public class ConveyerBeltProgram {
 
@@ -16,16 +17,16 @@ public class ConveyerBeltProgram {
 		UserInterface f = (testing? new UserInterfaceUseCaseTester(new UseCaseX()):
 								 new UserInterfaceTerminal());
 		
-		Controller c = new Controller(f);
+		SystemController c = new SystemController(f);
 		
 		c.displayWelcomeMessage();
 		
-		UserSession s = null;
+		UserController u = null;
 		try
 		{
-			while((s = c.displayLogin()) != null)
+			while((u = c.displayLogin()) != null)
 			{
-				s.runSession(f);
+				u.provideUI(f);
 			}
 		}
 		catch(Exception e)

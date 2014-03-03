@@ -1,4 +1,4 @@
-package userinterface;
+package system.userinterface;
 
 public interface UserInterface 
 {

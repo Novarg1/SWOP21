@@ -1,4 +1,4 @@
-package usecases;
+package system.usecases;
 
 import java.util.LinkedList;
 
