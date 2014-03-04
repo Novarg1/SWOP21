@@ -16,8 +16,10 @@ public class UseCaseDemo implements UseCase
 		inputs.add("user1");
 		inputs.add(" ");
 		
-		// tell the system you want to advance the AL
+		// tell the system you want to advance the al
 		inputs.add("1");
+		inputs.add("yes");
+		
 		
 		// login in user 2
 		inputs.add("user2");
