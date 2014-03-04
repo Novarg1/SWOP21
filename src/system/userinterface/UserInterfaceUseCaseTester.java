@@ -2,6 +2,14 @@ package system.userinterface;
 
 import system.usecases.UseCase;
 
+/*
+ * This is the testing oriented version of the userinterface
+ * It also expects a usecase class whose only responability is to 
+ * know the next output. The strings that are produced by the system
+ * are shown with a program: in front of, while the input string are
+ * preceded by input:
+ * 
+ */
 public class UserInterfaceUseCaseTester implements UserInterface
 {
 	public UserInterfaceUseCaseTester(UseCase useCase)

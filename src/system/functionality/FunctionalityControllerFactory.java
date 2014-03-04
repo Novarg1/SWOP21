@@ -1,7 +1,9 @@
 package system.functionality;
 
 import system.user.UserRole;
-
+/* Factory pattern
+ * returns a fully instantiated functionality controller
+ */
 public class FunctionalityControllerFactory 
 {
 

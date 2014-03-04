@@ -3,7 +3,11 @@ package system.userinterface;
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.InputStreamReader;
-
+/*
+ * Basic implementation of the UserInterface interface
+ * it uses the standard java system methods to communicate
+ * with the terminal
+ */
 public class UserInterfaceTerminal implements UserInterface
 {
 

@@ -2,7 +2,7 @@ package supportingfiles;
 
 import system.SystemController;
 import system.functionality.FunctionalityController;
-import system.usecases.UseCaseX;
+import system.usecases.UseCaseDemo;
 import system.user.UserController;
 import system.userinterface.UserInterface;
 import system.userinterface.UserInterfaceTerminal;
@@ -12,14 +12,17 @@ public class ConveyerBeltProgram {
 
 	public static void main(String[] args) 
 	{
+		// change this to testing to use the use case tester interface
 		boolean testing = true;
 		
-		UserInterface f = (testing? new UserInterfaceUseCaseTester(new UseCaseX()):
+		UserInterface f = (testing? new UserInterfaceUseCaseTester(new UseCaseDemo()):
 								 new UserInterfaceTerminal());
 		
+		// initialize the controller
 		SystemController c = new SystemController(f);
 		
 		c.displayWelcomeMessage();
+		
 		
 		UserController u = null;
 		try

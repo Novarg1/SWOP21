@@ -7,6 +7,12 @@ import system.user.UserControllerFactory;
 import system.user.UserRole;
 import system.userinterface.UserInterface;
 
+/* System Controller
+ * 
+ * Manages everything while no user is logged in
+ * 
+ */
+
 public class SystemController 
 {
 	public SystemController(UserInterface userInterface)
@@ -21,8 +27,14 @@ public class SystemController
 	
 	public void displayGoodByeMessage()
 	{
-		userInterface.displayString("\nClosing up, good gye.");
+		userInterface.displayString("\nClosing up, good bye.");
 	}
+	
+	/* displayLogin()
+	 * 
+	 * shows a login interface
+	 * @return a controller dedicated to the usertype
+	 */
 	
 	public UserController displayLogin() throws Exception
 	{
@@ -33,9 +45,13 @@ public class SystemController
 		
 		UserRole role = getRole(userName, pwd);
 		
-		UserController controller = UserControllerFactory.getUserController(role);
+		UserController controller = UserControllerFactory.getUserController(userName, role);
 		return controller;
 	}
+	
+	/* returns the role of the user that is currently logged in
+	 * 
+	 */
 	
 	private UserRole getRole(String userName, String pwd) throws Exception 
 	{

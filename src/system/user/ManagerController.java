@@ -8,6 +8,11 @@ import system.userinterface.UserInterface;
 
 public class ManagerController implements UserController {
 
+	public ManagerController(String uname)
+	{
+		this.userName = uname;
+	}
+	
 	@Override
 	public void provideUI(UserInterface ui) {
 		// TODO Auto-generated method stub
@@ -24,5 +29,7 @@ public class ManagerController implements UserController {
 			controller.provideFunctionality(ui);
 		}
 	}
+	
+	private String userName;
 
 }

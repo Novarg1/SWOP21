@@ -3,10 +3,12 @@ package system.usecases;
 import java.util.LinkedList;
 
 import system.userinterface.UserInterfaceUseCaseTester;
-
-public class UseCaseX implements UseCase
+/* This usecase should demo the system functionality
+ * 
+ */
+public class UseCaseDemo implements UseCase
 {
-	public UseCaseX()
+	public UseCaseDemo()
 	{
 		this.inputs = new LinkedList<String>();
 		
