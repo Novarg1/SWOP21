@@ -7,6 +7,9 @@ public class AssemblyLineController implements FunctionalityController
 	@Override
 	public boolean provideFunctionality(UserInterface userInterface) {
 		// TODO Auto-generated method stub
+		
+		// display the future state of the assembly line
+		
 		char c = userInterface.displayStringWithInput("Do you want to advance the line?").charAt(0);
 		if(c == 'y')
 		{

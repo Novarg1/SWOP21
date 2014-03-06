@@ -14,6 +14,9 @@ public class GarageHolderController implements UserController {
 	@Override
 	public void provideUI(UserInterface ui) {
 		// TODO Auto-generated method stub
+		
+		// first show the garage holder what he has already ordered
+		
 		ui.displayString("Welcome to the garage holder menu");
 		ui.displayString("");
 		ui.displayString("1. Place a new order");
