@@ -42,8 +42,5 @@ public abstract class CarModelSpecification
 				"\nWheels: " + this.wheels;
 	}
 	
-	private boolean isValidSpecification()
-	{
-		return false;
-	}
+	public abstract boolean isValidSpecification();
 }

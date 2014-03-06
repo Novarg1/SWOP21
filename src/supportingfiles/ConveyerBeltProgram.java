@@ -13,7 +13,7 @@ public class ConveyerBeltProgram {
 	public static void main(String[] args) 
 	{
 		// change this to testing to use the use case tester interface
-		boolean testing = true;
+		boolean testing = false;
 		
 		UserInterface f = (testing? new UserInterfaceUseCaseTester(new UseCaseDemo()):
 								 new UserInterfaceTerminal());
