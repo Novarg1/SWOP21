@@ -3,8 +3,6 @@ package company;
 import java.util.LinkedList;
 
 import util.TimeStamp;
-import car.Car;
-import car.CarInProduction;
 import car.CarOrder;
 
 public class Schedule {

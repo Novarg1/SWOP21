@@ -15,6 +15,8 @@ public class ConveyerBeltProgram {
 		// change this to testing to use the use case tester interface
 		boolean testing = false;
 		
+		Company company = new Company();
+		
 		UserInterface f = (testing? new UserInterfaceUseCaseTester(new UseCaseDemo()):
 								 new UserInterfaceTerminal());
 		

@@ -11,13 +11,13 @@ public abstract class CarModel {
 	}
 
 	public boolean isValidSpecification(CarSpecification spec) {
-		return (Arrays.asList(getPossibleAircos()).contains(spec.getAirco())
-				&& Arrays.asList(getPossibleBodies()).contains(spec.getBody())
-				&& Arrays.asList(getPossibleColors()).contains(spec.getColor())
-				&& Arrays.asList(getPossibleEngines()).contains(spec.getEngine())
-				&& Arrays.asList(getPossibleGearboxes()).contains(spec.getGearbox())
-				&& Arrays.asList(getPossibleSeats()).contains(spec.getSeats())
-				&& Arrays.asList(getPossibleWheels()).contains(spec.getWheels()));
+		return (Arrays.asList(getPossibleAircos()).contains(spec.AIRCO)
+				&& Arrays.asList(getPossibleBodies()).contains(spec.BODY)
+				&& Arrays.asList(getPossibleColors()).contains(spec.COLOR)
+				&& Arrays.asList(getPossibleEngines()).contains(spec.ENGINE)
+				&& Arrays.asList(getPossibleGearboxes()).contains(spec.GEARBOX)
+				&& Arrays.asList(getPossibleSeats()).contains(spec.SEATS)
+				&& Arrays.asList(getPossibleWheels()).contains(spec.WHEELS));
 	}
 
 	public abstract CarBody[] getPossibleBodies();
