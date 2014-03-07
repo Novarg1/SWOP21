@@ -1,7 +1,9 @@
 package system;
 
-import system.functionality.FunctionalityController;
-import system.functionality.FunctionalityControllerFactory;
+import java.util.HashSet;
+import java.util.Set;
+
+import system.user.User;
 import system.user.UserController;
 import system.user.UserControllerFactory;
 import system.user.UserRole;
@@ -13,53 +15,53 @@ import system.userinterface.UserInterface;
  * 
  */
 
-public class SystemController 
-{
+public class SystemController {
+
+	protected Set<User> users;
+	protected UserInterface userInterface;
+
 	public SystemController(UserInterface userInterface)
 	{
 		this.userInterface = userInterface;
+		users = new HashSet<User>();
+		//TODO add testing users
 	}
-	
+
 	public void displayWelcomeMessage()
 	{
 		userInterface.displayString("Welcome to 'Conveyer Belt'");
 	}
-	
+
 	public void displayGoodByeMessage()
 	{
 		userInterface.displayString("\nClosing up, good bye.");
 	}
-	
-	/* displayLogin()
-	 * 
+
+	/**  
 	 * shows a login interface
 	 * @return a controller dedicated to the usertype
 	 */
-	
-	public UserController displayLogin() throws Exception
-	{
-		String userName = "";
-		String pwd = "";
-		userName = userInterface.displayStringWithInput("please enter your username: ");
-		pwd = userInterface.displayStringWithInput("please enter your password: ");
-		
-		UserRole role = getRole(userName, pwd);
-		
-		UserController controller = UserControllerFactory.getUserController(userName, role);
-		return controller;
+	public UserController displayLogin() {
+		User user = null;
+		do {
+			String userName = userInterface.displayStringWithInput("please enter your username: ");
+			String pwd = userInterface.displayStringWithInput("please enter your password: ");
+			user = getUser(userName, pwd);
+		} while(user == null);
+
+		return user.getController();
 	}
-	
-	/* returns the role of the user that is currently logged in
-	 * 
+
+	/**
+	 * @return user with given username and password;
+	 * 		null if no such user exists
 	 */
-	
-	private UserRole getRole(String userName, String pwd) throws Exception 
-	{
-		if(userName.equals("user1") && pwd.equals(" "))return UserRole.USERROLE_MANAGER;
-		if(userName.equals("user2") && pwd.equals(" "))return UserRole.USERROLE_GARAGEHOLDER;
-		if(userName.equals("user3") && pwd.equals(" "))return UserRole.USERROLE_MECHANIC;
-		throw new Exception();
+	private User getUser(String userName, String pwd) {
+		for(User user : users) {
+			if(user.USERNAME.equals(userName) && user.PASSWORD.equals(pwd)) {
+				return user;
+			}
+		}
+		return null;
 	}
-	
-	protected UserInterface userInterface;
 }

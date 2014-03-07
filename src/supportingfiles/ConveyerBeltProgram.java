@@ -19,11 +19,11 @@ public class ConveyerBeltProgram {
 		
 		Company company = new Company();
 		
-		UserInterface f = (testing? new UserInterfaceUseCaseTester(new UseCaseDemo()):
+		UserInterface ui = (testing? new UserInterfaceUseCaseTester(new UseCaseDemo()):
 								 new UserInterfaceTerminal());
 		
 		// initialize the controller
-		SystemController c = new SystemController(f);
+		SystemController c = new SystemController(ui);
 		
 		c.displayWelcomeMessage();
 		
@@ -33,7 +33,7 @@ public class ConveyerBeltProgram {
 		{
 			while((u = c.displayLogin()) != null)
 			{
-				u.provideUI(f);
+				u.provideUI(ui);
 			}
 		}
 		catch(Exception e)

@@ -7,9 +7,10 @@ import system.userinterface.UserInterface;
 
 public class GarageHolderController implements UserController {
 
-	public GarageHolderController(String uname)
-	{
-		this.userName = uname;
+	private GarageHolder user;
+	
+	public GarageHolderController(GarageHolder user) {
+		this.user = user;
 	}
 	@Override
 	public void provideUI(UserInterface ui) {
@@ -23,7 +24,7 @@ public class GarageHolderController implements UserController {
 		ui.displayString("");
 		String input = ui.displayStringWithInput("Enter your choice:");
 		
-		if(input.equals("1")) // manager wants to advance assemblyline
+		if(input.equals("1"))
 		{
 			FunctionalityController controller = 
 					FunctionalityControllerFactory.getControllerFor(Functionality.FUNCTIONALITY_ORDER_PROCESS);
@@ -31,6 +32,4 @@ public class GarageHolderController implements UserController {
 		}
 		
 	}
-
-	private String userName;
 }

@@ -1,6 +1,5 @@
 package system.user;
 
-import system.functionality.AssemblyLineController;
 import system.functionality.Functionality;
 import system.functionality.FunctionalityController;
 import system.functionality.FunctionalityControllerFactory;
@@ -8,9 +7,11 @@ import system.userinterface.UserInterface;
 
 public class ManagerController implements UserController {
 
-	public ManagerController(String uname)
+	private Manager user;
+	
+	public ManagerController(Manager user)
 	{
-		this.userName = uname;
+		this.user = user;
 	}
 	
 	@Override
@@ -30,6 +31,4 @@ public class ManagerController implements UserController {
 		}
 	}
 	
-	private String userName;
-
 }

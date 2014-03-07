@@ -6,9 +6,12 @@ import system.functionality.FunctionalityControllerFactory;
 import system.userinterface.UserInterface;
 
 public class MechanicController implements UserController{
-	public MechanicController(String uname)
+
+	private Mechanic user;
+	
+	public MechanicController(Mechanic user)
 	{
-		this.userName = uname;
+		this.user = user;
 	}
 
 	@Override
@@ -20,13 +23,11 @@ public class MechanicController implements UserController{
 		ui.displayString("");
 		String input = ui.displayStringWithInput("Enter your choice:");
 		
-		if(input.equals("1")) // manager wants to advance assemblyline
+		if(input.equals("1"))
 		{
 			FunctionalityController controller = 
 					FunctionalityControllerFactory.getControllerFor(Functionality.FUNCTIONALITY_WORK_STATION);
 			controller.provideFunctionality(ui);
 		}
 	}
-
-	private String userName;
 }
