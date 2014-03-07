@@ -15,7 +15,7 @@ public abstract class WorkStation {
 	
 	public void setCurrentJob(CarInProduction current) {
 		this.current = current;
-		ready = (current == null) ? true : false;
+		ready = (current == null);
 	}
 
 	public CarInProduction getCurrentJob() {
