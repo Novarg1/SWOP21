@@ -4,11 +4,11 @@ import util.TimeStamp;
 
 public class CarOrder {
 
-	private CarModelSpecification specification;
+	private CarSpecification specification;
 	private TimeStamp completionTime;
 	private boolean finished = false;
 
-	public CarOrder(CarModelSpecification specification)
+	public CarOrder(CarSpecification specification)
 	{
 		this.specification = specification;
 	}

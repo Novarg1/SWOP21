@@ -40,4 +40,5 @@ public class TimeStamp {
 				|| (this.DAY == other.DAY && this.HOUR < other.HOUR)
 				|| (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE <= other.MINUTE));
 	}
+
 }
