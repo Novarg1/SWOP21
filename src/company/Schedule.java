@@ -22,11 +22,13 @@ public class Schedule {
 	
 	//TODO what if there are no car orders left?
 	/**
+	 * @param minutes
+	 * 		
 	 * @return
 	 * 		next car to be assembled on assembly line;
 	 * 		null if no next car is scheduled for the current day
 	 */
-	public CarOrder next() {
+	public CarOrder next(int minutes) {
 		CarOrder next = schedule.peek();
 		
 		//TODO

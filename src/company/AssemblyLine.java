@@ -6,15 +6,13 @@ import car.CarOrder;
 
 public class AssemblyLine {
 
-	private Schedule schedule;
 	private WorkStation[] workStations;
 
-	public AssemblyLine(WorkStation[] workStations, Schedule schedule) {
-		if(workStations == null || schedule == null || workStations.length < 1) {
+	public AssemblyLine(WorkStation[] workStations) {
+		if(workStations == null || workStations.length < 1) {
 			throw new IllegalArgumentException();
 		}
 		this.workStations = workStations;
-		this.schedule = schedule;
 	}
 
 	/**
@@ -24,8 +22,7 @@ public class AssemblyLine {
 	 * 		The car that was finished;
 	 * 		null if no car was finished
 	 */
-	public CarInProduction advance() {
-		CarOrder order = schedule.next();
+	public CarInProduction advance(CarOrder order) {
 		CarInProduction next = new CarInProduction(new Car(), order);
 		for (int i = 0; i < workStations.length; i++) {
 			CarInProduction temp = workStations[i].getCurrentJob();

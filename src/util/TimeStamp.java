@@ -34,4 +34,10 @@ public class TimeStamp {
 		}
 		return new TimeStamp(nDay, nHour, nMinute);
 	}
+
+	public boolean isBefore(TimeStamp other) {
+		return ((this.DAY < other.DAY)
+				|| (this.DAY == other.DAY && this.HOUR < other.HOUR)
+				|| (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE <= other.MINUTE));
+	}
 }

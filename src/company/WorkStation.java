@@ -22,7 +22,6 @@ public abstract class WorkStation {
 		return current;
 	}
 
-
 	public boolean isReady() {
 		return ready;
 	}
