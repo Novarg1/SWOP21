@@ -24,6 +24,17 @@ public class CarSpecification {
 		}
 	}
 
+	public CarPart get(Class<?> part) {
+		if(part.equals(AIRCO.getClass())) return AIRCO;
+		if(part.equals(BODY.getClass())) return BODY;
+		if(part.equals(COLOR.getClass())) return COLOR;
+		if(part.equals(ENGINE.getClass())) return ENGINE;
+		if(part.equals(GEARBOX.getClass())) return GEARBOX;
+		if(part.equals(SEATS.getClass())) return SEATS;
+		if(part.equals(WHEELS.getClass())) return WHEELS;
+		throw new IllegalArgumentException();
+	}
+	
 	@Override
 	public String toString() {
 		return "Color: " + this.COLOR + "\nBody: " + this.BODY + "\nEngine: "

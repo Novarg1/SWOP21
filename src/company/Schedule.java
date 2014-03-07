@@ -1,6 +1,8 @@
 package company;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import util.TimeStamp;
 import car.CarOrder;
@@ -52,11 +54,11 @@ public class Schedule {
 		TimeStamp completion = currentTime.increase(BUILD_TIME);
 
 		if(completion.isBefore(endTime)) {
-			inAssembly[0] = next;
+			inAssembly[2] = next;
 			result = next;
 			schedule.remove();
 		} else {
-			inAssembly[0] = null;
+			inAssembly[2] = null;
 			result = null;
 		}
 
@@ -103,6 +105,17 @@ public class Schedule {
 		return dayHasEnded;
 	}
 
+	public List<CarOrder> getPendingOrders() {
+		List<CarOrder> list = new ArrayList<CarOrder>();
+		for (CarOrder order : inAssembly) {
+			if(order != null) {
+				list.add(order);
+			}
+		}
+		list.addAll(schedule);
+		return list;
+	}
+	
 	private void updateCompletionTimes() {
 		for (int i = 0; i < inAssembly.length; i++) {
 			inAssembly[i].setCompletionTime(currentTime.increase((i+1)*60));

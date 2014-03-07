@@ -44,4 +44,8 @@ public class AssemblyLine {
 		}
 		return true;
 	}
+
+	public WorkStation[] getWorkstations() {
+		return workStations;
+	}
 }

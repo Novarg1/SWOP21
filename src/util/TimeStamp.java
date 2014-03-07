@@ -28,8 +28,8 @@ public class TimeStamp {
 			nHour += 1;
 			nMinute %= 60;
 			if(nHour >= 24) {
-				nHour = 0;
 				nDay += 1;
+				nHour %= 24;
 			}
 		}
 		return new TimeStamp(nDay, nHour, nMinute);
@@ -40,5 +40,6 @@ public class TimeStamp {
 				|| (this.DAY == other.DAY && this.HOUR < other.HOUR)
 				|| (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE <= other.MINUTE));
 	}
+
 
 }

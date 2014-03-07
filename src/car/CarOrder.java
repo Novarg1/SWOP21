@@ -3,25 +3,18 @@ package car;
 import system.user.GarageHolder;
 import util.TimeStamp;
 
-public class CarOrder implements Comparable {
+public class CarOrder implements Comparable<CarOrder> {
 
-	private GarageHolder client;
-	private CarSpecification specification;
+	public final GarageHolder CLIENT;
+	public final CarSpecification SPECIFICATION;
 	private TimeStamp completionTime;
 	private boolean finished = false;
 
 	public CarOrder(GarageHolder client, CarSpecification specification) {
-		this.client = client;
-		this.specification = specification;
+		CLIENT = client;
+		SPECIFICATION = specification;
 	}
 
-	/**
-	 * @return the garageHolder who placed this order
-	 */
-	public GarageHolder getClient() {
-		return client;
-	}
-	
 	/**
 	 * set estimated completion time of this order to given time
 	 * 
@@ -59,17 +52,13 @@ public class CarOrder implements Comparable {
 
 	@Override
 	public String toString() {
-		return this.specification.toString();
+		return SPECIFICATION.toString();
 	}
 
 	@Override
-	public int compareTo(Object other) {
-		try {
-			return this.completionTime.isBefore(((CarOrder) other)
-					.getCompletionTime()) ? -1 : 1;
-		} catch (ClassCastException e) {
-			throw new IllegalArgumentException();
-		}
+	public int compareTo(CarOrder other) {
+		return this.completionTime.isBefore(((CarOrder) other)
+				.getCompletionTime()) ? -1 : 1;
 	}
 
 }

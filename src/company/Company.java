@@ -15,6 +15,9 @@ public class Company {
 	private List<CarModel> carModels;
 	private List<CarOrder> finishedOrders;
 	
+	/**
+	 * Initializes a new company with a schedule and assemblyline
+	 */
 	public Company() {
 		schedule = new Schedule();
 		assemblyLine = new AssemblyLine(new WorkStation[] {
@@ -52,18 +55,34 @@ public class Company {
 		finishedOrders.add(assemblyLine.advance(order).ORDER);
 	}
 
+	public AssemblyLine getAssemblyLine() {
+		return assemblyLine;
+	}
+	
+	/**
+	 * @return finished orders placed by the given garageholder
+	 */
 	public List<CarOrder> getFinishedOrders(GarageHolder client) {
 		List<CarOrder> list = new ArrayList<CarOrder>();
 		for (CarOrder order : finishedOrders) {
-			if(order.getClient().equals(client)) {
+			if(order.CLIENT.equals(client)) {
 				list.add(order);
 			}
 		}
-		return null;
+		return list;
 	}
 	
+	/**
+	 * @return pending orders placed by the given garageholder
+	 */
 	public List<CarOrder> getPendingOrders(GarageHolder client) {
-		//TODO
-		return null;
+		List<CarOrder> pendingOrders = schedule.getPendingOrders();
+		List<CarOrder> list = new ArrayList<CarOrder>();
+		for (CarOrder order : pendingOrders) {
+			if(order.CLIENT.equals(client)) {
+				list.add(order);
+			}
+		}
+		return list;
 	}
 }
