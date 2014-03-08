@@ -93,7 +93,12 @@ public class Schedule {
 	}
 
 	public void addOrder(CarOrder order) {
-		TimeStamp completion = schedule.getLast().getCompletionTime().increase(60);
+		TimeStamp completion;
+		if(schedule.isEmpty()) {
+			completion = currentTime.increase(BUILD_TIME);
+		} else {
+			completion = schedule.getLast().getCompletionTime().increase(60);
+		}
 		if(completion.HOUR > END_HOUR) {
 			completion = new TimeStamp(completion.DAY+1, START_HOUR + BUILD_TIME, 0);
 		}
@@ -115,7 +120,7 @@ public class Schedule {
 		list.addAll(schedule);
 		return list;
 	}
-	
+
 	private void updateCompletionTimes() {
 		for (int i = 0; i < inAssembly.length; i++) {
 			inAssembly[i].setCompletionTime(currentTime.increase((i+1)*60));
