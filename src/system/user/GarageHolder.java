@@ -1,5 +1,7 @@
 package system.user;
 
+import company.Company;
+
 public class GarageHolder extends User {
 
 	public GarageHolder(String username, String password) {
@@ -7,7 +9,7 @@ public class GarageHolder extends User {
 	}
 
 	@Override
-	public UserController getController() {
-		return new GarageHolderController(this);
+	public UserController getController(Company company) {
+		return new GarageHolderController(this, company);
 	}
 }

@@ -1,5 +1,7 @@
 package system.user;
 
+import company.Company;
+
 public abstract class User {
 
 	public final String USERNAME;
@@ -10,7 +12,7 @@ public abstract class User {
 		this.PASSWORD = password;
 	}
 
-	public abstract UserController getController();
+	public abstract UserController getController(Company company);
 
 	@Override
 	public int hashCode() {

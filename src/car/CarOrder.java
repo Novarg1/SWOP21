@@ -1,16 +1,17 @@
 package car;
 
 import system.user.GarageHolder;
+import system.user.User;
 import util.TimeStamp;
 
 public class CarOrder implements Comparable<CarOrder> {
 
-	public final GarageHolder CLIENT;
+	public final User CLIENT;
 	public final CarSpecification SPECIFICATION;
 	private TimeStamp completionTime;
 	private boolean finished = false;
 
-	public CarOrder(GarageHolder client, CarSpecification specification) {
+	public CarOrder(User client, CarSpecification specification) {
 		CLIENT = client;
 		SPECIFICATION = specification;
 	}

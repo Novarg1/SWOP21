@@ -8,9 +8,9 @@ public final class UserControllerFactory {
 	{
 		switch(r)
 		{
-		case USERROLE_MANAGER:return new ManagerController(userName);
+		/*case USERROLE_MANAGER:return new ManagerController(userName);
 		case USERROLE_GARAGEHOLDER:return new GarageHolderController(userName);
-		case USERROLE_MECHANIC:return new MechanicController(userName);
+		case USERROLE_MECHANIC:return new MechanicController(userName);*/
 		default: throw new Exception();
 		}
 	}

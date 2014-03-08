@@ -3,18 +3,24 @@ package system.functionality;
 import java.util.List;
 
 import car.CarPart;
+import company.AssemblyLine;
+import company.Company;
 import company.WorkStation;
+import system.user.User;
 import system.userinterface.UserInterface;
 
 public class WorkStationController implements FunctionalityController {
-	private WorkStation workstation;
 
-	public WorkStationController(WorkStation ws) {
-		workstation = ws;
+	public WorkStationController() {
 	}
 
 	@Override
-	public boolean provideFunctionality(UserInterface ui) {
+	public boolean provideFunctionality(UserInterface ui, User user, Company company) {
+		int nw = Integer.parseInt(
+				ui.displayStringWithInput("At which workstation would you be working?")
+				);
+		WorkStation workstation = company.getAssemblyLine().getWorkstations()[nw];
+		
 		while(true) {
 			List<CarPart> pending = workstation.getPendingTasks();
 			if(pending.isEmpty()) {

@@ -1,5 +1,6 @@
 package system.functionality;
 
+import company.Company;
 import car.CarAirco;
 import car.CarBody;
 import car.CarColor;
@@ -10,6 +11,8 @@ import car.CarOrder;
 import car.CarSeats;
 import car.CarSpecification;
 import car.CarWheels;
+import car.StandardModel;
+import system.user.User;
 import system.userinterface.UserInterface;
 
 public class OrderProcessController implements FunctionalityController
@@ -19,7 +22,7 @@ public class OrderProcessController implements FunctionalityController
 	}
 
 	@Override
-	public boolean provideFunctionality(UserInterface userInterface) 
+	public boolean provideFunctionality(UserInterface userInterface, User user, Company company) 
 	{
 		CarModel model = this.askForModel(userInterface);
 		CarBody body = this.askForBody(userInterface);
@@ -36,7 +39,7 @@ public class OrderProcessController implements FunctionalityController
 			String input = userInterface.displayStringWithInput("You selected a car with options:\n" + spec + "\nDo you want to order this car?");
 			if(input.startsWith("y"))
 			{
-				CarOrder order = new CarOrder(spec);
+				CarOrder order = new CarOrder(user, spec);
 				// TODO place a carorder here
 			}
 		} catch (Exception e) 
@@ -49,12 +52,13 @@ public class OrderProcessController implements FunctionalityController
 
 	private CarModel askForModel(UserInterface userInterface)
 	{
-		String input = userInterface.displayStringWithInput("What type of wheels do you want?\n(1) comfort\n(2) sport");
+//		String input = userInterface.displayStringWithInput("What type of wheels do you want?\n(1) comfort\n(2) sport");
 
 //		if(input.equals("1"))return ;
 //		if(input.equals("2"))return ;
+		return new StandardModel();
 
-		throw new IllegalArgumentException();
+//		throw new IllegalArgumentException();
 	}
 
 	private CarWheels askForWheels(UserInterface userInterface)

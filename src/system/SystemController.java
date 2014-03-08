@@ -3,6 +3,10 @@ package system;
 import java.util.HashSet;
 import java.util.Set;
 
+import company.Company;
+import system.user.GarageHolder;
+import system.user.Manager;
+import system.user.Mechanic;
 import system.user.User;
 import system.user.UserController;
 import system.user.UserControllerFactory;
@@ -19,12 +23,16 @@ public class SystemController {
 
 	protected Set<User> users;
 	protected UserInterface userInterface;
+	protected Company company;
 
 	public SystemController(UserInterface userInterface)
 	{
 		this.userInterface = userInterface;
+		this.company = new Company();
 		users = new HashSet<User>();
-		//TODO add testing users
+		users.add(new Manager("user1"," "));
+		users.add(new GarageHolder("user2"," "));
+		users.add(new Mechanic("user3"," "));
 	}
 
 	public void displayWelcomeMessage()
@@ -49,7 +57,7 @@ public class SystemController {
 			user = getUser(userName, pwd);
 		} while(user == null);
 
-		return user.getController();
+		return user.getController(this.company);
 	}
 
 	/**

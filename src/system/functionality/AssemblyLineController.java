@@ -1,11 +1,14 @@
 package system.functionality;
 
+import company.Company;
+
+import system.user.User;
 import system.userinterface.UserInterface;
 
 public class AssemblyLineController implements FunctionalityController 
 {	
 	@Override
-	public boolean provideFunctionality(UserInterface userInterface) {
+	public boolean provideFunctionality(UserInterface userInterface, User user,Company company) {
 		// TODO Auto-generated method stub
 		
 		// display the future state of the assembly line

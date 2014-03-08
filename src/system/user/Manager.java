@@ -1,5 +1,7 @@
 package system.user;
 
+import company.Company;
+
 public class Manager extends User {
 
 	public Manager(String username, String password) {
@@ -8,8 +10,8 @@ public class Manager extends User {
 	
 	
 @Override
-	public UserController getController() {
-		return new ManagerController(this);
+	public UserController getController(Company company) {
+		return new ManagerController(this, company);
 	}
 
 }

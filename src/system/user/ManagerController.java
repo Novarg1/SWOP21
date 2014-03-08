@@ -1,5 +1,7 @@
 package system.user;
 
+import company.Company;
+
 import system.functionality.Functionality;
 import system.functionality.FunctionalityController;
 import system.functionality.FunctionalityControllerFactory;
@@ -8,10 +10,12 @@ import system.userinterface.UserInterface;
 public class ManagerController implements UserController {
 
 	private Manager user;
+	private Company company;
 	
-	public ManagerController(Manager user)
+	public ManagerController(Manager user, Company company)
 	{
 		this.user = user;
+		this.company = company;
 	}
 	
 	@Override
@@ -27,7 +31,7 @@ public class ManagerController implements UserController {
 		{
 			FunctionalityController controller = 
 					FunctionalityControllerFactory.getControllerFor(Functionality.FUNCTIONALITY_ASSEMBLY_LINE);
-			controller.provideFunctionality(ui);
+			controller.provideFunctionality(ui, user, company);
 		}
 	}
 	
