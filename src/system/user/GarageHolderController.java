@@ -1,7 +1,10 @@
 package system.user;
 
-import company.Company;
 
+import java.util.List;
+
+import car.CarOrder;
+import company.Company;
 import system.functionality.Functionality;
 import system.functionality.FunctionalityController;
 import system.functionality.FunctionalityControllerFactory;
@@ -20,7 +23,16 @@ public class GarageHolderController implements UserController {
 	public void provideUI(UserInterface ui) {
 		// TODO Auto-generated method stub
 		
-		// first show the garage holder what he has already ordered
+		// first show the garage holder what he has already ordered that is pending
+		List<CarOrder> ordersInProgress = this.company.getPendingOrders(this.user);
+		for(CarOrder order : ordersInProgress)
+			ui.displayString(order.toString());
+
+		// first show the garage holder what he has already ordered that is finished
+		List<CarOrder> ordersFinished = this.company.getFinishedOrders(this.user);
+		for(CarOrder order : ordersFinished)
+			ui.displayString(order.toString());
+		
 		
 		ui.displayString("Welcome to the garage holder menu");
 		ui.displayString("");
