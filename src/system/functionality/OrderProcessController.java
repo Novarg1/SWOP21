@@ -40,7 +40,7 @@ public class OrderProcessController implements FunctionalityController
 			if(input.startsWith("y"))
 			{
 				CarOrder order = new CarOrder(user, spec);
-				// TODO place a carorder here
+				company.placeOrder(order);
 			}
 		} catch (Exception e) 
 		{
