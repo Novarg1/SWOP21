@@ -123,9 +123,12 @@ public class Schedule {
 
 	private void updateCompletionTimes() {
 		for (int i = 0; i < inAssembly.length; i++) {
-			inAssembly[i].setCompletionTime(currentTime.increase((i+1)*60));
+			if(inAssembly[i] != null) {
+				inAssembly[i].setCompletionTime(currentTime.increase((i+1)*60));
+			}
 		}
-		TimeStamp prev = inAssembly[2].getCompletionTime();
+
+		TimeStamp prev = currentTime.increase(BUILD_TIME);
 		for (CarOrder order : schedule) {
 			TimeStamp next = prev.increase(60);
 			if(next.HOUR > END_HOUR) {
