@@ -40,6 +40,7 @@ public class ConveyerBeltProgram {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 		}
 		
 		// cleaning up, notifying the user
