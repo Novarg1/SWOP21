@@ -4,10 +4,17 @@ import company.Company;
 
 import system.user.User;
 import system.userinterface.UserInterface;
-
+/*
+ * Provides functionality to operate the assembly line
+ */
 public class AssemblyLineController implements FunctionalityController 
 {	
 	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see system.functionality.FunctionalityController#provideFunctionality(system.userinterface.UserInterface, system.user.User, company.Company)
+	 * @return true if the functionality has been successfully provided
+	 */
 	public boolean provideFunctionality(UserInterface userInterface, User user,Company company) {
 		// TODO Auto-generated method stub
 		int time = Integer.parseInt(userInterface.displayStringWithInput(

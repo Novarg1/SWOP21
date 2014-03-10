@@ -23,20 +23,26 @@ public class ConveyerBeltProgram {
 		// initialize the controller
 		SystemController c = new SystemController(ui);
 		
+		// display a welcome message
 		c.displayWelcomeMessage();
 		
-		
+		// main program loop as long as correct user/pwd combinations are given
+		// c.displayLogin will provide a user and the user object will provide
+		// the functionality for his usertype
 		UserController u = null;
 		try
 		{
 			while((u = c.displayLogin()) != null)
 			{
+				// provide an overview of all functionalities this usertype can use
 				u.provideUI(ui);
 			}
 		}
 		catch(Exception e)
 		{
 		}
+		
+		// cleaning up, notifying the user
 		c.displayGoodByeMessage();
 	}
 

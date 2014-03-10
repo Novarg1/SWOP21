@@ -14,6 +14,12 @@ public class WorkStationController implements FunctionalityController {
 	public WorkStationController() {
 	}
 
+	/*
+	 * guides the user through using a workstation
+	 * (non-Javadoc)
+	 * @see system.functionality.FunctionalityController#provideFunctionality(system.userinterface.UserInterface, system.user.User, company.Company)
+	 * @return true if the workstation was successfully used
+	 */
 	@Override
 	public boolean provideFunctionality(UserInterface ui, User user, Company company) {
 		int nw = Integer.parseInt(

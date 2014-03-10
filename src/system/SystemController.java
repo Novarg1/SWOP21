@@ -15,8 +15,8 @@ import system.userinterface.UserInterface;
 
 /* System Controller
  * 
- * Manages everything while no user is logged in
- * 
+ * Manages everything while no user is logged in, also keeps the ui, the userdb and the
+ * company alive.
  */
 
 public class SystemController {
