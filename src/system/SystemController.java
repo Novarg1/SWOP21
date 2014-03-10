@@ -51,11 +51,12 @@ public class SystemController {
 	 */
 	public UserController displayLogin() {
 		User user = null;
-		do {
-			String userName = userInterface.displayStringWithInput("please enter your username: ");
-			String pwd = userInterface.displayStringWithInput("please enter your password: ");
-			user = getUser(userName, pwd);
-		} while(user == null);
+		
+		String userName = userInterface.displayStringWithInput("please enter your username: ");
+		String pwd = userInterface.displayStringWithInput("please enter your password: ");
+		user = getUser(userName, pwd);
+		
+		if(user == null)return null;
 
 		return user.getController(this.company);
 	}
