@@ -14,7 +14,7 @@ public class Company {
 	private AssemblyLine assemblyLine;
 	private List<CarModel> carModels;
 	private List<CarOrder> finishedOrders;
-	
+
 	/**
 	 * Initializes a new company with a schedule and assemblyline
 	 */
@@ -36,14 +36,14 @@ public class Company {
 	public List<CarModel> getCarModels() {
 		return carModels;
 	}
-	
+
 	/**
 	 * places new order
 	 */
 	public void placeOrder(CarOrder order) {
 		schedule.addOrder(order);
 	}
-	
+
 	/**
 	 * advances assembly line
 	 * 
@@ -52,13 +52,16 @@ public class Company {
 	 */
 	public void advanceAssemblyLine(int minutes) {
 		CarOrder order = schedule.next(minutes);
-		finishedOrders.add(assemblyLine.advance(order).ORDER);
+		CarOrder finishedOrder = assemblyLine.advance(order);
+		if(finishedOrder != null) {
+			finishedOrders.add(finishedOrder);
+		}
 	}
 
 	public AssemblyLine getAssemblyLine() {
 		return assemblyLine;
 	}
-	
+
 	/**
 	 * @return finished orders placed by the given garageholder
 	 */
@@ -71,7 +74,7 @@ public class Company {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * @return pending orders placed by the given garageholder
 	 */
