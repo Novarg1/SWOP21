@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import system.user.GarageHolder;
+import system.user.User;
 import car.CarModel;
 import car.CarOrder;
 import car.StandardModel;
@@ -62,7 +63,7 @@ public class Company {
 	/**
 	 * @return finished orders placed by the given garageholder
 	 */
-	public List<CarOrder> getFinishedOrders(GarageHolder client) {
+	public List<CarOrder> getFinishedOrders(User client) {
 		List<CarOrder> list = new ArrayList<CarOrder>();
 		for (CarOrder order : finishedOrders) {
 			if(order.CLIENT.equals(client)) {
@@ -75,11 +76,11 @@ public class Company {
 	/**
 	 * @return pending orders placed by the given garageholder
 	 */
-	public List<CarOrder> getPendingOrders(GarageHolder client) {
+	public List<CarOrder> getPendingOrders(User user) {
 		List<CarOrder> pendingOrders = schedule.getPendingOrders();
 		List<CarOrder> list = new ArrayList<CarOrder>();
 		for (CarOrder order : pendingOrders) {
-			if(order.CLIENT.equals(client)) {
+			if(order.CLIENT.equals(user)) {
 				list.add(order);
 			}
 		}

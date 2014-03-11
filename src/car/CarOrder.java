@@ -61,5 +61,4 @@ public class CarOrder implements Comparable<CarOrder> {
 		return this.completionTime.isBefore(((CarOrder) other)
 				.getCompletionTime()) ? -1 : 1;
 	}
-
 }

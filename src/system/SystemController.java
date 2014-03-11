@@ -73,4 +73,9 @@ public class SystemController {
 		}
 		return null;
 	}
+	
+	public Company getCompany()
+	{
+		return this.company;
+	}
 }

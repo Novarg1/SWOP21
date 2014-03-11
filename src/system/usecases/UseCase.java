@@ -2,6 +2,10 @@ package system.usecases;
 
 import java.util.LinkedList;
 
+import system.SystemController;
+import system.user.User;
+import company.Company;
+
 /* UseCase interface
  * A class implementing this interface has only to know what the
  * next input is at any given point. This can be used to test usecases effectively
@@ -9,4 +13,5 @@ import java.util.LinkedList;
 public interface UseCase 
 {
 	public String nextInput();
+	public boolean passTest(SystemController c);
 }
