@@ -19,17 +19,17 @@ public class AssemblyLine {
 	 * advances the assembly line
 	 * 
 	 * @return
-	 * 		The car that was finished;
+	 * 		The carOrder that was finished;
 	 * 		null if no car was finished
 	 */
-	public CarInProduction advance(CarOrder order) {
+	public CarOrder advance(CarOrder order) {
 		CarInProduction next = new CarInProduction(new Car(), order);
 		for (int i = 0; i < workStations.length; i++) {
 			CarInProduction temp = workStations[i].getCurrentJob();
 			workStations[i].setCurrentJob(next);
 			next = temp;
 		}
-		return next;
+		return next==null ? null : next.ORDER;
 	}
 
 	/**
