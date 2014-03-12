@@ -25,7 +25,7 @@ public class CarOrder {
 	 */
 	public void setCompletionTime(TimeStamp time) {
 		if (finished) {
-			throw new IllegalArgumentException("this order is already finished");
+			throw new IllegalStateException("this order is already finished");
 		}
 		completionTime = time;
 	}

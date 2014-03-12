@@ -13,14 +13,19 @@ public abstract class CarModel {
 		MODEL = model;
 	}
 
+	/**
+	 * @param spec
+	 * @return true if the given specification is a valid specification for cars
+	 *         of this model
+	 */
 	public boolean isValidSpecification(CarSpecification spec) {
 		return (Arrays.asList(getPossibleAircos()).contains(spec.AIRCO)
 				&& Arrays.asList(getPossibleBodies()).contains(spec.BODY)
 				&& Arrays.asList(getPossibleColors()).contains(spec.COLOR)
 				&& Arrays.asList(getPossibleEngines()).contains(spec.ENGINE)
 				&& Arrays.asList(getPossibleGearboxes()).contains(spec.GEARBOX)
-				&& Arrays.asList(getPossibleSeats()).contains(spec.SEATS)
-				&& Arrays.asList(getPossibleWheels()).contains(spec.WHEELS));
+				&& Arrays.asList(getPossibleSeats()).contains(spec.SEATS) && Arrays
+				.asList(getPossibleWheels()).contains(spec.WHEELS));
 	}
 
 	/**

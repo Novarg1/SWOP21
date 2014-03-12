@@ -66,8 +66,9 @@ public class Car {
 		}
 		else if(part.getClass() == CarWheels.class) {
 			this.wheels = (CarWheels)part;
+		} else {
+			throw new IllegalArgumentException();
 		}
-		throw new IllegalArgumentException();
 	}
 
 	/**

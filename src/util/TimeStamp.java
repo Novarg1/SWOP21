@@ -47,11 +47,41 @@ public class TimeStamp implements Comparable<TimeStamp> {
 				|| (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE < other.MINUTE)) {
 			return -1;
 		}
-		
+
 		if (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE == other.MINUTE) {
 			return 0;
 		}
 		return 1;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + DAY;
+		result = prime * result + HOUR;
+		result = prime * result + MINUTE;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TimeStamp other = (TimeStamp) obj;
+		if (DAY != other.DAY)
+			return false;
+		if (HOUR != other.HOUR)
+			return false;
+		if (MINUTE != other.MINUTE)
+			return false;
+		return true;
 	}
 
 }

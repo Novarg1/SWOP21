@@ -2,7 +2,6 @@ package tests;
 
 import org.junit.Test;
 
-//TODO
 public class TestSchedule {
 
 	@Test
