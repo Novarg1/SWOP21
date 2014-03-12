@@ -60,16 +60,11 @@ public class TestUseCaseGarageHolder
 		
 		// if everything worked allright then a new car should have been added
 		// to the schedule
-		try {
-			CarSpecification spec = new CarSpecification(new StandardModel(), CarBody.BODY_SEDAN, CarColor.RED,
+		CarSpecification spec = new CarSpecification(new StandardModel(), CarBody.BODY_SEDAN, CarColor.RED,
 												CarEngine.PERFORMANCE, CarGearbox.AUTOMATIC, CarSeats.VINYL_GREY, 
 												CarAirco.CLIMATE_CONTROL, CarWheels.SPORTS);
-			User user = new GarageHolder("user2", " ");
-			assert(c.getCompany().getPendingOrders(user).get(0).toString().equals(spec.toString()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		User user = new GarageHolder("user2", " ");
+		assert(c.getCompany().getPendingOrders(user).get(0).toString().equals(spec.toString()));
 	}
 	
 	/**
@@ -96,13 +91,8 @@ public class TestUseCaseGarageHolder
 		
 		// if everything worked allright then a new car should not have been added
 		// to the schedule
-		try {
-			User user = new GarageHolder("user2", " ");
-			assert(c.getCompany().getPendingOrders(user).size()==0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		User user = new GarageHolder("user2", " ");
+		assert(c.getCompany().getPendingOrders(user).size()==0);
 	}
 	
 	/**
@@ -144,12 +134,7 @@ public class TestUseCaseGarageHolder
 		
 		// if everything worked allright then a new car should not have been added
 		// to the schedule
-		try {
-			User user = new GarageHolder("user2", " ");
-			assert(c.getCompany().getPendingOrders(user).size()==0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		User user = new GarageHolder("user2", " ");
+		assert(c.getCompany().getPendingOrders(user).size()==0);
 	}
 }
