@@ -1,5 +1,5 @@
 package system.user;
-/* Factory Pattern
+/** Factory Pattern
  * 
  * returns a fully instantiated usercontroller
  */

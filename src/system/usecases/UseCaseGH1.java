@@ -7,7 +7,7 @@ import system.user.GarageHolder;
 import system.user.User;
 import car.*;
 
-/*
+/**
  * This is the use case for garage holder when everything goes as planned
  * the test succeeds when the ordered car is successfully found in schedule
  */

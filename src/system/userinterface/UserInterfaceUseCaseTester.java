@@ -2,7 +2,7 @@ package system.userinterface;
 
 import system.usecases.UseCase;
 
-/*
+/**
  * This is the testing oriented version of the userinterface
  * It also expects a usecase class whose only responability is to 
  * know the next output. The strings that are produced by the system

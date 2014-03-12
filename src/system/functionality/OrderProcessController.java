@@ -47,7 +47,7 @@ public class OrderProcessController implements FunctionalityController
 		return false;
 	}
 
-	/*
+	/**
 	 * asks the user what model he wants to order
 	 * @return the requested CarModel
 	 */
@@ -62,7 +62,7 @@ public class OrderProcessController implements FunctionalityController
 //		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user what wheels he wants to order
 	 * @return the requested CarWheels
 	 */
@@ -76,7 +76,7 @@ public class OrderProcessController implements FunctionalityController
 		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user what airoc he wants to order
 	 * @return the requested CarAirco
 	 */
@@ -90,7 +90,7 @@ public class OrderProcessController implements FunctionalityController
 		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user what seats he wants to order
 	 * @return the requested CarSeats
 	 */
@@ -105,7 +105,7 @@ public class OrderProcessController implements FunctionalityController
 		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user what gearbox he wants to order
 	 * @return the requested CarGearbox		 
 	 */
@@ -119,7 +119,7 @@ public class OrderProcessController implements FunctionalityController
 		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user which engine he wants to order
 	 * @return the requested CarEngine
 	 */
@@ -133,7 +133,7 @@ public class OrderProcessController implements FunctionalityController
 		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user what color he wants to order
 	 * @return the requested CarColor
 	 */
@@ -149,7 +149,7 @@ public class OrderProcessController implements FunctionalityController
 		throw new IllegalArgumentException();
 	}
 
-	/*
+	/**
 	 * asks the user which body he wants to order
 	 * @return the requested CarBody
 	 */

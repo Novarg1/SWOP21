@@ -1,6 +1,6 @@
 package system.functionality;
 
-/*
+/**
  * types of functionality that can exist in our model
  */
 public enum Functionality 

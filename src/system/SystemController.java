@@ -11,7 +11,7 @@ import system.user.User;
 import system.user.UserController;
 import system.userinterface.UserInterface;
 
-/* System Controller
+/** System Controller
  * 
  * Manages everything while no user is logged in, also keeps the ui, the userdb and the
  * company alive.

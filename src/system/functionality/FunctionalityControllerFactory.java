@@ -1,6 +1,6 @@
 package system.functionality;
 
-/* Factory pattern
+/** Factory pattern
  * returns a fully instantiated functionality controller
  */
 public class FunctionalityControllerFactory 
