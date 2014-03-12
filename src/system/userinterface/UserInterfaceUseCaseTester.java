@@ -1,48 +1,45 @@
 package system.userinterface;
 
-import system.usecases.UseCase;
+import java.util.LinkedList;
 
 /**
  * This is the testing oriented version of the userinterface
- * It also expects a usecase class whose only responability is to 
- * know the next output. The strings that are produced by the system
+ * It also expects that the user provides it with the input
+ * it will have to give. The strings that are produced by the system
  * are shown with a program: in front of, while the input string are
  * preceded by input:
  * 
  */
 public class UserInterfaceUseCaseTester implements UserInterface
 {
-	public UserInterfaceUseCaseTester(UseCase useCase)
+	public UserInterfaceUseCaseTester()
 	{
-		this.useCase = useCase;
-		supressOutput = false;
+		this.inputs = new LinkedList<String>();
 	}
 
 	@Override
 	public void displayString(String s) {
-		if(this.supressOutput == false)
-			System.out.println("Program: " + s);	
+		System.out.println("Program: " + s);	
 	}
 
 	@Override
 	public String displayStringWithInput(String s) {
 		// TODO Auto-generated method stub
 		this.displayString(s);
-		String input = useCase.nextInput();
-		if(input.equals(UserInterfaceUseCaseTester.supressOutputString))
-		{
-			this.supressOutput = !this.supressOutput;
-			input = this.displayStringWithInput(s);
-		}
-		else if(this.supressOutput == false)
-		{
-			System.out.println("Input  : " + input);
-		}
+		String input = this.nextInput();
+		System.out.println("Input  : " + input);
 		return input;
 	}
 	
-	public static String supressOutputString = "TOGGLESUPRESSOUTPUT";
+	public void addInput(String input)
+	{
+		this.inputs.add(input);
+	}
+	
+	private String nextInput()
+	{
+		return this.inputs.pop();
+	}
 
-	private UseCase useCase;
-	private boolean supressOutput;
+	private LinkedList<String> inputs;
 }
