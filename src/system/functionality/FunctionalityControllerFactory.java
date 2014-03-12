@@ -1,7 +1,5 @@
 package system.functionality;
 
-import company.Company;
-
 /* Factory pattern
  * returns a fully instantiated functionality controller
  */

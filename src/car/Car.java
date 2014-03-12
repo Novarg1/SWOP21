@@ -1,5 +1,8 @@
 package car;
 
+/**
+ * Represents a car
+ */
 public class Car {
 
 	private CarBody body = null;
@@ -25,6 +28,9 @@ public class Car {
 				"\nWheels: " + this.wheels;
 	}
 
+	/**
+	 * @return true if this car has been completed and is fully functional
+	 */
 	public boolean isComplete() {
 		return (body != null &&
 				color != null &&
@@ -35,6 +41,10 @@ public class Car {
 				wheels != null);
 	}
 
+	/**
+	 * Installs the given part on this car
+	 * @param part
+	 */
 	public void install(CarPart part) {
 		if(part.getClass() == CarBody.class) {
 			this.body = (CarBody)part;
@@ -60,6 +70,10 @@ public class Car {
 		throw new IllegalArgumentException();
 	}
 
+	/**
+	 * @param part
+	 * @return true if the given part is installed on this car
+	 */
 	public boolean hasPart(CarPart part) {
 		if(part.getClass() == CarBody.class) {
 			return this.body == (CarBody)part;

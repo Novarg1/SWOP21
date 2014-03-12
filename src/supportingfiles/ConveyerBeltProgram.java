@@ -1,8 +1,6 @@
 package supportingfiles;
 
-import company.Company;
 import system.SystemController;
-import system.functionality.FunctionalityController;
 import system.usecases.UseCase;
 import system.usecases.UseCaseDemo;
 import system.usecases.UseCaseGH1;

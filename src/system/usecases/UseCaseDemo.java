@@ -2,12 +2,9 @@ package system.usecases;
 
 import java.util.LinkedList;
 
-import company.Company;
 import system.SystemController;
-import system.user.User;
-import system.userinterface.UserInterfaceUseCaseTester;
-/* This usecase should demo the system functionality
- * 
+
+/** This usecase should demo the system functionality
  */
 public class UseCaseDemo implements UseCase
 {

@@ -3,7 +3,6 @@ package system.functionality;
 import java.util.List;
 
 import car.CarPart;
-import company.AssemblyLine;
 import company.Company;
 import company.WorkStation;
 import system.user.User;

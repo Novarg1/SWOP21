@@ -9,8 +9,6 @@ import system.user.Manager;
 import system.user.Mechanic;
 import system.user.User;
 import system.user.UserController;
-import system.user.UserControllerFactory;
-import system.user.UserRole;
 import system.userinterface.UserInterface;
 
 /* System Controller

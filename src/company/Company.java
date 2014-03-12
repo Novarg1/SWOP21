@@ -3,12 +3,14 @@ package company;
 import java.util.ArrayList;
 import java.util.List;
 
-import system.user.GarageHolder;
 import system.user.User;
 import car.CarModel;
 import car.CarOrder;
 import car.StandardModel;
 
+/**
+ * Represents the car manufacturing company
+ */
 public class Company {
 
 	private Schedule schedule;
@@ -59,6 +61,9 @@ public class Company {
 		}
 	}
 
+	/**
+	 * @return The assemblyLine of this company
+	 */
 	public AssemblyLine getAssemblyLine() {
 		return assemblyLine;
 	}

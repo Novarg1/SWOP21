@@ -5,15 +5,6 @@ import java.util.LinkedList;
 import system.SystemController;
 import system.user.GarageHolder;
 import system.user.User;
-import car.CarAirco;
-import car.CarBody;
-import car.CarColor;
-import car.CarEngine;
-import car.CarGearbox;
-import car.CarSeats;
-import car.CarSpecification;
-import car.CarWheels;
-import car.StandardModel;
 
 public class UseCaseGH3 implements UseCase 
 {

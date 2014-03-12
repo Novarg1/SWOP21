@@ -4,10 +4,17 @@ import car.Car;
 import car.CarInProduction;
 import car.CarOrder;
 
+/**
+ * An assemblyline has a list of workstations and can be advanced.
+ */
 public class AssemblyLine {
 
 	private WorkStation[] workStations;
 
+	/**
+	 * Creates a new assemblyLine with the given list of workstations
+	 * @param workStations
+	 */
 	public AssemblyLine(WorkStation[] workStations) {
 		if(workStations == null || workStations.length < 1) {
 			throw new IllegalArgumentException();
@@ -33,8 +40,7 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * @return
-	 * 		true if all workstations on this line are ready
+	 * @return true if all workstations on this line are ready
 	 */
 	public boolean isReadyToAdvance() {
 		for (int i = 0; i < workStations.length; i++) {
@@ -45,6 +51,9 @@ public class AssemblyLine {
 		return true;
 	}
 
+	/**
+	 * @return The list of workstations this assemblyLine contains
+	 */
 	public WorkStation[] getWorkstations() {
 		return workStations;
 	}

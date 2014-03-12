@@ -1,11 +1,17 @@
 package util;
 
-public class TimeStamp {
+public class TimeStamp implements Comparable<TimeStamp> {
 
 	public final int DAY;
 	public final int HOUR;
 	public final int MINUTE;
 
+	/**
+	 * Creates a new Timestamp with given day, hour and minute
+	 * @param day
+	 * @param hour
+	 * @param minute
+	 */
 	public TimeStamp(int day, int hour, int minute) {
 		if(day < 0 || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
 			throw new IllegalArgumentException("invalid timeStamp");
@@ -35,11 +41,17 @@ public class TimeStamp {
 		return new TimeStamp(nDay, nHour, nMinute);
 	}
 
-	public boolean isBefore(TimeStamp other) {
-		return ((this.DAY < other.DAY)
-				|| (this.DAY == other.DAY && this.HOUR < other.HOUR)
-				|| (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE <= other.MINUTE));
+	@Override
+	public int compareTo(TimeStamp other) {
+		if ((this.DAY < other.DAY) || (this.DAY == other.DAY && this.HOUR < other.HOUR)
+				|| (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE < other.MINUTE)) {
+			return -1;
+		}
+		
+		if (this.DAY == other.DAY && this.HOUR == other.HOUR && this.MINUTE == other.MINUTE) {
+			return 0;
+		}
+		return 1;
 	}
-
 
 }

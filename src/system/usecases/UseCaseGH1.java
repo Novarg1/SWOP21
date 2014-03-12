@@ -6,7 +6,6 @@ import system.SystemController;
 import system.user.GarageHolder;
 import system.user.User;
 import car.*;
-import company.Company;
 
 /*
  * This is the use case for garage holder when everything goes as planned

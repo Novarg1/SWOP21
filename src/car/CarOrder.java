@@ -1,10 +1,12 @@
 package car;
 
-import system.user.GarageHolder;
 import system.user.User;
 import util.TimeStamp;
 
-public class CarOrder implements Comparable<CarOrder> {
+/**
+ * Represents an order for a car.
+ */
+public class CarOrder {
 
 	public final User CLIENT;
 	public final CarSpecification SPECIFICATION;
@@ -56,9 +58,4 @@ public class CarOrder implements Comparable<CarOrder> {
 		return SPECIFICATION.toString();
 	}
 
-	@Override
-	public int compareTo(CarOrder other) {
-		return this.completionTime.isBefore(((CarOrder) other)
-				.getCompletionTime()) ? -1 : 1;
-	}
 }
