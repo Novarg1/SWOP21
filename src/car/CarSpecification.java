@@ -14,6 +14,7 @@ public class CarSpecification {
 
 	/**
 	 * Creates a carspecification with the given specifics
+	 * 
 	 * @param model
 	 * @param body
 	 * @param color
@@ -59,6 +60,14 @@ public class CarSpecification {
 		if (part.equals(WHEELS.getClass()))
 			return WHEELS;
 		throw new IllegalArgumentException();
+	}
+
+	/**
+	 * @return a list of all specific carParts in this specification
+	 */
+	public CarPart[] getAll() {
+		return new CarPart[] { BODY, COLOR, ENGINE, GEARBOX, SEATS, AIRCO,
+				WHEELS };
 	}
 
 	@Override

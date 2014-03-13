@@ -30,6 +30,9 @@ public class AssemblyLine {
 	 * 		null if no car was finished
 	 */
 	public CarOrder advance(CarOrder order) {
+		if(!isReadyToAdvance()) {
+			throw new IllegalStateException("Cannot advance assembly line");
+		}
 		CarInProduction next = new CarInProduction(new Car(), order);
 		for (int i = 0; i < workStations.length; i++) {
 			CarInProduction temp = workStations[i].getCurrentJob();
@@ -44,7 +47,7 @@ public class AssemblyLine {
 	 */
 	public boolean isReadyToAdvance() {
 		for (int i = 0; i < workStations.length; i++) {
-			if(!workStations[i].isReady()) {
+			if(workStations[i] != null && !workStations[i].isReady()) {
 				return false;
 			}
 		}
