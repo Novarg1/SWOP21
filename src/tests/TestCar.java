@@ -13,7 +13,7 @@ public class TestCar {
 
 	Car car;
 	CarModel model;
-	CarSpecification spec;
+	CarModelSpecification spec;
 	CarOrder order;
 
 	@Before
@@ -22,46 +22,46 @@ public class TestCar {
 		model = new CarModel("testModel") {
 
 			@Override
-			public CarBody[] getPossibleBodies() {
-				return new CarBody[] { CarBody.BODY_BREAK };
+			public CarPartBody[] getPossibleBodies() {
+				return new CarPartBody[] { CarPartBody.BODY_BREAK };
 			}
 
 			@Override
-			public CarAirco[] getPossibleAircos() {
-				return new CarAirco[] { CarAirco.CLIMATE_CONTROL };
+			public CarPartAirco[] getPossibleAircos() {
+				return new CarPartAirco[] { CarPartAirco.CLIMATE_CONTROL };
 			}
 
 			@Override
-			public CarColor[] getPossibleColors() {
-				return new CarColor[] { CarColor.BLACK, CarColor.BLUE };
+			public CarPartColor[] getPossibleColors() {
+				return new CarPartColor[] { CarPartColor.BLACK, CarPartColor.BLUE };
 			}
 
 			@Override
-			public CarEngine[] getPossibleEngines() {
-				return new CarEngine[] { CarEngine.PERFORMANCE };
+			public CarPartEngine[] getPossibleEngines() {
+				return new CarPartEngine[] { CarPartEngine.PERFORMANCE };
 			}
 
 			@Override
-			public CarGearbox[] getPossibleGearboxes() {
-				return new CarGearbox[] { CarGearbox.AUTOMATIC };
+			public CarPartGearbox[] getPossibleGearboxes() {
+				return new CarPartGearbox[] { CarPartGearbox.AUTOMATIC };
 			}
 
 			@Override
-			public CarSeats[] getPossibleSeats() {
-				return new CarSeats[] { CarSeats.LEATHER_BLACK,
-						CarSeats.VINYL_GREY };
+			public CarPartSeats[] getPossibleSeats() {
+				return new CarPartSeats[] { CarPartSeats.LEATHER_BLACK,
+						CarPartSeats.VINYL_GREY };
 			}
 
 			@Override
-			public CarWheels[] getPossibleWheels() {
-				return new CarWheels[] { CarWheels.COMFORT };
+			public CarPartWheels[] getPossibleWheels() {
+				return new CarPartWheels[] { CarPartWheels.COMFORT };
 			}
 
 		};
-		spec = new CarSpecification(model, CarBody.BODY_BREAK, CarColor.BLACK,
-				CarEngine.PERFORMANCE, CarGearbox.AUTOMATIC,
-				CarSeats.LEATHER_BLACK, CarAirco.CLIMATE_CONTROL,
-				CarWheels.COMFORT);
+		spec = new CarModelSpecification(model, CarPartBody.BODY_BREAK, CarPartColor.BLACK,
+				CarPartEngine.PERFORMANCE, CarPartGearbox.AUTOMATIC,
+				CarPartSeats.LEATHER_BLACK, CarPartAirco.CLIMATE_CONTROL,
+				CarPartWheels.COMFORT);
 		order = new CarOrder(new GarageHolder("",""), spec);
 	}
 
@@ -74,10 +74,10 @@ public class TestCar {
 	public void testModel2() {
 		boolean rejected = false;
 		try {
-			new CarSpecification(model, CarBody.BODY_BREAK, CarColor.BLACK,
-					CarEngine.PERFORMANCE, CarGearbox.AUTOMATIC,
-					CarSeats.LEATHER_WHITE, CarAirco.CLIMATE_CONTROL,
-					CarWheels.COMFORT);
+			new CarModelSpecification(model, CarPartBody.BODY_BREAK, CarPartColor.BLACK,
+					CarPartEngine.PERFORMANCE, CarPartGearbox.AUTOMATIC,
+					CarPartSeats.LEATHER_WHITE, CarPartAirco.CLIMATE_CONTROL,
+					CarPartWheels.COMFORT);
 		} catch(IllegalArgumentException e) {
 			rejected = true;
 		}
@@ -86,7 +86,7 @@ public class TestCar {
 
 	@Test
 	public void testSpecification() {
-		assertEquals(spec.get(CarWheels.class), CarWheels.COMFORT);
+		assertEquals(spec.get(CarPartWheels.class), CarPartWheels.COMFORT);
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class TestCar {
 		assertTrue(car.hasPart(spec.GEARBOX));
 		assertTrue(car.hasPart(spec.SEATS));
 		assertTrue(car.hasPart(spec.WHEELS));
-		assertFalse(car.hasPart(CarWheels.SPORTS));
+		assertFalse(car.hasPart(CarPartWheels.SPORTS));
 	}
 	
 	@Test

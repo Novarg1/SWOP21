@@ -9,18 +9,18 @@ import org.junit.Test;
 
 import system.user.GarageHolder;
 import car.Car;
-import car.CarAirco;
-import car.CarBody;
-import car.CarColor;
-import car.CarEngine;
-import car.CarGearbox;
+import car.CarPartAirco;
+import car.CarPartBody;
+import car.CarPartColor;
+import car.CarPartEngine;
+import car.CarPartGearbox;
 import car.CarInProduction;
 import car.CarModel;
 import car.CarOrder;
 import car.CarPart;
-import car.CarSeats;
-import car.CarSpecification;
-import car.CarWheels;
+import car.CarPartSeats;
+import car.CarModelSpecification;
+import car.CarPartWheels;
 import car.StandardModel;
 import company.AssemblyLine;
 import company.Company;
@@ -35,10 +35,10 @@ public class TestAssemblyLine {
 	public void initialize() {
 		company = new Company();
 		Car car = new Car();
-		CarSpecification spec = new CarSpecification(new StandardModel(), CarBody.BODY_BREAK, CarColor.BLACK,
-				CarEngine.PERFORMANCE, CarGearbox.AUTOMATIC,
-				CarSeats.LEATHER_BLACK, CarAirco.CLIMATE_CONTROL,
-				CarWheels.COMFORT);
+		CarModelSpecification spec = new CarModelSpecification(new StandardModel(), CarPartBody.BODY_BREAK, CarPartColor.BLACK,
+				CarPartEngine.PERFORMANCE, CarPartGearbox.AUTOMATIC,
+				CarPartSeats.LEATHER_BLACK, CarPartAirco.CLIMATE_CONTROL,
+				CarPartWheels.COMFORT);
 		CarOrder order = new CarOrder(new GarageHolder("",""), spec);
 		job = new CarInProduction(car,order);
 	}

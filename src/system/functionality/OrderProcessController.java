@@ -1,16 +1,16 @@
 package system.functionality;
 
 import company.Company;
-import car.CarAirco;
-import car.CarBody;
-import car.CarColor;
-import car.CarEngine;
-import car.CarGearbox;
+import car.CarPartAirco;
+import car.CarPartBody;
+import car.CarPartColor;
+import car.CarPartEngine;
+import car.CarPartGearbox;
 import car.CarModel;
 import car.CarOrder;
-import car.CarSeats;
-import car.CarSpecification;
-import car.CarWheels;
+import car.CarPartSeats;
+import car.CarModelSpecification;
+import car.CarPartWheels;
 import car.StandardModel;
 import system.user.User;
 import system.userinterface.UserInterface;
@@ -22,17 +22,17 @@ public class OrderProcessController implements FunctionalityController
 	public boolean provideFunctionality(UserInterface userInterface, User user, Company company) 
 	{
 		CarModel model = this.askForModel(userInterface);
-		CarBody body = this.askForBody(userInterface);
-		CarColor color = this.askForColor(userInterface);
-		CarEngine engine = this.askForEngine(userInterface);
-		CarGearbox gearbox = this.askForGearbox(userInterface);
-		CarSeats seats = this.askForSeats(userInterface);
-		CarAirco airco = this.askForAirco(userInterface);
-		CarWheels wheels = this.askForWheels(userInterface);
+		CarPartBody body = this.askForBody(userInterface);
+		CarPartColor color = this.askForColor(userInterface);
+		CarPartEngine engine = this.askForEngine(userInterface);
+		CarPartGearbox gearbox = this.askForGearbox(userInterface);
+		CarPartSeats seats = this.askForSeats(userInterface);
+		CarPartAirco airco = this.askForAirco(userInterface);
+		CarPartWheels wheels = this.askForWheels(userInterface);
 
 		try 
 		{
-			CarSpecification spec = new CarSpecification(model, body, color, engine, gearbox, seats, airco, wheels);
+			CarModelSpecification spec = new CarModelSpecification(model, body, color, engine, gearbox, seats, airco, wheels);
 			String input = userInterface.displayStringWithInput("You selected a car with options:\n" + spec + "\nDo you want to order this car?");
 			if(input.startsWith("y"))
 			{
@@ -66,12 +66,12 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user what wheels he wants to order
 	 * @return the requested CarWheels
 	 */
-	private CarWheels askForWheels(UserInterface userInterface)
+	private CarPartWheels askForWheels(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What type of wheels do you want?\n(1) comfort\n(2) sport");
 
-		if(input.equals("1"))return CarWheels.COMFORT;
-		if(input.equals("2"))return CarWheels.SPORTS;
+		if(input.equals("1"))return CarPartWheels.COMFORT;
+		if(input.equals("2"))return CarPartWheels.SPORTS;
 
 		throw new IllegalArgumentException();
 	}
@@ -80,12 +80,12 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user what airoc he wants to order
 	 * @return the requested CarAirco
 	 */
-	private CarAirco askForAirco(UserInterface userInterface)
+	private CarPartAirco askForAirco(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What type of airco do you want?\n(1) manual\n(2) climate control");
 
-		if(input.equals("1"))return CarAirco.MANUAL;
-		if(input.equals("2"))return CarAirco.CLIMATE_CONTROL;
+		if(input.equals("1"))return CarPartAirco.MANUAL;
+		if(input.equals("2"))return CarPartAirco.CLIMATE_CONTROL;
 
 		throw new IllegalArgumentException();
 	}
@@ -94,13 +94,13 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user what seats he wants to order
 	 * @return the requested CarSeats
 	 */
-	private CarSeats askForSeats(UserInterface userInterface)
+	private CarPartSeats askForSeats(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What type of seats do you desire?\n(1) vynil grey\n(2) black leather\n(3) white leather");
 
-		if(input.equals("1"))return CarSeats.VINYL_GREY;
-		if(input.equals("2"))return CarSeats.LEATHER_BLACK;
-		if(input.equals("3"))return CarSeats.LEATHER_WHITE;
+		if(input.equals("1"))return CarPartSeats.VINYL_GREY;
+		if(input.equals("2"))return CarPartSeats.LEATHER_BLACK;
+		if(input.equals("3"))return CarPartSeats.LEATHER_WHITE;
 
 		throw new IllegalArgumentException();
 	}
@@ -109,12 +109,12 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user what gearbox he wants to order
 	 * @return the requested CarGearbox		 
 	 */
-	private CarGearbox askForGearbox(UserInterface userInterface)
+	private CarPartGearbox askForGearbox(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What type of gearbox do you want?\n(1) manual\n(2) automatic");
 
-		if(input.equals("1"))return CarGearbox.MANUAL;
-		if(input.equals("2"))return CarGearbox.AUTOMATIC;
+		if(input.equals("1"))return CarPartGearbox.MANUAL;
+		if(input.equals("2"))return CarPartGearbox.AUTOMATIC;
 
 		throw new IllegalArgumentException();
 	}
@@ -123,12 +123,12 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user which engine he wants to order
 	 * @return the requested CarEngine
 	 */
-	private CarEngine askForEngine(UserInterface userInterface)
+	private CarPartEngine askForEngine(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What type of engine do you desire?\n(1) standard\n(2) performance");
 
-		if(input.equals("1"))return CarEngine.STANDARD;
-		if(input.equals("2"))return CarEngine.PERFORMANCE;
+		if(input.equals("1"))return CarPartEngine.STANDARD;
+		if(input.equals("2"))return CarPartEngine.PERFORMANCE;
 
 		throw new IllegalArgumentException();
 	}
@@ -137,14 +137,14 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user what color he wants to order
 	 * @return the requested CarColor
 	 */
-	private CarColor askForColor(UserInterface userInterface)
+	private CarPartColor askForColor(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What color did you want?\n(1) red\n(2) blue\n(3) black\n(4) white");
 
-		if(input.equals("1"))return CarColor.RED;
-		if(input.equals("2"))return CarColor.BLUE;
-		if(input.equals("3"))return CarColor.BLACK;
-		if(input.equals("4"))return CarColor.WHITE;
+		if(input.equals("1"))return CarPartColor.RED;
+		if(input.equals("2"))return CarPartColor.BLUE;
+		if(input.equals("3"))return CarPartColor.BLACK;
+		if(input.equals("4"))return CarPartColor.WHITE;
 
 		throw new IllegalArgumentException();
 	}
@@ -153,21 +153,21 @@ public class OrderProcessController implements FunctionalityController
 	 * asks the user which body he wants to order
 	 * @return the requested CarBody
 	 */
-	private CarBody askForBody(UserInterface userInterface)
+	private CarPartBody askForBody(UserInterface userInterface)
 	{
 		String input = userInterface.displayStringWithInput("What type of body did you want?\n(1) sedan\n(2) break");
 
-		CarBody b;
+		CarPartBody b;
 
 		if(input.equals("1"))
 		{
-			b = CarBody.BODY_SEDAN;
+			b = CarPartBody.BODY_SEDAN;
 		}
 		else
 		{
 			if(input.equals("2"))
 			{
-				b = CarBody.BODY_BREAK;
+				b = CarPartBody.BODY_BREAK;
 			}
 			else
 			{

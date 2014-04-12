@@ -9,11 +9,16 @@ import util.TimeStamp;
 public class CarOrder {
 
 	public final User CLIENT;
-	public final CarSpecification SPECIFICATION;
+	public final CarModelSpecification SPECIFICATION;
 	private TimeStamp completionTime;
 	private boolean finished = false;
 
-	public CarOrder(User client, CarSpecification specification) {
+	public CarOrder(User client, CarModelSpecification specification) {
+		if(specification == null ||
+				specification.isValid(false))
+		{
+			throw new IllegalArgumentException();
+		}
 		CLIENT = client;
 		SPECIFICATION = specification;
 	}

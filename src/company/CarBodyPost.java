@@ -1,7 +1,7 @@
 package company;
 
-import car.CarBody;
-import car.CarColor;
+import car.CarPartBody;
+import car.CarPartColor;
 
 /**
  * Represents the workpost that is responsible for the carbody
@@ -9,8 +9,8 @@ import car.CarColor;
 public class CarBodyPost extends WorkStation {
 
 	private static final Class<?>[] installableParts = new Class[] {
-		CarBody.class,
-		CarColor.class
+		CarPartBody.class,
+		CarPartColor.class
 	};
 
 	public CarBodyPost() {

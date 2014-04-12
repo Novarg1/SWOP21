@@ -1,7 +1,7 @@
 package company;
 
-import car.CarEngine;
-import car.CarGearbox;
+import car.CarPartEngine;
+import car.CarPartGearbox;
 
 /**
  * Represents the workpost that is responsible for installing engine and gearbox
@@ -9,7 +9,7 @@ import car.CarGearbox;
 public class DriveTrainPost extends WorkStation {
 
 	private static final Class<?>[] installableParts = new Class[] {
-			CarEngine.class, CarGearbox.class };
+			CarPartEngine.class, CarPartGearbox.class };
 
 	public DriveTrainPost() {
 		super(installableParts);

@@ -1,8 +1,8 @@
 package company;
 
-import car.CarAirco;
-import car.CarSeats;
-import car.CarWheels;
+import car.CarPartAirco;
+import car.CarPartSeats;
+import car.CarPartWheels;
 
 /**
  * Represents the workpost that is responsible for installing accesoires
@@ -10,9 +10,9 @@ import car.CarWheels;
 public class AccesoiresPost extends WorkStation {
 
 	private static final Class<?>[] installableParts = new Class[] {
-		CarSeats.class,
-		CarAirco.class,
-		CarWheels.class
+		CarPartSeats.class,
+		CarPartAirco.class,
+		CarPartWheels.class
 	};
 
 	public AccesoiresPost() {

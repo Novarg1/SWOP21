@@ -2,14 +2,14 @@ package tests;
 
 import org.junit.Test;
 
-import car.CarAirco;
-import car.CarBody;
-import car.CarColor;
-import car.CarEngine;
-import car.CarGearbox;
-import car.CarSeats;
-import car.CarSpecification;
-import car.CarWheels;
+import car.CarPartAirco;
+import car.CarPartBody;
+import car.CarPartColor;
+import car.CarPartEngine;
+import car.CarPartGearbox;
+import car.CarPartSeats;
+import car.CarModelSpecification;
+import car.CarPartWheels;
 import car.StandardModel;
 import system.SystemController;
 import system.user.GarageHolder;
@@ -60,9 +60,9 @@ public class TestUseCaseGarageHolder
 		
 		// if everything worked allright then a new car should have been added
 		// to the schedule
-		CarSpecification spec = new CarSpecification(new StandardModel(), CarBody.BODY_SEDAN, CarColor.RED,
-												CarEngine.PERFORMANCE, CarGearbox.AUTOMATIC, CarSeats.VINYL_GREY, 
-												CarAirco.CLIMATE_CONTROL, CarWheels.SPORTS);
+		CarModelSpecification spec = new CarModelSpecification(new StandardModel(), CarPartBody.BODY_SEDAN, CarPartColor.RED,
+												CarPartEngine.PERFORMANCE, CarPartGearbox.AUTOMATIC, CarPartSeats.VINYL_GREY, 
+												CarPartAirco.CLIMATE_CONTROL, CarPartWheels.SPORTS);
 		User user = new GarageHolder("user2", " ");
 		assert(c.getCompany().getPendingOrders(user).get(0).toString().equals(spec.toString()));
 	}
