@@ -2,7 +2,7 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartAirco
+public enum CarPartAirco implements CarPart
 {
 	MANUAL,
 	CLIMATE_CONTROL;
@@ -32,4 +32,11 @@ public enum CarPartAirco
 	}
 	
 	private boolean installed=false;
+
+	@Override
+	public void install() {
+		// TODO Auto-generated method stub
+		this.installed = true;
+		
+	}
 }

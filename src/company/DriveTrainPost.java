@@ -13,6 +13,7 @@ public class DriveTrainPost extends WorkStation {
 
 	public DriveTrainPost() {
 		super(installableParts);
+		this.id = "DRIVETRAIN";
 	}
 
 }

@@ -1,11 +1,15 @@
 package company;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import util.TimeStamp;
+import car.CarModelSpecification;
 import car.CarOrder;
+import car.CarPart;
 
 /**
  * A schedule holds a list of all pending orders and is responsible for
@@ -78,6 +82,15 @@ public class Schedule {
 
 		updateCompletionTimes();
 		return result;
+	}
+	
+	private CarOrder prepareNextOrder()
+	{
+		CarOrder order = schedule.pop();
+		CarModelSpecification spec = order.SPECIFICATION;
+		Map<String, LinkedList<CarPart>> buildingSchedule = new HashMap<String, LinkedList<CarPart>>();
+		buildingSchedule.put(", value)
+		return order;
 	}
 
 	/**

@@ -26,7 +26,7 @@ public class Company {
 		assemblyLine = new AssemblyLine(new WorkStation[] {
 				new CarBodyPost(),
 				new DriveTrainPost(),
-				new AccesoiresPost()
+				new AccessoiresPost()
 		});
 		carModels = new ArrayList<CarModel>();
 		carModels.add(new StandardModel());

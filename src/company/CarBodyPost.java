@@ -15,6 +15,7 @@ public class CarBodyPost extends WorkStation {
 
 	public CarBodyPost() {
 		super(installableParts);
+		this.id = "CARBODY";
 	}
 
 }

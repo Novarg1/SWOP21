@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import car.CarInProduction;
+import car.CarOrder;
 import car.CarPart;
 
 /**
@@ -13,9 +13,10 @@ import car.CarPart;
  */
 public abstract class WorkStation {
 
-	private CarInProduction current = null;
+	private CarOrder current = null;
 	private boolean ready = true;
 	protected final Class<?>[] installableParts;
+	protected String id;
 
 	protected WorkStation(Class<?>[] installableParts) {
 		this.installableParts = installableParts;
@@ -26,7 +27,7 @@ public abstract class WorkStation {
 	 * 
 	 * @param current
 	 */
-	public void setCurrentJob(CarInProduction current) {
+	public void setCurrentJob(CarOrder current) {
 		this.current = current;
 		ready = (current == null);
 	}
@@ -34,7 +35,7 @@ public abstract class WorkStation {
 	/**
 	 * @return the current job of this workstation
 	 */
-	public CarInProduction getCurrentJob() {
+	public CarOrder getCurrentJob() {
 		return current;
 	}
 
@@ -52,11 +53,11 @@ public abstract class WorkStation {
 	 * @param part
 	 */
 	public void install(CarPart part) {
-		if (!this.canInstall(part)) {
+	/*	if (!this.canInstall(part)) {
 			throw new IllegalArgumentException();
 		}
 		current.CAR.install(part);
-		ready = getPendingTasks().isEmpty();
+		ready = getPendingTasks().isEmpty();*/
 	}
 
 	/**
@@ -65,7 +66,8 @@ public abstract class WorkStation {
 	 *         part
 	 */
 	public boolean isInstalled(CarPart part) {
-		return current.CAR.hasPart(part);
+		//return current.CAR.hasPart(part);
+		return false;
 	}
 
 	/**
@@ -73,7 +75,7 @@ public abstract class WorkStation {
 	 *         job
 	 */
 	public List<CarPart> getPendingTasks() {
-		if (current == null) {
+	/*	if (current == null) {
 			return Collections.emptyList();
 		}
 		List<CarPart> list = new ArrayList<CarPart>(5);
@@ -83,7 +85,8 @@ public abstract class WorkStation {
 				list.add(part);
 			}
 		}
-		return list;
+		return list;*/
+		return null;
 	}
 
 	/**

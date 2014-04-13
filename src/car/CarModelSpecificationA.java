@@ -46,5 +46,10 @@ public class CarModelSpecificationA extends CarModelSpecification
 		toret.setAirco(airco);
 		return toret;
 	}
+	
+	public int getBuildingTimePerWorkstation()
+	{
+		return 50;
+	}
 
 }

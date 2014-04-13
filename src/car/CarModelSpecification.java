@@ -517,6 +517,11 @@ public abstract class CarModelSpecification
 			return false;
 		}
 	}
+	
+	public int getBuildingTimePerWorkstation()
+	{
+		return 50;
+	}
 
 	/**
 	 * returns a string representation for this object

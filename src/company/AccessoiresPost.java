@@ -7,7 +7,7 @@ import car.CarPartWheels;
 /**
  * Represents the workpost that is responsible for installing accesoires
  */
-public class AccesoiresPost extends WorkStation {
+public class AccessoiresPost extends WorkStation {
 
 	private static final Class<?>[] installableParts = new Class[] {
 		CarPartSeats.class,
@@ -15,8 +15,9 @@ public class AccesoiresPost extends WorkStation {
 		CarPartWheels.class
 	};
 
-	public AccesoiresPost() {
+	public AccessoiresPost() {
 		super(installableParts);
+		this.id = "ACCESSOIRES";
 	}
 
 }
