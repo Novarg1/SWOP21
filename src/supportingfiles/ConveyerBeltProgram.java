@@ -1,5 +1,8 @@
 package supportingfiles;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import system.SystemController;
 import system.user.UserController;
 import system.userinterface.UserInterface;
@@ -10,36 +13,63 @@ public class ConveyerBeltProgram {
 
 	public static void main(String[] args) 
 	{
-		// change this to testing to use the use case tester interface
-		boolean demo = false;
+		SystemController s = new SystemController();
+
+		boolean running = true;
 		
-		UserInterface ui = (demo == true? new UserInterfaceDemo():
-								 new UserInterfaceTerminal());
+		while(running)
+		{
+			System.out.println("Select the user you want to login:"
+					+ "\n(1) Manager\n(2) Garage Holder \n(3) Mechanic\n(4) Custom Shop Owner");
+			
+			int user = Integer.parseInt(readLine());
+			
+			switch(user)
+			{
+			case 1: s.logInUser(0);
+					break;
+			case 2: s.logInUser(1);
+					presentGarageHolderMenu();
+					break;
+			case 3: s.logInUser(2);
+					break;
+			case 4: s.logInUser(3);
+					break;
+					
+			default:System.out.println("User not known");
+					break;
+			}
+			
+			System.out.println("Do you wish to quit?");
+			if(!readLine().startsWith("y"))
+				running = false;
+		}
+	}
+	
+	public static void presentGarageHolderMenu()
+	{
+		// print history overview
 		
-		// initialize the controller
-		SystemController c = new SystemController(ui);
+		// show option menu
+		// 1. order car
+		// 2. view order details
+		// 3. exit
 		
-		// display a welcome message
-		c.displayWelcomeMessage();
-		
-		// main program loop as long as correct user/pwd combinations are given
-		// c.displayLogin will provide a user and the user object will provide
-		// the functionality for his usertype
-		UserController u = null;
+		// process choice
+	}
+	
+	public static String readLine()
+	{		
+		InputStreamReader sr =new InputStreamReader(System.in);
+		BufferedReader br=new BufferedReader(sr);
+
+		String input = "";
+
 		try
 		{
-			while((u = c.displayLogin()) != null)
-			{
-				// provide an overview of all functionalities this usertype can use
-				u.provideUI(ui);
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		// cleaning up, notifying the user
-		c.displayGoodByeMessage();
+			input = br.readLine();
+		}catch(Exception e){}
+
+		return input;
 	}
 }
