@@ -2,6 +2,7 @@ package company;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import car.CarOrder;
@@ -15,11 +16,9 @@ public abstract class WorkStation {
 
 	private CarOrder current = null;
 	private boolean ready = true;
-	protected final Class<?>[] installableParts;
 	protected String id;
 
-	protected WorkStation(Class<?>[] installableParts) {
-		this.installableParts = installableParts;
+	protected WorkStation() {
 	}
 
 	/**
@@ -43,64 +42,27 @@ public abstract class WorkStation {
 	 * @return true if all tasks are completed for the current job in this
 	 *         workstation
 	 */
-	public boolean isReady() {
-		return ready;
+	public boolean isReady() 
+	{
+		return (this.getPendingTasks().size() == 0);
 	}
 
-	/**
-	 * Installs the given part to the car currently in this workstation
-	 * 
-	 * @param part
-	 */
-	public void install(CarPart part) {
-	/*	if (!this.canInstall(part)) {
-			throw new IllegalArgumentException();
-		}
-		current.CAR.install(part);
-		ready = getPendingTasks().isEmpty();*/
-	}
-
-	/**
-	 * @param part
-	 * @return true if the car currently in this workstation contains the given
-	 *         part
-	 */
-	public boolean isInstalled(CarPart part) {
-		//return current.CAR.hasPart(part);
-		return false;
-	}
 
 	/**
 	 * @return a list of tasks that still need to be completed for the current
 	 *         job
 	 */
-	public List<CarPart> getPendingTasks() {
-	/*	if (current == null) {
-			return Collections.emptyList();
-		}
-		List<CarPart> list = new ArrayList<CarPart>(5);
-		for (Class<?> partClass : installableParts) {
-			CarPart part = current.ORDER.SPECIFICATION.get(partClass);
-			if (!isInstalled(part)) {
-				list.add(part);
-			}
-		}
-		return list;*/
-		return null;
+	public LinkedList<CarPart> getPendingTasks() 
+	{
+		LinkedList<CarPart> list = new LinkedList<CarPart>();
+		for(CarPart p : current.getProductionSchemeFor(id))
+			if(p.isInstalled()==false)
+				list.add(p);
+		return list;
 	}
-
-	/**
-	 * @param part
-	 * @return true if this workstation is suited for installing the given part
-	 *         to a car
-	 */
-	private boolean canInstall(CarPart part) {
-		for (int i = 0; i < installableParts.length; i++) {
-			if (part.getClass() == installableParts[i]) {
-				return true;
-			}
-		}
-		return false;
+	
+	public String getId()
+	{
+		return this.id;
 	}
-
 }

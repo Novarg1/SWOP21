@@ -1,192 +1,126 @@
 package company;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
-import util.TimeStamp;
-import car.CarModelSpecification;
 import car.CarOrder;
 import car.CarPart;
 
-/**
- * A schedule holds a list of all pending orders and is responsible for
- * scheduling their production
- * 
- * @author Kenny
- * 
- */
-public class Schedule {
-
-	private static final int START_HOUR = 6;
-	private static final int END_HOUR = 22;
-	private static final int BUILD_TIME = 3 * 60;
-
-	private TimeStamp currentTime;
-	private TimeStamp endTime;
-	private LinkedList<CarOrder> schedule;
-	private CarOrder[] inAssembly;
-	private boolean dayHasEnded;
-
-	/**
-	 * Creates a new schedule with no pending orders and a currentTime of 0:6:0
-	 * (D:H:M)
-	 */
-	public Schedule() {
-		schedule = new LinkedList<CarOrder>();
-		currentTime = new TimeStamp(0, START_HOUR, 0);
-		endTime = new TimeStamp(0, END_HOUR, 0);
-		inAssembly = new CarOrder[3];
-		dayHasEnded = false;
-	}
-
-	/**
-	 * @param minutes
-	 *            time the last cycle took
-	 * @return next car to be assembled on assembly line; null if no next car is
-	 *         scheduled for the current day or if there are no new carorders
-	 */
-	public CarOrder next(int minutes) {
-		if (dayHasEnded) {
-			throw new IllegalArgumentException("proceed to next day first!");
-		}
-		if (minutes < 1 || minutes > 120) {
-			throw new IllegalArgumentException("invalid amount of minutes");
-		}
-		CarOrder result;
-		currentTime = currentTime.increase(minutes);
-		if (inAssembly[0] != null) {
-			inAssembly[0].setFinished(currentTime);
-		}
-		inAssembly[0] = inAssembly[1];
-		inAssembly[1] = inAssembly[2];
-
-		CarOrder next = schedule.peek();
-		TimeStamp completion = currentTime.increase(BUILD_TIME);
-
-		if (completion.compareTo(endTime) <= 0) {
-			inAssembly[2] = next;
-			result = next;
-			schedule.remove();
-		} else {
-			inAssembly[2] = null;
-			result = null;
-		}
-
-		if (assemblyIsEmpty()
-				&& !(currentTime.increase(BUILD_TIME).compareTo(endTime) <= 0)) {
-			dayHasEnded = true;
-		}
-
-		updateCompletionTimes();
-		return result;
+public class Schedule 
+{
+	private LinkedList<CarOrder> upcoming;
+	private LinkedList<Day> days;
+	
+	public Schedule()
+	{
+		this.upcoming = new LinkedList<CarOrder>();
+		this.days = new LinkedList<Day>();
+		this.days.push(new Day(1));
 	}
 	
-	private CarOrder prepareNextOrder()
+	public Day getCurrentDay()
 	{
-		CarOrder order = schedule.pop();
-		CarModelSpecification spec = order.SPECIFICATION;
-		Map<String, LinkedList<CarPart>> buildingSchedule = new HashMap<String, LinkedList<CarPart>>();
-		buildingSchedule.put(", value)
+		return this.days.peek();
+	}
+	
+	public void startNewDay()
+	{
+		this.days.push(this.days.peek().getNextDay());
+	}
+	
+	public void increaseDayTime(int time)
+	{
+		this.days.peek().increaseTime(time);
+	}
+	
+	private int getExpectedDayForNextOrder()
+	{
+		int dayNumber = getCurrentDay().getDay();
+		int dayCount = 0;
+		for(CarOrder o : upcoming)
+		{
+			if(o.getExpectedCompletionTime() != dayNumber)
+			{
+				dayCount = 1;
+				dayNumber = o.getExpectedCompletionTime();
+			}
+			else
+			{
+				++dayCount;
+			}
+		}
+		if(dayCount < 15)
+		{
+			return dayCount;
+		}
+		else
+		{
+			return dayCount + 1;
+		}
+	}
+	
+	public int placeOrder(CarOrder order)
+	{
+		order.setExpectedCompletionTime(getExpectedDayForNextOrder());
+		this.upcoming.add(order);
+		return order.getExpectedCompletionTime();
+	}
+	
+	private CarOrder getNextOrder()
+	{
+		return this.upcoming.pop();
+	}
+	
+	public LinkedList<CarOrder> getUpcomingOrders()
+	{
+		LinkedList<CarOrder> clone = new LinkedList<CarOrder>();
+		for(CarOrder o : upcoming)clone.add(o);
+		return clone;
+	}
+	
+	public int getExpectedWorkTimeForNextOrder(int numberOfWorkstations)
+	{
+		return this.upcoming.peek().SPECIFICATION.getBuildingTimePerWorkstation() * numberOfWorkstations;
+	}
+	
+	public boolean canNextOrderBeBuildToday(int numberOfWorkstations)
+	{
+		int additionalTime = this.getExpectedWorkTimeForNextOrder(numberOfWorkstations);
+		return !this.days.peek().shouldBeFinished(additionalTime);
+	}
+	
+	public CarOrder prepareNextOrder()
+	{
+		CarOrder order = this.getNextOrder();
+		Map<String, LinkedList<CarPart>> productionSchedule = new HashMap<String, LinkedList<CarPart>>();
+		
+		// preparing the schedule for the car body post
+		LinkedList<CarPart> CarBodyPost = new LinkedList<CarPart>();
+		CarBodyPost.add(order.SPECIFICATION.getBody());
+		CarBodyPost.add(order.SPECIFICATION.getColor());
+		
+		// preparing the schedule for the drive train post
+		LinkedList<CarPart> DriveTrainPost = new LinkedList<CarPart>();
+		DriveTrainPost.add(order.SPECIFICATION.getEngine());
+		DriveTrainPost.add(order.SPECIFICATION.getGearbox());
+		
+		// preparing the schedule for the accessoires post
+		LinkedList<CarPart> AccessoiresPost = new LinkedList<CarPart>();
+		AccessoiresPost.add(order.SPECIFICATION.getSeats());
+		if(order.SPECIFICATION.getAircoChosen())
+			AccessoiresPost.add(order.SPECIFICATION.getAirco());
+		AccessoiresPost.add(order.SPECIFICATION.getWheels());
+		if(order.SPECIFICATION.getSpoilerChosen())
+			AccessoiresPost.add(order.SPECIFICATION.getSpoiler());
+		
+		// creating the hashmap
+		productionSchedule.put("CARBODY", CarBodyPost);
+		productionSchedule.put("DRIVETRAIN", DriveTrainPost);
+		productionSchedule.put("ACCESSOIRES", AccessoiresPost);
+		
+		order.setProductionScheme(productionSchedule);
+		
 		return order;
-	}
-
-	/**
-	 * starts new day
-	 * 
-	 * @return The first carOrder for the new day or null if there are no
-	 *         carOrders
-	 */
-	public CarOrder newDay() {
-		if (!dayHasEnded) {
-			throw new IllegalArgumentException("Cannot advance to new day yet");
-		}
-		if (currentTime.DAY == endTime.DAY) {
-			currentTime = new TimeStamp(currentTime.DAY + 1, START_HOUR, 0);
-		} else {
-			currentTime = new TimeStamp(currentTime.DAY, START_HOUR, 0);
-		}
-		endTime = new TimeStamp(currentTime.DAY, END_HOUR, 0);
-		dayHasEnded = false;
-		updateCompletionTimes();
-		return schedule.poll();
-	}
-
-	/**
-	 * Adds the given order to this schedule's list
-	 * 
-	 * @param order
-	 */
-	public void addOrder(CarOrder order) {
-		TimeStamp completion;
-		if (schedule.isEmpty()) {
-			completion = currentTime.increase(BUILD_TIME);
-		} else {
-			completion = schedule.getLast().getCompletionTime().increase(60);
-		}
-		if (completion.HOUR > END_HOUR) {
-			completion = new TimeStamp(completion.DAY + 1, START_HOUR
-					+ BUILD_TIME, 0);
-		}
-		order.setCompletionTime(completion);
-		schedule.add(order);
-	}
-
-	/**
-	 * @return true if no more work has to be done the current day
-	 */
-	public boolean dayHasEnded() {
-		return dayHasEnded;
-	}
-
-	/**
-	 * @return a list containing all pending orders
-	 */
-	public List<CarOrder> getPendingOrders() {
-		List<CarOrder> list = new ArrayList<CarOrder>();
-		for (CarOrder order : inAssembly) {
-			if (order != null) {
-				list.add(order);
-			}
-		}
-		list.addAll(schedule);
-		return list;
-	}
-
-	/**
-	 * Estimates and sets all completion times of pending orders
-	 */
-	private void updateCompletionTimes() {
-		for (int i = 0; i < inAssembly.length; i++) {
-			if (inAssembly[i] != null) {
-				inAssembly[i].setCompletionTime(currentTime
-						.increase((i + 1) * 60));
-			}
-		}
-
-		TimeStamp prev = currentTime.increase(BUILD_TIME);
-		for (CarOrder order : schedule) {
-			TimeStamp next = prev.increase(60);
-			if (next.HOUR > END_HOUR) {
-				next = new TimeStamp(next.DAY + 1, START_HOUR + BUILD_TIME, 0);
-			}
-			order.setCompletionTime(next);
-			prev = next;
-		}
-	}
-
-	/**
-	 * @return true if there are currently no cars in production on the
-	 *         assemblyLine
-	 */
-	private boolean assemblyIsEmpty() {
-		for (CarOrder order : inAssembly) {
-			if (order != null) {
-				return false;
-			}
-		}
-		return true;
 	}
 }

@@ -65,4 +65,12 @@ public class AssemblyLine {
 	public WorkStation[] getWorkstations() {
 		return workStations;
 	}
+	
+	public boolean isEmpty()
+	{
+		for(WorkStation w : workStations)
+			if(w.getCurrentJob() != null)
+				return false;
+		return true;
+	}
 }

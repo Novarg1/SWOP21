@@ -1,9 +1,16 @@
 package system;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
+import car.CarOrder;
+import car.CarPart;
+import company.AssemblyLine;
+import company.CMCSystem;
 import company.Company;
+import company.Schedule;
+import company.WorkStation;
 import system.user.GarageHolder;
 import system.user.Manager;
 import system.user.Mechanic;
@@ -13,67 +20,84 @@ import system.userinterface.UserInterface;
 
 /** System Controller
  * 
- * Manages everything while no user is logged in, also keeps the ui, the userdb and the
- * company alive.
  */
 
-public class SystemController {
-
-	protected Set<User> users;
-	protected UserInterface userInterface;
-	protected Company company;
-
-	public SystemController(UserInterface userInterface)
+public class SystemController 
+{	
+	private CMCSystem cmcSytem;
+	
+	public SystemController()
 	{
-		this.userInterface = userInterface;
-		this.company = new Company();
-		users = new HashSet<User>();
-		users.add(new Manager("user1"," "));
-		users.add(new GarageHolder("user2"," "));
-		users.add(new Mechanic("user3"," "));
+		this.cmcSytem = new CMCSystem();
 	}
 
-	public void displayWelcomeMessage()
+	public String getLoggedInUser()
 	{
-		userInterface.displayString("Welcome to 'Conveyer Belt'");
+		return cmcSytem.getLoggedInUser();
 	}
-
-	public void displayGoodByeMessage()
+	
+	public void logInUser(int n)
 	{
-		userInterface.displayString("\nClosing up, good bye.");
+		cmcSytem.logInUser(n);
 	}
-
-	/**  
-	 * shows a login interface
-	 * @return a controller dedicated to the usertype
-	 */
-	public UserController displayLogin() {
-		User user = null;
-		
-		String userName = userInterface.displayStringWithInput("please enter your username: ");
-		String pwd = userInterface.displayStringWithInput("please enter your password: ");
-		user = getUser(userName, pwd);
-		
-		if(user == null)return null;
-
-		return user.getController(this.company);
+	
+	public void advanceAssemblyLine(int time)
+	{
+		try {
+			cmcSytem.advance(time);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	/**
-	 * @return user with given username and password;
-	 * 		null if no such user exists
-	 */
-	private User getUser(String userName, String pwd) {
-		for(User user : users) {
-			if(user.USERNAME.equals(userName) && user.PASSWORD.equals(pwd)) {
-				return user;
-			}
+	
+	public void startNewDay()
+	{
+		Schedule s = cmcSytem.getSchedule();
+		s.startNewDay();
+	}
+	
+	public int placeOrder(CarOrder order)
+	{
+		Schedule s = cmcSytem.getSchedule();
+		return s.placeOrder(order);
+	}
+	
+	public boolean canAdvance()
+	{
+		AssemblyLine a = cmcSytem.getAssemblyLine();
+		return a.isReadyToAdvance();
+	}
+	
+	public LinkedList<CarOrder> getScheduledOrdersFor(String user)
+	{
+		return cmcSytem.getScheduledOrdersForUser(user);
+	}
+	
+	public LinkedList<CarOrder> getFinishedOrdersFor(String user)
+	{
+		return cmcSytem.getFinishedOrdersForUser(user);
+	}
+	
+	public LinkedList<CarPart> getWorkPostOverview(String id)
+	{
+		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
+		{
+			if(w.getId() == id)
+				return w.getPendingTasks();
 		}
 		return null;
 	}
 	
-	public Company getCompany()
+	public boolean isWorkPostFinished(String id)
 	{
-		return this.company;
+		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
+		{
+			if(w.getId() == id)
+				return w.isReady();
+		}
+		return false;
 	}
+	
+	
 }

@@ -12,7 +12,6 @@ public class DriveTrainPost extends WorkStation {
 			CarPartEngine.class, CarPartGearbox.class };
 
 	public DriveTrainPost() {
-		super(installableParts);
 		this.id = "DRIVETRAIN";
 	}
 

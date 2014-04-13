@@ -9,9 +9,13 @@ package car;
  */
 public interface CarPart {
 	
-	public void install();
+	public void install(int time);
 	
 	public String toString();
 	
 	public boolean isInstalled();
+	
+	public String getAssemblyInstructions();
+	
+	public int getTimeTaken();
 }

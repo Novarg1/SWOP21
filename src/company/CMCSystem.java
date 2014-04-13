@@ -6,14 +6,15 @@ import car.CarOrder;
 
 public class CMCSystem 
 {
-	private NSchedule schedule;
+	private Schedule schedule;
 	private AssemblyLine assemblyLine;
+	private UserManager userManager;
 	
 	private LinkedList<CarOrder> finishedOrders;
 	
 	public CMCSystem()
 	{
-		schedule = new NSchedule();
+		schedule = new Schedule();
 		
 		WorkStation[] workstations = new WorkStation[3];
 		workstations[0] = new CarBodyPost();
@@ -22,21 +23,36 @@ public class CMCSystem
 		assemblyLine = new AssemblyLine(workstations);
 		
 		finishedOrders = new LinkedList<CarOrder>();
+		
+		userManager = new UserManager();
 	}
 	
-	public void placeOrder(CarOrder order)
+	public LinkedList<CarOrder> getScheduledOrdersForUser(String user)
 	{
-		this.schedule.addOrder(order);
+		LinkedList<CarOrder> list = schedule.getUpcomingOrders();
+		for(CarOrder o : list)
+			if(o.CLIENT != user)
+				list.remove(o);
+		return list;
 	}
 	
-	public boolean canAdvance()
+	public LinkedList<CarOrder> getFinishedOrdersForUser(String user)
 	{
-		return this.assemblyLine.isReadyToAdvance();
+		LinkedList<CarOrder> list = new LinkedList<CarOrder>();
+		for(CarOrder o : finishedOrders)
+			if(o.CLIENT == user)
+				list.add(o);
+		return list;
 	}
 	
-	public void advanceAssemblyLine(int time) throws Exception
+	public AssemblyLine getAssemblyLine()
 	{
-		if(!this.canAdvance())
+		return this.assemblyLine;
+	}
+	
+	public void advance(int time) throws Exception
+	{
+		if(!this.assemblyLine.isReadyToAdvance())
 		{
 			throw new Exception();
 		}
@@ -55,12 +71,32 @@ public class CMCSystem
 		{
 			orderToPush = this.schedule.prepareNextOrder();
 		}
+		
 		CarOrder newlyFinished = this.assemblyLine.advance(orderToPush);
+		if(newlyFinished != null)
+			this.finishedOrders.add(newlyFinished);
+		
 		this.schedule.increaseDayTime(time);
+		
+		if(schedule.getCurrentDay().shouldBeFinished() &&
+				assemblyLine.isEmpty())
+		{
+			schedule.startNewDay();
+		}
 	}
 	
-	public void startNewDay()
+	public Schedule getSchedule()
 	{
-		this.schedule.startNewDay();
+		return this.schedule;
+	}
+	
+	public void logInUser(int n)
+	{
+		this.userManager.logInUser(n);
+	}
+	
+	public String getLoggedInUser()
+	{
+		return this.userManager.getLoggedInUser();
 	}
 }

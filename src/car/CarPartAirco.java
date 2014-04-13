@@ -32,11 +32,24 @@ public enum CarPartAirco implements CarPart
 	}
 	
 	private boolean installed=false;
+	private int time=0;
 
 	@Override
-	public void install() {
+	public void install(int time) {
 		// TODO Auto-generated method stub
 		this.installed = true;
-		
+		this.time = time;
+	}
+
+	@Override
+	public String getAssemblyInstructions() {
+		// TODO Auto-generated method stub
+		return "install the airco";
+	}
+
+	@Override
+	public int getTimeTaken() {
+		// TODO Auto-generated method stub
+		return time;
 	}
 }

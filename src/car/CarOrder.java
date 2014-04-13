@@ -3,6 +3,8 @@ package car;
 import java.util.LinkedList;
 import java.util.Map;
 
+import company.Day;
+
 import system.user.User;
 import util.TimeStamp;
 
@@ -11,13 +13,14 @@ import util.TimeStamp;
  */
 public class CarOrder {
 
-	public final User CLIENT;
+	public final String CLIENT;
 	public final CarModelSpecification SPECIFICATION;
-	private TimeStamp completionTime;
+	private Day completionTime;
+	private int expectedCompletionTime;
 	private boolean finished = false;
 	private Map<String, LinkedList<CarPart>> productionScheme = null;
 
-	public CarOrder(User client, CarModelSpecification specification) {
+	public CarOrder(String client, CarModelSpecification specification) {
 		if(specification == null ||
 				specification.isValid(false))
 		{
@@ -32,25 +35,35 @@ public class CarOrder {
 	 * 
 	 * @param time
 	 */
-	public void setCompletionTime(TimeStamp time) {
+	public void setCompletionTime(Day time) {
 		if (finished) {
 			throw new IllegalStateException("this order is already finished");
 		}
 		completionTime = time;
+	}
+	
+	public void setExpectedCompletionTime(int time)
+	{
+		expectedCompletionTime = time;
+	}
+	
+	public int getExpectedCompletionTime()
+	{
+		return expectedCompletionTime;
 	}
 
 	/**
 	 * @return estimated completion time, or actual completion time if this
 	 *         order is finished
 	 */
-	public TimeStamp getCompletionTime() {
+	public Day getCompletionTime() {
 		return completionTime;
 	}
 
 	/**
 	 * set this order to finished, with given actual completion time
 	 */
-	public void setFinished(TimeStamp time) {
+	private void setFinished(Day time) {
 		setCompletionTime(time);
 		finished = true;
 	}

@@ -16,7 +16,6 @@ public class AccessoiresPost extends WorkStation {
 	};
 
 	public AccessoiresPost() {
-		super(installableParts);
 		this.id = "ACCESSOIRES";
 	}
 
