@@ -84,10 +84,18 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		
 		CarOrder order = new CarOrder(user, spec);
 		
+		System.out.println("Are you sure you want to place this order:");
+		System.out.println(order);
+		
+		if(LineReader.readLine().toLowerCase().startsWith("n"))
+		{
+			System.out.println("Your order has been cancelled");
+			return;
+		}
+		
 		int expDelivery = systemController.placeOrder(order);
 		
-		System.out.println("You have ordered:");
-		System.out.println(order);
+		System.out.println("Your order has been placed");
 		System.out.println("We expect your order to be ready on: " + expDelivery);
 		
 		upcommingOrders = systemController.getScheduledOrdersFor(user);
