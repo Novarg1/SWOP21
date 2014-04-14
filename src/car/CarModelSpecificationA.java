@@ -7,6 +7,7 @@ public class CarModelSpecificationA extends CarModelSpecification
 	public CarModelSpecificationA()
 	{
 		this.addModelSpecificationRestriction(new CarModelSpecificationRestricitionSport(this));
+		this.type = "Model A";
 	}
 	
 	protected LinkedList<CarPartBody> bodyOptions() {

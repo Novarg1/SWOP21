@@ -1,4 +1,4 @@
-package system;
+package controllers;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,12 +10,6 @@ import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;
 import company.WorkStation;
-import system.user.GarageHolder;
-import system.user.Manager;
-import system.user.Mechanic;
-import system.user.User;
-import system.user.UserController;
-import system.userinterface.UserInterface;
 
 /** System Controller
  * 

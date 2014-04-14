@@ -52,11 +52,11 @@ public class Schedule
 		}
 		if(dayCount < 15)
 		{
-			return dayCount;
+			return dayNumber;
 		}
 		else
 		{
-			return dayCount + 1;
+			return dayNumber + 1;
 		}
 	}
 	

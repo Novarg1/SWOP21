@@ -23,6 +23,7 @@ public abstract class CarModelSpecification
 	protected CarPartAirco airco = null;
 	protected CarPartWheels wheels = null;
 	protected CarPartSpoiler spoiler = null;
+	protected String type = null;
 	
 	private CarModelSpecificationRestriction restriction = null;
 
@@ -437,6 +438,15 @@ public abstract class CarModelSpecification
 	protected LinkedList<CarPartSpoiler> spoilerOptions()
 	{
 		return CarPartSpoiler.options();
+	}
+	
+	/**
+	 * inspector for the type field
+	 * @return this.type
+	 */
+	public String getType()
+	{
+		return this.type;
 	}
 	
 	/**

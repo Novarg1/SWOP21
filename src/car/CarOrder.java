@@ -4,10 +4,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import company.Day;
-
-import system.user.User;
-import util.TimeStamp;
-
 /**
  * Represents an order for a car.
  */
@@ -22,7 +18,7 @@ public class CarOrder {
 
 	public CarOrder(String client, CarModelSpecification specification) {
 		if(specification == null ||
-				specification.isValid(false))
+				!specification.isValid(false))
 		{
 			throw new IllegalArgumentException();
 		}

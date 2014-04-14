@@ -11,7 +11,7 @@ public class UserManager
 	{
 		users = new LinkedList<String>();
 		users.add("Manager");
-		users.add("garageHolder");
+		users.add("GarageHolder");
 		users.add("Mechanic");
 		users.add("CustomShopController");
 	}
