@@ -6,17 +6,17 @@ package car;
  * @author jonathanlangens
  *
  */
-public abstract class CarModelSpecificationRestriction 
+public abstract class Restriction 
 {
-	protected CarModelSpecification spec;
-	protected CarModelSpecificationRestriction successor = null;
+	protected Model spec;
+	protected Restriction successor = null;
 	
 	/**
 	 * the constructor for a restriction and the specification to which it should
 	 * apply
 	 * @param specification
 	 */
-	public CarModelSpecificationRestriction(CarModelSpecification specification) throws IllegalArgumentException
+	public Restriction(Model specification) throws IllegalArgumentException
 	{
 		if(specification == null)
 			throw new IllegalArgumentException();
@@ -27,7 +27,7 @@ public abstract class CarModelSpecificationRestriction
 	 * adds the successor to the chain of restrictions
 	 * @param successor
 	 */
-	public void setSuccessor(CarModelSpecificationRestriction successor)
+	public void setSuccessor(Restriction successor)
 	{
 		if(this.successor == null)
 		{

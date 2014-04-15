@@ -1,6 +1,5 @@
 package company;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +14,10 @@ import car.CarPart;
 public abstract class WorkStation {
 
 	private CarOrder current = null;
-	private boolean ready = true;
-	protected String id;
+	private final String id;
 
-	protected WorkStation() {
+	protected WorkStation(String id) {
+		this.id = id;
 	}
 
 	/**
@@ -28,7 +27,6 @@ public abstract class WorkStation {
 	 */
 	public void setCurrentJob(CarOrder current) {
 		this.current = current;
-		ready = (current == null);
 	}
 
 	/**
@@ -42,21 +40,21 @@ public abstract class WorkStation {
 	 * @return true if all tasks are completed for the current job in this
 	 *         workstation
 	 */
-	public boolean isReady() 
-	{
-		return (this.getPendingTasks().size() == 0);
+	public boolean isReady() {
+		return (this.getPendingTasks().isEmpty());
 	}
-
 
 	/**
 	 * @return a list of tasks that still need to be completed for the current
 	 *         job
 	 */
-	public LinkedList<CarPart> getPendingTasks() 
-	{
+	public List<CarPart> getPendingTasks() {
+		if(current == null) {
+			return Collections.emptyList();
+		}
 		LinkedList<CarPart> list = new LinkedList<CarPart>();
 		for(CarPart p : current.getProductionSchemeFor(id))
-			if(p.isInstalled()==false)
+			if(!p.isInstalled())
 				list.add(p);
 		return list;
 	}

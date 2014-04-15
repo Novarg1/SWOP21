@@ -2,18 +2,18 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartGearbox implements CarPart
+public enum Body implements CarPart
 {
-	MANUAL5,
-	MANUAL6,
-	AUTOMATIC;
+	BODY_SEDAN,
+	BODY_BREAK,
+	BODY_SPORT;
 	
 	@Override
 	public String toString() {
 		switch(this) {
-		case MANUAL5: return "5 speed manual";
-		case MANUAL6: return "6 speed manual";
-		case AUTOMATIC: return "5 speed automatic";
+		case BODY_SEDAN: return "sedan";
+		case BODY_BREAK: return "break";
+		case BODY_SPORT: return "sport";
 		default: throw new IllegalArgumentException();
 		}
 	}
@@ -23,6 +23,7 @@ public enum CarPartGearbox implements CarPart
 		// TODO Auto-generated method stub
 		this.installed = true;
 		this.time = time;
+		
 	}
 
 	@Override
@@ -31,12 +32,12 @@ public enum CarPartGearbox implements CarPart
 		return installed;
 	}
 	
-	public static LinkedList<CarPartGearbox> options()
+	public static LinkedList<Body> options()
 	{
-		LinkedList<CarPartGearbox> toret = new LinkedList<CarPartGearbox>();
-		for(CarPartGearbox box : CarPartGearbox.values())
+		LinkedList<Body> toret = new LinkedList<Body>();
+		for(Body body : Body.values())
 		{
-			toret.add(box);
+			toret.add(body);
 		}
 		return toret;
 	}
@@ -47,12 +48,12 @@ public enum CarPartGearbox implements CarPart
 	@Override
 	public String getAssemblyInstructions() {
 		// TODO Auto-generated method stub
-		return "install the gearbox";
+		return "install the body";
 	}
 
 	@Override
 	public int getTimeTaken() {
 		// TODO Auto-generated method stub
-		return time;
+		return 0;
 	}
 }

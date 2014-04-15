@@ -2,18 +2,17 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartSeats implements CarPart
+public enum Spoiler implements CarPart
 {
-	LEATHER_BLACK,
-	LEATHER_WHITE,
-	VINYL_GREY;
+
+	HIGH,
+	LOW;
 	
 	@Override
 	public String toString() {
 		switch(this) {
-		case LEATHER_BLACK: return "black leather";
-		case LEATHER_WHITE: return "white leather";
-		case VINYL_GREY: return "grey vinyl";
+		case HIGH: return "high";
+		case LOW:return "low";
 		default: throw new IllegalArgumentException();
 		}
 	}
@@ -31,12 +30,12 @@ public enum CarPartSeats implements CarPart
 		return installed;
 	}
 	
-	public static LinkedList<CarPartSeats> options()
+	public static LinkedList<Spoiler> options()
 	{
-		LinkedList<CarPartSeats> toret = new LinkedList<CarPartSeats>();
-		for(CarPartSeats seat : CarPartSeats.values())
+		LinkedList<Spoiler> toret = new LinkedList<Spoiler>();
+		for(Spoiler spoiler : Spoiler.values())
 		{
-			toret.add(seat);
+			toret.add(spoiler);
 		}
 		return toret;
 	}
@@ -47,7 +46,7 @@ public enum CarPartSeats implements CarPart
 	@Override
 	public String getAssemblyInstructions() {
 		// TODO Auto-generated method stub
-		return "pick up the seats and insert them in the car";
+		return "bolt the spoiler on the car";
 	}
 
 	@Override

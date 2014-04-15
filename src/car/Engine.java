@@ -2,24 +2,18 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartColor implements CarPart
+public enum Engine implements CarPart
 {
-	RED,
-	BLUE,
-	BLACK,
-	WHITE,
-	GREEN,
-	YELLOW;
+	STANDARD,
+	PERFORMANCE,
+	ULTRA;
 	
 	@Override
 	public String toString() {
 		switch(this) {
-		case RED: return "red";
-		case BLUE: return "blue";
-		case BLACK: return "black";
-		case WHITE: return "white";
-		case GREEN: return "green";
-		case YELLOW: return "yellow";
+		case STANDARD: return "2.0l 4 cylinders";
+		case PERFORMANCE: return "2.5l V6";
+		case ULTRA:return "3.0l 8 cylinders";
 		default: throw new IllegalArgumentException();
 		}
 	}
@@ -37,12 +31,12 @@ public enum CarPartColor implements CarPart
 		return installed;
 	}
 	
-	public static LinkedList<CarPartColor> options()
+	public static LinkedList<Engine> options()
 	{
-		LinkedList<CarPartColor> toret = new LinkedList<CarPartColor>();
-		for(CarPartColor color : CarPartColor.values())
+		LinkedList<Engine> toret = new LinkedList<Engine>();
+		for(Engine engine : Engine.values())
 		{
-			toret.add(color);
+			toret.add(engine);
 		}
 		return toret;
 	}
@@ -53,7 +47,7 @@ public enum CarPartColor implements CarPart
 	@Override
 	public String getAssemblyInstructions() {
 		// TODO Auto-generated method stub
-		return "paint the car " + this;
+		return "place the engine in the car";
 	}
 
 	@Override

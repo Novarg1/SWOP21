@@ -2,16 +2,16 @@ package tests;
 
 import org.junit.Test;
 
-import car.CarModelSpecification;
-import car.CarModelSpecificationA;
-import car.CarPartEngine;
+import car.Model;
+import car.ModelA;
+import car.Engine;
 
 public class TestCarSpecification 
 {
 	@Test
 	public void TestSpecificationA()
 	{
-		CarModelSpecification spec = new CarModelSpecificationA();
+		Model spec = new ModelA();
 		
 		assert(spec.getBodyOptions().size() == 2);
 		assert(spec.getColorOptions().size() == 4);
@@ -39,7 +39,7 @@ public class TestCarSpecification
 		assert(spec.isValid(true));
 		assert(!spec.isValid(false));
 		
-		spec.setEngine(CarPartEngine.ULTRA);
+		spec.setEngine(Engine.ULTRA);
 		assert(!spec.isValid(true));
 		
 		spec.setEngine(spec.getEngineOptions().get(0));

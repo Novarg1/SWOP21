@@ -2,18 +2,18 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartBody implements CarPart
+public enum Seats implements CarPart
 {
-	BODY_SEDAN,
-	BODY_BREAK,
-	BODY_SPORT;
+	LEATHER_BLACK,
+	LEATHER_WHITE,
+	VINYL_GREY;
 	
 	@Override
 	public String toString() {
 		switch(this) {
-		case BODY_SEDAN: return "sedan";
-		case BODY_BREAK: return "break";
-		case BODY_SPORT: return "sport";
+		case LEATHER_BLACK: return "black leather";
+		case LEATHER_WHITE: return "white leather";
+		case VINYL_GREY: return "grey vinyl";
 		default: throw new IllegalArgumentException();
 		}
 	}
@@ -23,7 +23,6 @@ public enum CarPartBody implements CarPart
 		// TODO Auto-generated method stub
 		this.installed = true;
 		this.time = time;
-		
 	}
 
 	@Override
@@ -32,12 +31,12 @@ public enum CarPartBody implements CarPart
 		return installed;
 	}
 	
-	public static LinkedList<CarPartBody> options()
+	public static LinkedList<Seats> options()
 	{
-		LinkedList<CarPartBody> toret = new LinkedList<CarPartBody>();
-		for(CarPartBody body : CarPartBody.values())
+		LinkedList<Seats> toret = new LinkedList<Seats>();
+		for(Seats seat : Seats.values())
 		{
-			toret.add(body);
+			toret.add(seat);
 		}
 		return toret;
 	}
@@ -48,12 +47,12 @@ public enum CarPartBody implements CarPart
 	@Override
 	public String getAssemblyInstructions() {
 		// TODO Auto-generated method stub
-		return "install the body";
+		return "pick up the seats and insert them in the car";
 	}
 
 	@Override
 	public int getTimeTaken() {
 		// TODO Auto-generated method stub
-		return 0;
+		return time;
 	}
 }

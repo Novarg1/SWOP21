@@ -1,25 +1,25 @@
 package controllers;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import util.LineReader;
-import car.CarModelSpecification;
-import car.CarModelSpecificationA;
+import car.Model;
+import car.ModelA;
 import car.CarOrder;
-import car.CarPartAirco;
-import car.CarPartBody;
-import car.CarPartColor;
-import car.CarPartEngine;
-import car.CarPartGearbox;
-import car.CarPartSeats;
-import car.CarPartSpoiler;
-import car.CarPartWheels;
+import car.Airco;
+import car.Body;
+import car.Color;
+import car.Engine;
+import car.Gearbox;
+import car.Seats;
+import car.Spoiler;
+import car.Wheels;
 
 public class UseCaseControllerGarageHolder implements UseCaseController
 {
 	private String user;
-	private LinkedList<CarOrder> upcommingOrders;
-	private LinkedList<CarOrder> prevOrders;
+	private List<CarOrder> upcommingOrders;
+	private List<CarOrder> prevOrders;
 	private SystemController systemController;
 
 	@Override
@@ -71,7 +71,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		
 		int choice = Integer.parseInt(LineReader.readLine());
 		
-		CarModelSpecification spec = this.getSpecification(choice);
+		Model spec = this.getSpecification(choice);
 		
 		setBody(spec);
 		setColor(spec);
@@ -101,19 +101,19 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		upcommingOrders = systemController.getScheduledOrdersFor(user);
 	}
 	
-	private CarModelSpecification getSpecification(int n)
+	private Model getSpecification(int n)
 	{
-		return new CarModelSpecificationA();
+		return new ModelA();
 	}
 	
-	private void setBody(CarModelSpecification spec)
+	private void setBody(Model spec)
 	{
 		while(spec.getBodyChosen() == false)
 		{
 			System.out.println("What body type would you like?");
 			
 			int index = 1;
-			for(CarPartBody b : spec.getBodyOptions())
+			for(Body b : spec.getBodyOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
@@ -124,14 +124,14 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}
-	private void setColor(CarModelSpecification spec)
+	private void setColor(Model spec)
 	{
 		while(spec.getColorChosen() == false)
 		{
 			System.out.println("What color type would you like?");
 			
 			int index = 1;
-			for(CarPartColor b : spec.getColorOptions())
+			for(Color b : spec.getColorOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
@@ -142,14 +142,14 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}
-	private void setEngine(CarModelSpecification spec)
+	private void setEngine(Model spec)
 	{
 		while(spec.getEngineChosen() == false)
 		{
 			System.out.println("What engine type would you like?");
 			
 			int index = 1;
-			for(CarPartEngine b : spec.getEngineOptions())
+			for(Engine b : spec.getEngineOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
@@ -160,14 +160,14 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}
-	private void setGearbox(CarModelSpecification spec)
+	private void setGearbox(Model spec)
 	{
 		while(spec.getGearboxChosen() == false)
 		{
 			System.out.println("What Gearbox type would you like?");
 			
 			int index = 1;
-			for(CarPartGearbox b : spec.getGearboxOptions())
+			for(Gearbox b : spec.getGearboxOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
@@ -178,14 +178,14 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}
-	private void setSeats(CarModelSpecification spec)
+	private void setSeats(Model spec)
 	{
 		while(spec.getSeatsChosen() == false)
 		{
 			System.out.println("What Seats type would you like?");
 			
 			int index = 1;
-			for(CarPartSeats b : spec.getSeatsOptions())
+			for(Seats b : spec.getSeatsOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
@@ -196,7 +196,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}	
-	private void setAirco(CarModelSpecification spec)
+	private void setAirco(Model spec)
 	{
 		boolean noAirco = false;
 		
@@ -214,7 +214,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 				System.out.println("What Airco type would you like?");
 				
 				int index = 1;
-				for(CarPartAirco b : spec.getAircoOptions())
+				for(Airco b : spec.getAircoOptions())
 					System.out.println("(" + (index++) + ") " + b);
 				
 				int choice = LineReader.readInt(); 
@@ -226,14 +226,14 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}
-	private void setWheels(CarModelSpecification spec)
+	private void setWheels(Model spec)
 	{
 		while(spec.getWheelsChosen() == false)
 		{
 			System.out.println("What Wheels type would you like?");
 			
 			int index = 1;
-			for(CarPartWheels b : spec.getWheelsOptions())
+			for(Wheels b : spec.getWheelsOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
@@ -244,7 +244,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 			}
 		}
 	}
-	private void setSpoiler(CarModelSpecification spec)
+	private void setSpoiler(Model spec)
 	{
 		boolean noSpoiler = false;
 		
@@ -262,7 +262,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 				System.out.println("What Spoiler type would you like?");
 				
 				int index = 1;
-				for(CarPartSpoiler b : spec.getSpoilerOptions())
+				for(Spoiler b : spec.getSpoilerOptions())
 					System.out.println("(" + (index++) + ") " + b);
 				
 				int choice = LineReader.readInt(); 

@@ -10,13 +10,13 @@ import company.Day;
 public class CarOrder {
 
 	public final String CLIENT;
-	public final CarModelSpecification SPECIFICATION;
+	public final Model SPECIFICATION;
 	private Day completionTime;
 	private int expectedCompletionTime;
 	private boolean finished = false;
 	private Map<String, LinkedList<CarPart>> productionScheme = null;
 
-	public CarOrder(String client, CarModelSpecification specification) {
+	public CarOrder(String client, Model specification) {
 		if(specification == null ||
 				!specification.isValid(false))
 		{

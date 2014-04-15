@@ -2,7 +2,7 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartAirco implements CarPart
+public enum Airco implements CarPart
 {
 	MANUAL,
 	CLIMATE_CONTROL;
@@ -21,10 +21,10 @@ public enum CarPartAirco implements CarPart
 		return installed;
 	}
 	
-	public static LinkedList<CarPartAirco> options()
+	public static LinkedList<Airco> options()
 	{
-		LinkedList<CarPartAirco> toret = new LinkedList<CarPartAirco>();
-		for(CarPartAirco airco : CarPartAirco.values())
+		LinkedList<Airco> toret = new LinkedList<Airco>();
+		for(Airco airco : Airco.values())
 		{
 			toret.add(airco);
 		}

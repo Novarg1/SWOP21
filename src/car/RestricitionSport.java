@@ -4,11 +4,11 @@ package car;
  * @author jonathanlangens
  *
  */
-public class CarModelSpecificationRestricitionSport extends CarModelSpecificationRestriction
+public class RestricitionSport extends Restriction
 {
 
-	public CarModelSpecificationRestricitionSport(
-			CarModelSpecification specification) {
+	public RestricitionSport(
+			Model specification) {
 		super(specification);
 		// TODO Auto-generated constructor stub
 	}
@@ -22,14 +22,13 @@ public class CarModelSpecificationRestricitionSport extends CarModelSpecificatio
 	 */
 	@Override
 	public boolean checkValidity() {
-		// TODO Auto-generated method stub
-		if(spec.getBodyChosen() && spec.getBody() == CarPartBody.BODY_SPORT)
+		if(spec.getBodyChosen() && spec.getBody() == Body.BODY_SPORT)
 		{
 			if(spec.getSpoilerChosen())
 			{
 				if(spec.getEngineChosen() &&
-						(spec.getEngine()==CarPartEngine.PERFORMANCE ||
-							spec.getEngine()==CarPartEngine.ULTRA))
+						(spec.getEngine()==Engine.PERFORMANCE ||
+							spec.getEngine()==Engine.ULTRA))
 				{
 					return this.checkSuccessorValidity();
 				}

@@ -13,21 +13,21 @@ import java.util.LinkedList;
  * 
  * @author jonathanlangens
  */
-public abstract class CarModelSpecification 
+public abstract class Model 
 {
-	protected CarPartBody body = null;
-	protected CarPartColor color = null;
-	protected CarPartEngine engine = null;
-	protected CarPartGearbox gearbox = null;
-	protected CarPartSeats seats = null;
-	protected CarPartAirco airco = null;
-	protected CarPartWheels wheels = null;
-	protected CarPartSpoiler spoiler = null;
+	protected Body body = null;
+	protected Color color = null;
+	protected Engine engine = null;
+	protected Gearbox gearbox = null;
+	protected Seats seats = null;
+	protected Airco airco = null;
+	protected Wheels wheels = null;
+	protected Spoiler spoiler = null;
 	protected String type = null;
 	
-	private CarModelSpecificationRestriction restriction = null;
+	private Restriction restriction = null;
 
-	public CarModelSpecification()
+	public Model()
 	{
 	}
 	
@@ -35,7 +35,7 @@ public abstract class CarModelSpecification
 	 * inspector for this.body
 	 * @return this.body
 	 */
-	public CarPartBody getBody()
+	public Body getBody()
 	{
 		return this.body;
 	}
@@ -43,7 +43,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.body
 	 * @param body
 	 */
-	public void setBody(CarPartBody body)
+	public void setBody(Body body)
 	{
 		this.body = body;
 	}
@@ -60,11 +60,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with body options
 	 */
-	public LinkedList<CarPartBody> getBodyOptions()
+	public LinkedList<Body> getBodyOptions()
 	{
 		if(this.getBodyChosen())
 		{
-			LinkedList<CarPartBody> toret = new LinkedList<CarPartBody>();
+			LinkedList<Body> toret = new LinkedList<Body>();
 			toret.add(this.getBody());
 			return toret;
 		}
@@ -77,16 +77,16 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for body
 	 * @return a linked list with body options
 	 */
-	protected LinkedList<CarPartBody> bodyOptions()
+	protected LinkedList<Body> bodyOptions()
 	{
-		return CarPartBody.options();
+		return Body.options();
 	}
 	
 	/**
 	 * inspector for this.color
 	 * @return this.color
 	 */
-	public CarPartColor getColor()
+	public Color getColor()
 	{
 		return this.color;
 	}
@@ -94,7 +94,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.color
 	 * @param color
 	 */
-	public void setColor(CarPartColor color)
+	public void setColor(Color color)
 	{
 		this.color = color;
 	}
@@ -111,11 +111,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with color options
 	 */
-	public LinkedList<CarPartColor> getColorOptions()
+	public LinkedList<Color> getColorOptions()
 	{
 		if(this.getColorChosen())
 		{
-			LinkedList<CarPartColor> toret = new LinkedList<CarPartColor>();
+			LinkedList<Color> toret = new LinkedList<Color>();
 			toret.add(this.getColor());
 			return toret;
 		}
@@ -128,16 +128,16 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for color
 	 * @return a linked list with color options
 	 */
-	protected LinkedList<CarPartColor> colorOptions()
+	protected LinkedList<Color> colorOptions()
 	{
-		return CarPartColor.options();
+		return Color.options();
 	}
 	
 	/**
 	 * inspector for this.engine
 	 * @return this.engine
 	 */
-	public CarPartEngine getEngine()
+	public Engine getEngine()
 	{
 		return this.engine;
 	}
@@ -145,7 +145,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.engine
 	 * @param engine
 	 */
-	public void setEngine(CarPartEngine engine)
+	public void setEngine(Engine engine)
 	{
 		this.engine = engine;
 	}
@@ -162,11 +162,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with engine options
 	 */
-	public LinkedList<CarPartEngine> getEngineOptions()
+	public LinkedList<Engine> getEngineOptions()
 	{
 		if(this.getEngineChosen())
 		{
-			LinkedList<CarPartEngine> toret = new LinkedList<CarPartEngine>();
+			LinkedList<Engine> toret = new LinkedList<Engine>();
 			toret.add(this.getEngine());
 			return toret;
 		}
@@ -179,16 +179,16 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for engine
 	 * @return a linked list with engine options
 	 */
-	protected LinkedList<CarPartEngine> engineOptions()
+	protected LinkedList<Engine> engineOptions()
 	{
-		return CarPartEngine.options();
+		return Engine.options();
 	}
 
 	/**
 	 * inspector for this.gearbox
 	 * @return this.gearbox
 	 */
-	public CarPartGearbox getGearbox()
+	public Gearbox getGearbox()
 	{
 		return this.gearbox;
 	}
@@ -196,7 +196,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.gearbox
 	 * @param gearbox
 	 */
-	public void setGearbox(CarPartGearbox gearbox)
+	public void setGearbox(Gearbox gearbox)
 	{
 		this.gearbox = gearbox;
 	}
@@ -213,11 +213,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with gearbox options
 	 */
-	public LinkedList<CarPartGearbox> getGearboxOptions()
+	public LinkedList<Gearbox> getGearboxOptions()
 	{
 		if(this.getGearboxChosen())
 		{
-			LinkedList<CarPartGearbox> toret = new LinkedList<CarPartGearbox>();
+			LinkedList<Gearbox> toret = new LinkedList<Gearbox>();
 			toret.add(this.getGearbox());
 			return toret;
 		}
@@ -230,16 +230,16 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for gearbox
 	 * @return a linked list with gearbox options
 	 */
-	protected LinkedList<CarPartGearbox> gearboxOptions()
+	protected LinkedList<Gearbox> gearboxOptions()
 	{
-		return CarPartGearbox.options();
+		return Gearbox.options();
 	}
 
 	/**
 	 * inspector for this.seats
 	 * @return this.seats
 	 */
-	public CarPartSeats getSeats()
+	public Seats getSeats()
 	{
 		return this.seats;
 	}
@@ -247,7 +247,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.seats
 	 * @param seats
 	 */
-	public void setSeats(CarPartSeats seats)
+	public void setSeats(Seats seats)
 	{
 		this.seats = seats;
 	}
@@ -264,11 +264,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with seats options
 	 */
-	public LinkedList<CarPartSeats> getSeatsOptions()
+	public LinkedList<Seats> getSeatsOptions()
 	{
 		if(this.getSeatsChosen())
 		{
-			LinkedList<CarPartSeats> toret = new LinkedList<CarPartSeats>();
+			LinkedList<Seats> toret = new LinkedList<Seats>();
 			toret.add(this.getSeats());
 			return toret;
 		}
@@ -281,16 +281,16 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for seats
 	 * @return a linked list with seats options
 	 */
-	protected LinkedList<CarPartSeats> seatsOptions()
+	protected LinkedList<Seats> seatsOptions()
 	{
-		return CarPartSeats.options();
+		return Seats.options();
 	}
 	
 	/**
 	 * inspector for this.airco
 	 * @return this.airco
 	 */
-	public CarPartAirco getAirco()
+	public Airco getAirco()
 	{
 		return this.airco;
 	}
@@ -298,7 +298,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.airco
 	 * @param airco
 	 */
-	public void setAirco(CarPartAirco airco)
+	public void setAirco(Airco airco)
 	{
 		this.airco = airco;
 	}
@@ -315,11 +315,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with airco options
 	 */
-	public LinkedList<CarPartAirco> getAircoOptions()
+	public LinkedList<Airco> getAircoOptions()
 	{
 		if(this.getAircoChosen())
 		{
-			LinkedList<CarPartAirco> toret = new LinkedList<CarPartAirco>();
+			LinkedList<Airco> toret = new LinkedList<Airco>();
 			toret.add(this.getAirco());
 			return toret;
 		}
@@ -332,16 +332,16 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for airco
 	 * @return a linked list with airco options
 	 */
-	protected LinkedList<CarPartAirco> aircoOptions()
+	protected LinkedList<Airco> aircoOptions()
 	{
-		return CarPartAirco.options();
+		return Airco.options();
 	}
 	
 	/**
 	 * inspector for this.wheels
 	 * @return this.wheels
 	 */
-	public CarPartWheels getWheels()
+	public Wheels getWheels()
 	{
 		return this.wheels;
 	}
@@ -349,7 +349,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.wheels
 	 * @param wheels
 	 */
-	public void setWheels(CarPartWheels wheels)
+	public void setWheels(Wheels wheels)
 	{
 		this.wheels = wheels;
 	}
@@ -366,11 +366,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with wheels options
 	 */
-	public LinkedList<CarPartWheels> getWheelsOptions()
+	public LinkedList<Wheels> getWheelsOptions()
 	{
 		if(this.getWheelsChosen())
 		{
-			LinkedList<CarPartWheels> toret = new LinkedList<CarPartWheels>();
+			LinkedList<Wheels> toret = new LinkedList<Wheels>();
 			toret.add(this.getWheels());
 			return toret;
 		}
@@ -383,9 +383,9 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for wheels
 	 * @return a linked list with wheels options
 	 */
-	protected LinkedList<CarPartWheels> wheelsOptions()
+	protected LinkedList<Wheels> wheelsOptions()
 	{
-		return CarPartWheels.options();
+		return Wheels.options();
 	}
 
 	
@@ -393,7 +393,7 @@ public abstract class CarModelSpecification
 	 * inspector for this.spoiler
 	 * @return this.spoiler
 	 */
-	public CarPartSpoiler getSpoiler()
+	public Spoiler getSpoiler()
 	{
 		return this.spoiler;
 	}
@@ -401,7 +401,7 @@ public abstract class CarModelSpecification
 	 * mutator for this.spoiler
 	 * @param spoiler
 	 */
-	public void setSpoiler(CarPartSpoiler spoiler)
+	public void setSpoiler(Spoiler spoiler)
 	{
 		this.spoiler = spoiler;
 	}
@@ -418,11 +418,11 @@ public abstract class CarModelSpecification
 	 * a list with viable optios for this model specification
 	 * @return a linked list with spoiler options
 	 */
-	public LinkedList<CarPartSpoiler> getSpoilerOptions()
+	public LinkedList<Spoiler> getSpoilerOptions()
 	{
 		if(this.getSpoilerChosen())
 		{
-			LinkedList<CarPartSpoiler> toret = new LinkedList<CarPartSpoiler>();
+			LinkedList<Spoiler> toret = new LinkedList<Spoiler>();
 			toret.add(this.getSpoiler());
 			return toret;
 		}
@@ -435,9 +435,9 @@ public abstract class CarModelSpecification
 	 * returns a list with all the standard options for spoiler
 	 * @return a linked list with spoiler options
 	 */
-	protected LinkedList<CarPartSpoiler> spoilerOptions()
+	protected LinkedList<Spoiler> spoilerOptions()
 	{
-		return CarPartSpoiler.options();
+		return Spoiler.options();
 	}
 	
 	/**
@@ -451,9 +451,9 @@ public abstract class CarModelSpecification
 	
 	/**
 	 * Adds the passed restriction to the chain of restrictions
-	 * @param CarModelSpecificationRestriction r
+	 * @param Restriction r
 	 */
-	public void addModelSpecificationRestriction(CarModelSpecificationRestriction r)
+	public void addModelSpecificationRestriction(Restriction r)
 	{
 		if(this.restriction == null)
 		{

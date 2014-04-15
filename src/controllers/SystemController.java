@@ -1,8 +1,6 @@
 package controllers;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.List;
 
 import car.CarOrder;
 import car.CarPart;
@@ -62,17 +60,17 @@ public class SystemController
 		return a.isReadyToAdvance();
 	}
 	
-	public LinkedList<CarOrder> getScheduledOrdersFor(String user)
+	public List<CarOrder> getScheduledOrdersFor(String user)
 	{
 		return cmcSytem.getScheduledOrdersForUser(user);
 	}
 	
-	public LinkedList<CarOrder> getFinishedOrdersFor(String user)
+	public List<CarOrder> getFinishedOrdersFor(String user)
 	{
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
 	
-	public LinkedList<CarPart> getWorkPostOverview(String id)
+	public List<CarPart> getWorkPostOverview(String id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{

@@ -1,18 +1,13 @@
 package company;
 
-import car.CarPartEngine;
-import car.CarPartGearbox;
-
 /**
  * Represents the workpost that is responsible for installing engine and gearbox
  */
 public class DriveTrainPost extends WorkStation {
 
-	private static final Class<?>[] installableParts = new Class[] {
-			CarPartEngine.class, CarPartGearbox.class };
+	private static final String id = "DRIVETRAIN";
 
 	public DriveTrainPost() {
-		this.id = "DRIVETRAIN";
+		super(id);
 	}
-
 }

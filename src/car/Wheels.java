@@ -2,18 +2,18 @@ package car;
 
 import java.util.LinkedList;
 
-public enum CarPartEngine implements CarPart
+public enum Wheels implements CarPart
 {
-	STANDARD,
-	PERFORMANCE,
-	ULTRA;
+	WINTER,
+	COMFORT,
+	SPORTS;
 	
 	@Override
 	public String toString() {
 		switch(this) {
-		case STANDARD: return "2.0l 4 cylinders";
-		case PERFORMANCE: return "2.5l V6";
-		case ULTRA:return "3.0l 8 cylinders";
+		case WINTER: return "winter";
+		case COMFORT: return "comfort";
+		case SPORTS: return "sports";
 		default: throw new IllegalArgumentException();
 		}
 	}
@@ -31,12 +31,12 @@ public enum CarPartEngine implements CarPart
 		return installed;
 	}
 	
-	public static LinkedList<CarPartEngine> options()
+	public static LinkedList<Wheels> options()
 	{
-		LinkedList<CarPartEngine> toret = new LinkedList<CarPartEngine>();
-		for(CarPartEngine engine : CarPartEngine.values())
+		LinkedList<Wheels> toret = new LinkedList<Wheels>();
+		for(Wheels wheels : Wheels.values())
 		{
-			toret.add(engine);
+			toret.add(wheels);
 		}
 		return toret;
 	}
@@ -47,7 +47,7 @@ public enum CarPartEngine implements CarPart
 	@Override
 	public String getAssemblyInstructions() {
 		// TODO Auto-generated method stub
-		return "place the engine in the car";
+		return "place the wheels on the car";
 	}
 
 	@Override
