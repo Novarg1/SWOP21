@@ -1,16 +1,14 @@
 package car;
+
 /**
  * if a car has a sports body it also must have a spoiler
  * @author jonathanlangens
  *
  */
-public class RestricitionSport extends Restriction
-{
+public class RestricitionSport extends Restriction {
 
-	public RestricitionSport(
-			Model specification) {
+	public RestricitionSport(ModelSpecification specification) {
 		super(specification);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -22,30 +20,16 @@ public class RestricitionSport extends Restriction
 	 */
 	@Override
 	public boolean checkValidity() {
-		if(spec.getBodyChosen() && spec.getBody() == Body.BODY_SPORT)
-		{
-			if(spec.getSpoilerChosen())
-			{
-				if(spec.getEngineChosen() &&
-						(spec.getEngine()==Engine.PERFORMANCE ||
-							spec.getEngine()==Engine.ULTRA))
-				{
-					return this.checkSuccessorValidity();
-				}
-				else
-				{
-					return false;
-				}
+		if(spec.BodyChosen() && spec.getBody().getOptionType() == Body.Options.SPORT) {
+			if(spec.getSpoilerChosen() &&
+					spec.getEngineChosen() &&
+					(spec.getEngine().getOptionType()==Engine.Options.PERFORMANCE ||
+					spec.getEngine().getOptionType()==Engine.Options.ULTRA)) {
+				return this.checkSuccessorValidity();
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
-		else
-		{
-			return this.checkSuccessorValidity();
-		}
+		return this.checkSuccessorValidity();
 	}
 
 }

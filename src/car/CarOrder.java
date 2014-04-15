@@ -1,22 +1,23 @@
 package car;
 
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import company.Day;
+
 /**
  * Represents an order for a car.
  */
 public class CarOrder {
 
 	public final String CLIENT;
-	public final Model SPECIFICATION;
+	public final ModelSpecification SPECIFICATION;
 	private Day completionTime;
 	private int expectedCompletionTime;
 	private boolean finished = false;
-	private Map<String, LinkedList<CarPart>> productionScheme = null;
+	private Map<String, List<CarPart<?>>> productionScheme = null;
 
-	public CarOrder(String client, Model specification) {
+	public CarOrder(String client, ModelSpecification specification) {
 		if(specification == null ||
 				!specification.isValid(false))
 		{
@@ -57,14 +58,6 @@ public class CarOrder {
 	}
 
 	/**
-	 * set this order to finished, with given actual completion time
-	 */
-	private void setFinished(Day time) {
-		setCompletionTime(time);
-		finished = true;
-	}
-
-	/**
 	 * @return true if this order has been finished
 	 */
 	public boolean isFinished() {
@@ -76,13 +69,11 @@ public class CarOrder {
 		return SPECIFICATION.toString();
 	}
 	
-	public void setProductionScheme(Map<String, LinkedList<CarPart>> productionScheme)
-	{
+	public void setProductionScheme(Map<String, List<CarPart<?>>> productionScheme) {
 		this.productionScheme = productionScheme;
 	}
 	
-	public LinkedList<CarPart> getProductionSchemeFor(String workstationId)
-	{
+	public List<CarPart<?>> getProductionSchemeFor(String workstationId) {
 		if(this.productionScheme.containsKey(workstationId))
 			return this.productionScheme.get(workstationId);
 		return null;

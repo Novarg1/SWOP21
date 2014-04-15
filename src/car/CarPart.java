@@ -1,21 +1,62 @@
 package car;
 
 /**
- * interface for representing all carParts
+ * class for representing all carParts
  * a carpart knows how to install itself, how to present itself
- * ins stringform and wheter or not it has been installed
+ * ins stringform and wheter or not it has been installed.
  * 
- * @author jonathanlangens
+ * Subclasses should define an enumeration of specific options.
  */
-public interface CarPart {
+public abstract class CarPart<Option extends Enum<?>> {
+
+	private final Option option;
+	private boolean installed;
+	private int time;
 	
-	public void install(int time);
+	protected CarPart(Option option) {
+		this.option = option;
+		installed = false;
+		time = -1;
+	}
 	
-	public String toString();
+	/**
+	 * sets this carpart's status to 'installed'.
+	 * @param time The time it took to install this part.
+	 */
+	public void install(int time) {
+		this.installed = true;
+		this.time = time;
+	}
 	
-	public boolean isInstalled();
+	/**
+	 * @return The type of this carPart
+	 */
+	public Option getOptionType() {
+		return option;
+	}
 	
-	public String getAssemblyInstructions();
+	/**
+	 * @return true if this carpart has been installed.
+	 */
+	public boolean isInstalled() {
+		return installed;
+	}
 	
-	public int getTimeTaken();
+	/**
+	 * @return The time it took to install this carpart. The result
+	 * 		is a negative number if this part has not been installed yet.
+	 */
+	public int getTimeTaken() {
+		return isInstalled() ? time : -1;
+	}
+	
+	@Override
+	public String toString() {
+		return option.toString();
+	}
+	
+	/**
+	 * @return Instructions in text-format for installing this part.
+	 */
+	public abstract String getAssemblyInstructions();
 }

@@ -2,6 +2,7 @@ package company;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import car.CarOrder;
@@ -93,20 +94,20 @@ public class Schedule
 	public CarOrder prepareNextOrder()
 	{
 		CarOrder order = this.getNextOrder();
-		Map<String, LinkedList<CarPart>> productionSchedule = new HashMap<String, LinkedList<CarPart>>();
+		Map<String, List<CarPart<?>>> productionSchedule = new HashMap<>();
 		
 		// preparing the schedule for the car body post
-		LinkedList<CarPart> CarBodyPost = new LinkedList<CarPart>();
+		LinkedList<CarPart<?>> CarBodyPost = new LinkedList<>();
 		CarBodyPost.add(order.SPECIFICATION.getBody());
 		CarBodyPost.add(order.SPECIFICATION.getColor());
 		
 		// preparing the schedule for the drive train post
-		LinkedList<CarPart> DriveTrainPost = new LinkedList<CarPart>();
+		LinkedList<CarPart<?>> DriveTrainPost = new LinkedList<>();
 		DriveTrainPost.add(order.SPECIFICATION.getEngine());
 		DriveTrainPost.add(order.SPECIFICATION.getGearbox());
 		
 		// preparing the schedule for the accessoires post
-		LinkedList<CarPart> AccessoiresPost = new LinkedList<CarPart>();
+		LinkedList<CarPart<?>> AccessoiresPost = new LinkedList<>();
 		AccessoiresPost.add(order.SPECIFICATION.getSeats());
 		if(order.SPECIFICATION.getAircoChosen())
 			AccessoiresPost.add(order.SPECIFICATION.getAirco());

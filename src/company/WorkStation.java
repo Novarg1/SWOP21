@@ -48,12 +48,12 @@ public abstract class WorkStation {
 	 * @return a list of tasks that still need to be completed for the current
 	 *         job
 	 */
-	public List<CarPart> getPendingTasks() {
+	public List<CarPart<?>> getPendingTasks() {
 		if(current == null) {
 			return Collections.emptyList();
 		}
-		LinkedList<CarPart> list = new LinkedList<CarPart>();
-		for(CarPart p : current.getProductionSchemeFor(id))
+		List<CarPart<?>> list = new LinkedList<>();
+		for(CarPart<?> p : current.getProductionSchemeFor(id))
 			if(!p.isInstalled())
 				list.add(p);
 		return list;

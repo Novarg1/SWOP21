@@ -8,7 +8,7 @@ package car;
  */
 public abstract class Restriction 
 {
-	protected Model spec;
+	protected ModelSpecification spec;
 	protected Restriction successor = null;
 	
 	/**
@@ -16,7 +16,7 @@ public abstract class Restriction
 	 * apply
 	 * @param specification
 	 */
-	public Restriction(Model specification) throws IllegalArgumentException
+	public Restriction(ModelSpecification specification) throws IllegalArgumentException
 	{
 		if(specification == null)
 			throw new IllegalArgumentException();
@@ -27,14 +27,10 @@ public abstract class Restriction
 	 * adds the successor to the chain of restrictions
 	 * @param successor
 	 */
-	public void setSuccessor(Restriction successor)
-	{
-		if(this.successor == null)
-		{
+	public void setSuccessor(Restriction successor) {
+		if(this.successor == null) {
 			this.successor = successor;
-		}
-		else
-		{
+		} else {
 			this.successor.setSuccessor(successor);
 		}
 	}
@@ -44,8 +40,7 @@ public abstract class Restriction
 	 * specification or not
 	 * @return
 	 */
-	public boolean checkSuccessorValidity()
-	{
+	public boolean checkSuccessorValidity() {
 		return (this.successor != null)?this.successor.checkValidity():true;
 	}
 	

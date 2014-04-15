@@ -1,58 +1,17 @@
 package car;
 
-import java.util.LinkedList;
+public class Engine extends CarPart<Engine.Options> {
 
-public enum Engine implements CarPart
-{
-	STANDARD,
-	PERFORMANCE,
-	ULTRA;
-	
-	@Override
-	public String toString() {
-		switch(this) {
-		case STANDARD: return "2.0l 4 cylinders";
-		case PERFORMANCE: return "2.5l V6";
-		case ULTRA:return "3.0l 8 cylinders";
-		default: throw new IllegalArgumentException();
-		}
+	public enum Options {
+		STANDARD, PERFORMANCE, ULTRA;
 	}
 
-	@Override
-	public void install(int time) {
-		// TODO Auto-generated method stub
-		this.installed = true;
-		this.time = time;
+	public Engine(Options option) {
+		super(option);
 	}
-
-	@Override
-	public boolean isInstalled() {
-		// TODO Auto-generated method stub
-		return installed;
-	}
-	
-	public static LinkedList<Engine> options()
-	{
-		LinkedList<Engine> toret = new LinkedList<Engine>();
-		for(Engine engine : Engine.values())
-		{
-			toret.add(engine);
-		}
-		return toret;
-	}
-	
-	private boolean installed = false;
-	private int time = 0;
 
 	@Override
 	public String getAssemblyInstructions() {
-		// TODO Auto-generated method stub
 		return "place the engine in the car";
-	}
-
-	@Override
-	public int getTimeTaken() {
-		// TODO Auto-generated method stub
-		return time;
 	}
 }

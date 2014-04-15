@@ -3,8 +3,8 @@ package controllers;
 import java.util.List;
 
 import util.LineReader;
-import car.Model;
-import car.ModelA;
+import car.ModelSpecification;
+import car.ModelASpec;
 import car.CarOrder;
 import car.Airco;
 import car.Body;
@@ -71,7 +71,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		
 		int choice = Integer.parseInt(LineReader.readLine());
 		
-		Model spec = this.getSpecification(choice);
+		ModelSpecification spec = this.getSpecification(choice);
 		
 		setBody(spec);
 		setColor(spec);
@@ -101,106 +101,106 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		upcommingOrders = systemController.getScheduledOrdersFor(user);
 	}
 	
-	private Model getSpecification(int n)
+	private ModelSpecification getSpecification(int n)
 	{
-		return new ModelA();
+		return new ModelASpec();
 	}
 	
-	private void setBody(Model spec)
+	private void setBody(ModelSpecification spec)
 	{
-		while(spec.getBodyChosen() == false)
+		while(spec.BodyChosen() == false)
 		{
 			System.out.println("What body type would you like?");
 			
 			int index = 1;
-			for(Body b : spec.getBodyOptions())
+			for(Body b : spec.getViableBodyOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
 			
-			if(choice > 0 && choice <= spec.getBodyOptions().size())
+			if(choice > 0 && choice <= spec.getViableBodyOptions().size())
 			{
-				spec.setBody(spec.getBodyOptions().get(choice - 1));
+				spec.setBody(spec.getViableBodyOptions().get(choice - 1));
 			}
 		}
 	}
-	private void setColor(Model spec)
+	private void setColor(ModelSpecification spec)
 	{
 		while(spec.getColorChosen() == false)
 		{
 			System.out.println("What color type would you like?");
 			
 			int index = 1;
-			for(Color b : spec.getColorOptions())
+			for(Color b : spec.getViableColorOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
 			
-			if(choice > 0 && choice <= spec.getColorOptions().size())
+			if(choice > 0 && choice <= spec.getViableColorOptions().size())
 			{
-				spec.setColor(spec.getColorOptions().get(choice - 1));
+				spec.setColor(spec.getViableColorOptions().get(choice - 1));
 			}
 		}
 	}
-	private void setEngine(Model spec)
+	private void setEngine(ModelSpecification spec)
 	{
 		while(spec.getEngineChosen() == false)
 		{
 			System.out.println("What engine type would you like?");
 			
 			int index = 1;
-			for(Engine b : spec.getEngineOptions())
+			for(Engine b : spec.getViableEngineOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
 			
-			if(choice > 0 && choice <= spec.getEngineOptions().size())
+			if(choice > 0 && choice <= spec.getViableEngineOptions().size())
 			{
-				spec.setEngine(spec.getEngineOptions().get(choice - 1));
+				spec.setEngine(spec.getViableEngineOptions().get(choice - 1));
 			}
 		}
 	}
-	private void setGearbox(Model spec)
+	private void setGearbox(ModelSpecification spec)
 	{
 		while(spec.getGearboxChosen() == false)
 		{
 			System.out.println("What Gearbox type would you like?");
 			
 			int index = 1;
-			for(Gearbox b : spec.getGearboxOptions())
+			for(Gearbox b : spec.getViableGearboxOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
 			
-			if(choice > 0 && choice <= spec.getGearboxOptions().size())
+			if(choice > 0 && choice <= spec.getViableGearboxOptions().size())
 			{
-				spec.setGearbox(spec.getGearboxOptions().get(choice - 1));
+				spec.setGearbox(spec.getViableGearboxOptions().get(choice - 1));
 			}
 		}
 	}
-	private void setSeats(Model spec)
+	private void setSeats(ModelSpecification spec)
 	{
 		while(spec.getSeatsChosen() == false)
 		{
 			System.out.println("What Seats type would you like?");
 			
 			int index = 1;
-			for(Seats b : spec.getSeatsOptions())
+			for(Seats b : spec.getViableSeatsOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
 			
-			if(choice > 0 && choice <= spec.getSeatsOptions().size())
+			if(choice > 0 && choice <= spec.getViableSeatsOptions().size())
 			{
-				spec.setSeats(spec.getSeatsOptions().get(choice - 1));
+				spec.setSeats(spec.getViableSeatsOptions().get(choice - 1));
 			}
 		}
 	}	
-	private void setAirco(Model spec)
+	private void setAirco(ModelSpecification spec)
 	{
 		boolean noAirco = false;
 		
-		if(spec.getAircoOptions().size() == 0)noAirco = true;
+		if(spec.getViableAircoOptions().size() == 0)noAirco = true;
 		
 		while(spec.getAircoChosen() == false && noAirco == false)
 		{
@@ -214,41 +214,41 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 				System.out.println("What Airco type would you like?");
 				
 				int index = 1;
-				for(Airco b : spec.getAircoOptions())
+				for(Airco b : spec.getViableAircoOptions())
 					System.out.println("(" + (index++) + ") " + b);
 				
 				int choice = LineReader.readInt(); 
 				
-				if(choice > 0 && choice <= spec.getAircoOptions().size())
+				if(choice > 0 && choice <= spec.getViableAircoOptions().size())
 				{
-					spec.setAirco(spec.getAircoOptions().get(choice - 1));
+					spec.setAirco(spec.getViableAircoOptions().get(choice - 1));
 				}
 			}
 		}
 	}
-	private void setWheels(Model spec)
+	private void setWheels(ModelSpecification spec)
 	{
 		while(spec.getWheelsChosen() == false)
 		{
 			System.out.println("What Wheels type would you like?");
 			
 			int index = 1;
-			for(Wheels b : spec.getWheelsOptions())
+			for(Wheels b : spec.getViableWheelsOptions())
 				System.out.println("(" + (index++) + ") " + b);
 			
 			int choice = LineReader.readInt(); 
 			
-			if(choice > 0 && choice <= spec.getWheelsOptions().size())
+			if(choice > 0 && choice <= spec.getViableWheelsOptions().size())
 			{
-				spec.setWheels(spec.getWheelsOptions().get(choice - 1));
+				spec.setWheels(spec.getViableWheelsOptions().get(choice - 1));
 			}
 		}
 	}
-	private void setSpoiler(Model spec)
+	private void setSpoiler(ModelSpecification spec)
 	{
 		boolean noSpoiler = false;
 		
-		if(spec.getSpoilerOptions().size() == 0)noSpoiler = true;
+		if(spec.getViableSpoilerOptions().size() == 0)noSpoiler = true;
 		
 		while(spec.getSpoilerChosen() == false && noSpoiler == false) 
 		{
@@ -262,14 +262,14 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 				System.out.println("What Spoiler type would you like?");
 				
 				int index = 1;
-				for(Spoiler b : spec.getSpoilerOptions())
+				for(Spoiler b : spec.getViableSpoilerOptions())
 					System.out.println("(" + (index++) + ") " + b);
 				
 				int choice = LineReader.readInt(); 
 				
-				if(choice > 0 && choice <= spec.getSpoilerOptions().size())
+				if(choice > 0 && choice <= spec.getViableSpoilerOptions().size())
 				{
-					spec.setSpoiler(spec.getSpoilerOptions().get(choice - 1));
+					spec.setSpoiler(spec.getViableSpoilerOptions().get(choice - 1));
 				}
 			}
 		}
