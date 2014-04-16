@@ -108,7 +108,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 	
 	private void setBody(ModelSpecification spec)
 	{
-		while(spec.BodyChosen() == false)
+		while(spec.bodyChosen() == false)
 		{
 			System.out.println("What body type would you like?");
 			
@@ -126,7 +126,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 	}
 	private void setColor(ModelSpecification spec)
 	{
-		while(spec.getColorChosen() == false)
+		while(spec.colorChosen() == false)
 		{
 			System.out.println("What color type would you like?");
 			
@@ -144,7 +144,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 	}
 	private void setEngine(ModelSpecification spec)
 	{
-		while(spec.getEngineChosen() == false)
+		while(spec.engineChosen() == false)
 		{
 			System.out.println("What engine type would you like?");
 			
@@ -162,7 +162,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 	}
 	private void setGearbox(ModelSpecification spec)
 	{
-		while(spec.getGearboxChosen() == false)
+		while(spec.gearboxChosen() == false)
 		{
 			System.out.println("What Gearbox type would you like?");
 			
@@ -180,7 +180,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 	}
 	private void setSeats(ModelSpecification spec)
 	{
-		while(spec.getSeatsChosen() == false)
+		while(spec.seatsChosen() == false)
 		{
 			System.out.println("What Seats type would you like?");
 			
@@ -202,7 +202,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		
 		if(spec.getViableAircoOptions().size() == 0)noAirco = true;
 		
-		while(spec.getAircoChosen() == false && noAirco == false)
+		while(spec.aircoChosen() == false && noAirco == false)
 		{
 			System.out.println("Do you want an airco system? (y/n)");
 			if(LineReader.readLine().toLowerCase().startsWith("n"))
@@ -228,7 +228,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 	}
 	private void setWheels(ModelSpecification spec)
 	{
-		while(spec.getWheelsChosen() == false)
+		while(spec.wheelsChosen() == false)
 		{
 			System.out.println("What Wheels type would you like?");
 			
@@ -250,7 +250,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController
 		
 		if(spec.getViableSpoilerOptions().size() == 0)noSpoiler = true;
 		
-		while(spec.getSpoilerChosen() == false && noSpoiler == false) 
+		while(spec.spoilerChosen() == false && noSpoiler == false) 
 		{
 			System.out.println("Do you want an Spoiler system? (y/n)");
 			if(LineReader.readLine().toLowerCase().startsWith("n"))

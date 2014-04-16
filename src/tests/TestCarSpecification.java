@@ -22,14 +22,14 @@ public class TestCarSpecification
 		assert(spec.getViableWheelsOptions().size() == 3);
 		assert(spec.getViableSpoilerOptions().size() == 0);
 		
-		assert(!spec.BodyChosen());
-		assert(!spec.getColorChosen());
-		assert(!spec.getEngineChosen());
-		assert(!spec.getGearboxChosen());
-		assert(!spec.getAircoChosen());
-		assert(!spec.getSeatsChosen());
-		assert(!spec.getWheelsChosen());
-		assert(!spec.getSpoilerChosen());
+		assert(!spec.bodyChosen());
+		assert(!spec.colorChosen());
+		assert(!spec.engineChosen());
+		assert(!spec.gearboxChosen());
+		assert(!spec.aircoChosen());
+		assert(!spec.seatsChosen());
+		assert(!spec.wheelsChosen());
+		assert(!spec.spoilerChosen());
 		
 		spec.setBody(spec.getViableBodyOptions().get(0));
 		assert(spec.isValid(true));
@@ -63,13 +63,13 @@ public class TestCarSpecification
 		
 		assert(spec.isValid(false));
 		
-		assert(spec.BodyChosen());
-		assert(spec.getColorChosen());
-		assert(spec.getEngineChosen());
-		assert(spec.getGearboxChosen());
-		assert(spec.getSeatsChosen());
-		assert(spec.getAircoChosen());
-		assert(spec.getWheelsChosen());
-		assert(!spec.getSpoilerChosen());
+		assert(spec.bodyChosen());
+		assert(spec.colorChosen());
+		assert(spec.engineChosen());
+		assert(spec.gearboxChosen());
+		assert(spec.seatsChosen());
+		assert(spec.aircoChosen());
+		assert(spec.wheelsChosen());
+		assert(!spec.spoilerChosen());
 	}
 }

@@ -109,10 +109,10 @@ public class Schedule
 		// preparing the schedule for the accessoires post
 		LinkedList<CarPart<?>> AccessoiresPost = new LinkedList<>();
 		AccessoiresPost.add(order.SPECIFICATION.getSeats());
-		if(order.SPECIFICATION.getAircoChosen())
+		if(order.SPECIFICATION.aircoChosen())
 			AccessoiresPost.add(order.SPECIFICATION.getAirco());
 		AccessoiresPost.add(order.SPECIFICATION.getWheels());
-		if(order.SPECIFICATION.getSpoilerChosen())
+		if(order.SPECIFICATION.spoilerChosen())
 			AccessoiresPost.add(order.SPECIFICATION.getSpoiler());
 		
 		// creating the hashmap
