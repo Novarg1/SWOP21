@@ -1,7 +1,8 @@
 package car;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
 
 public class ModelASpec extends ModelSpecification {
 
@@ -9,7 +10,6 @@ public class ModelASpec extends ModelSpecification {
 
 	public ModelASpec() {
 		super(model);
-		this.addModelSpecificationRestriction(new RestricitionSport(this));
 	}
 
 	@Override
@@ -18,49 +18,46 @@ public class ModelASpec extends ModelSpecification {
 	}
 
 	@Override
-	protected List<Body.Options> getAllBodyOptions() {
-		return Arrays.asList(new Body.Options[] { Body.Options.SEDAN,
-				Body.Options.BREAK });
+	protected Set<Body.Options> getAllBodyOptions() {
+		return EnumSet.of(Body.Options.SEDAN, Body.Options.BREAK);
 	}
 
 	@Override
-	protected List<Color.Options> getAllColorOptions() {
-		return Arrays.asList(new Color.Options[] { Color.Options.RED,
-				Color.Options.BLUE, Color.Options.BLACK, Color.Options.WHITE });
+	protected Set<Color.Options> getAllColorOptions() {
+		return EnumSet.of(Color.Options.RED, Color.Options.BLUE,
+				Color.Options.BLACK, Color.Options.WHITE);
 	}
 
 	@Override
-	protected List<Engine.Options> getAllEngineOptions() {
-		return Arrays.asList(new Engine.Options[] { Engine.Options.PERFORMANCE,
-				Engine.Options.STANDARD });
+	protected Set<Engine.Options> getAllEngineOptions() {
+		return EnumSet.of(Engine.Options.PERFORMANCE, Engine.Options.STANDARD);
 	}
 
 	@Override
-	protected List<Gearbox.Options> getAllGearboxOptions() {
-		return Arrays.asList(new Gearbox.Options[] { Gearbox.Options.AUTOMATIC,
-				Gearbox.Options.MANUAL5, Gearbox.Options.MANUAL6 });
+	protected Set<Gearbox.Options> getAllGearboxOptions() {
+		return EnumSet.of(Gearbox.Options.AUTOMATIC, Gearbox.Options.MANUAL5,
+				Gearbox.Options.MANUAL6);
 	}
 
 	@Override
-	protected List<Seats.Options> getAllSeatsOptions() {
-		return Arrays.asList(new Seats.Options[] { Seats.Options.LEATHER_BLACK,
-				Seats.Options.LEATHER_WHITE, Seats.Options.VINYL_GREY });
+	protected Set<Seats.Options> getAllSeatsOptions() {
+		return EnumSet.of(Seats.Options.LEATHER_BLACK,
+				Seats.Options.LEATHER_WHITE, Seats.Options.VINYL_GREY);
 	}
 
 	@Override
-	protected List<Airco.Options> getAllAircoOptions() {
-		return Arrays.asList(new Airco.Options[] { Airco.Options.MANUAL,
-				Airco.Options.AUTOMATIC });
+	protected Set<Airco.Options> getAllAircoOptions() {
+		return EnumSet.of(Airco.Options.MANUAL, Airco.Options.AUTOMATIC);
 	}
 
 	@Override
-	protected List<Wheels.Options> getAllWheelsOptions() {
-		return Arrays.asList(new Wheels.Options[] { Wheels.Options.COMFORT,
-				Wheels.Options.SPORTS, Wheels.Options.WINTER });
+	protected Set<Wheels.Options> getAllWheelsOptions() {
+		return EnumSet.of(Wheels.Options.COMFORT, Wheels.Options.SPORTS,
+				Wheels.Options.WINTER);
 	}
 
 	@Override
-	protected List<Spoiler.Options> getAllSpoilerOptions() {
-		return Arrays.asList(new Spoiler.Options[] {});
+	protected Set<Spoiler.Options> getAllSpoilerOptions() {
+		return Collections.emptySet();
 	}
 }

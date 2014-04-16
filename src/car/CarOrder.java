@@ -18,9 +18,7 @@ public class CarOrder {
 	private Map<String, List<CarPart<?>>> productionScheme = null;
 
 	public CarOrder(String client, ModelSpecification specification) {
-		if(specification == null ||
-				!specification.isValid(false))
-		{
+		if (specification == null || !specification.isValid()) {
 			throw new IllegalArgumentException();
 		}
 		CLIENT = client;
@@ -38,14 +36,12 @@ public class CarOrder {
 		}
 		completionTime = time;
 	}
-	
-	public void setExpectedCompletionTime(int time)
-	{
+
+	public void setExpectedCompletionTime(int time) {
 		expectedCompletionTime = time;
 	}
-	
-	public int getExpectedCompletionTime()
-	{
+
+	public int getExpectedCompletionTime() {
 		return expectedCompletionTime;
 	}
 
@@ -68,13 +64,14 @@ public class CarOrder {
 	public String toString() {
 		return SPECIFICATION.toString();
 	}
-	
-	public void setProductionScheme(Map<String, List<CarPart<?>>> productionScheme) {
+
+	public void setProductionScheme(
+			Map<String, List<CarPart<?>>> productionScheme) {
 		this.productionScheme = productionScheme;
 	}
-	
+
 	public List<CarPart<?>> getProductionSchemeFor(String workstationId) {
-		if(this.productionScheme.containsKey(workstationId))
+		if (this.productionScheme.containsKey(workstationId))
 			return this.productionScheme.get(workstationId);
 		return null;
 	}
