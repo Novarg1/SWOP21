@@ -3,8 +3,6 @@ package car;
 import java.util.Collections;
 import java.util.Set;
 
-//TODO check if parts are viable in all setters
-
 /**
  * A carspecification contains specific parts that a car should have, along with
  * all the information of which parts this specific type of model might have and
@@ -26,10 +24,21 @@ public abstract class ModelSpecification {
 
 	protected final String type;
 	private Restriction restriction;
+	
+	private final int buildingTime; 
+	private static final int DEFAULT_BUILDING_TIME = 60;
 
+	/**
+	 * model with default building time per part
+	 */
 	public ModelSpecification(String model) {
+		this(model, DEFAULT_BUILDING_TIME);
+	}
+	
+	public ModelSpecification(String model, int buildingTime) {
 		type = model;
 		restriction = getModelRestriction();
+		this.buildingTime = buildingTime;
 	}
 
 	/**
@@ -528,7 +537,9 @@ public abstract class ModelSpecification {
 	/**
 	 * @return Estimated time in minutes that is spent in each workstation.
 	 */
-	public abstract int getBuildingTimePerWorkstation();
+	public int getBuildingTimePerWorkstation() {
+		return buildingTime;
+	}
 
 	/**
 	 * returns a string representation for this object

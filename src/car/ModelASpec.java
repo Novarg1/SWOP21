@@ -7,14 +7,10 @@ import java.util.Set;
 public class ModelASpec extends ModelSpecification {
 
 	private static final String model = "Model A";
+	private static final int BUILDING_TIME = 50;
 
 	public ModelASpec() {
-		super(model);
-	}
-
-	@Override
-	public int getBuildingTimePerWorkstation() {
-		return 50;
+		super(model, BUILDING_TIME);
 	}
 
 	@Override

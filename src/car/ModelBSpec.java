@@ -12,11 +12,6 @@ public class ModelBSpec extends ModelSpecification {
 	}
 
 	@Override
-	public int getBuildingTimePerWorkstation() {
-		return 50;
-	}
-
-	@Override
 	protected Set<Body.Options> getAllBodyOptions() {
 		return EnumSet.of(Body.Options.SEDAN, Body.Options.BREAK,
 				Body.Options.SPORT);

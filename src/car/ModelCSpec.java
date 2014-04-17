@@ -6,9 +6,10 @@ import java.util.Set;
 public class ModelCSpec extends ModelSpecification {
 
 	private static final String model = "Model C";
+	private static final int BUILDING_TIME = 50;
 
 	public ModelCSpec() {
-		super(model);
+		super(model, BUILDING_TIME);
 	}
 
 	@Override
