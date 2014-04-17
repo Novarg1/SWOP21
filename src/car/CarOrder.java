@@ -3,7 +3,7 @@ package car;
 import java.util.List;
 import java.util.Map;
 
-import company.Day;
+import util.TimeStamp;
 
 /**
  * Represents an order for a car.
@@ -12,44 +12,48 @@ public class CarOrder {
 
 	public final String CLIENT;
 	public final ModelSpecification SPECIFICATION;
-	private Day completionTime;
-	private int expectedCompletionTime;
+	private TimeStamp completionTime;
 	private boolean finished = false;
 	private Map<String, List<CarPart<?>>> productionScheme = null;
 
 	public CarOrder(String client, ModelSpecification specification) {
 		if (specification == null || !specification.isValid()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("invalid specification");
 		}
 		CLIENT = client;
 		SPECIFICATION = specification;
 	}
 
 	/**
-	 * set estimated completion time of this order to given time
-	 * 
-	 * @param time
+	 * Sets this order as finished on the given time.
+	 *
+	 * @throws IllegalStateException if this order is already finished
 	 */
-	public void setCompletionTime(Day time) {
+	public void setFinished(TimeStamp time) {
+		if (finished) {
+			throw new IllegalStateException("this order is already finished");
+		}
+		completionTime = time;
+		finished = true;
+	}
+
+	/**
+	 * sets estimated completion time to the given time.
+	 * 
+	 * @throws IllegalStateException if this order is already finished
+	 */
+	public void setCompletionTime(TimeStamp time) {
 		if (finished) {
 			throw new IllegalStateException("this order is already finished");
 		}
 		completionTime = time;
 	}
 
-	public void setExpectedCompletionTime(int time) {
-		expectedCompletionTime = time;
-	}
-
-	public int getExpectedCompletionTime() {
-		return expectedCompletionTime;
-	}
-
 	/**
 	 * @return estimated completion time, or actual completion time if this
 	 *         order is finished
 	 */
-	public Day getCompletionTime() {
+	public TimeStamp getCompletionTime() {
 		return completionTime;
 	}
 

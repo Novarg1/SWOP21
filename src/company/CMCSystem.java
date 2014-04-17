@@ -78,7 +78,7 @@ public class CMCSystem
 		
 		this.schedule.increaseDayTime(time);
 		
-		if(schedule.getCurrentDay().shouldBeFinished() &&
+		if(schedule.getCurrentTime().shouldBeFinished() &&
 				assemblyLine.isEmpty())
 		{
 			schedule.startNewDay();
