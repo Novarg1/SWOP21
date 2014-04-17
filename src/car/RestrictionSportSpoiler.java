@@ -8,7 +8,7 @@ public class RestrictionSportSpoiler extends Restriction {
 	@Override
 	protected boolean isFulfilled(ModelSpecification spec) {
 		try {
-			return ! spec.getBody().getOptionType().equals(Body.Options.SPORT)
+			return ! spec.getBody().equals(Body.SPORT)
 					|| spec.spoilerChosen();
 		} catch(NullPointerException e) {
 			return false;

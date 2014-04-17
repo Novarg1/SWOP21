@@ -18,43 +18,43 @@ public class ModelCSpec extends ModelSpecification {
 	}
 
 	@Override
-	protected Set<Body.Options> getAllBodyOptions() {
-		return EnumSet.of(Body.Options.SPORT);
+	protected Set<Body> getAllBodies() {
+		return EnumSet.of(Body.SPORT);
 	}
 
 	@Override
-	protected Set<Color.Options> getAllColorOptions() {
-		return EnumSet.of(Color.Options.BLACK, Color.Options.WHITE);
+	protected Set<Color> getAllColors() {
+		return EnumSet.of(Color.BLACK, Color.WHITE);
 	}
 
 	@Override
-	protected Set<Engine.Options> getAllEngineOptions() {
-		return EnumSet.of(Engine.Options.PERFORMANCE, Engine.Options.ULTRA);
+	protected Set<Engine> getAllEngines() {
+		return EnumSet.of(Engine.PERFORMANCE, Engine.ULTRA);
 	}
 
 	@Override
-	protected Set<Gearbox.Options> getAllGearboxOptions() {
-		return EnumSet.of(Gearbox.Options.MANUAL6);
+	protected Set<Gearbox> getAllGearboxes() {
+		return EnumSet.of(Gearbox.MANUAL6);
 	}
 
 	@Override
-	protected Set<Seats.Options> getAllSeatsOptions() {
-		return EnumSet.of(Seats.Options.LEATHER_BLACK,
-				Seats.Options.LEATHER_WHITE);
+	protected Set<Seats> getAllSeats() {
+		return EnumSet.of(Seats.LEATHER_BLACK,
+				Seats.LEATHER_WHITE);
 	}
 
 	@Override
-	protected Set<Airco.Options> getAllAircoOptions() {
-		return EnumSet.of(Airco.Options.MANUAL, Airco.Options.AUTOMATIC);
+	protected Set<Airco> getAllAircos() {
+		return EnumSet.of(Airco.MANUAL, Airco.AUTOMATIC);
 	}
 
 	@Override
-	protected Set<Wheels.Options> getAllWheelsOptions() {
-		return EnumSet.of(Wheels.Options.SPORTS, Wheels.Options.WINTER);
+	protected Set<Wheels> getAllWheels() {
+		return EnumSet.of(Wheels.SPORTS, Wheels.WINTER);
 	}
 
 	@Override
-	protected Set<Spoiler.Options> getAllSpoilerOptions() {
-		return EnumSet.of(Spoiler.Options.HIGH, Spoiler.Options.LOW);
+	protected Set<Spoiler> getAllSpoilers() {
+		return EnumSet.of(Spoiler.HIGH, Spoiler.LOW);
 	}
 }

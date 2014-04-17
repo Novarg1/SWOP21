@@ -1,17 +1,21 @@
 package car;
 
-public class Wheels extends CarPart<Wheels.Options> {
+public enum Wheels implements CarPart {
 
-	public enum Options {
-		WINTER, COMFORT, SPORTS;
+	WINTER, COMFORT, SPORTS;
+
+	@Override
+	public void install(Car car) {
+		car.setWheels(this);
 	}
-	
-	protected Wheels(Options option) {
-		super(option);
+
+	@Override
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getWheels());
 	}
 
 	@Override
 	public String getAssemblyInstructions() {
-		return "place the wheels on the car";
+		return "install "+this+" wheels";
 	}
 }

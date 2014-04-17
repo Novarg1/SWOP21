@@ -1,17 +1,21 @@
 package car;
 
-public class Engine extends CarPart<Engine.Options> {
+public enum Engine implements CarPart {
 
-	public enum Options {
-		STANDARD, PERFORMANCE, ULTRA;
-	}
+	STANDARD, PERFORMANCE, ULTRA;
 
-	public Engine(Options option) {
-		super(option);
+	@Override
+	public void install(Car car) {
+		car.setEngine(this);
 	}
 
 	@Override
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getEngine());
+	}
+	
+	@Override
 	public String getAssemblyInstructions() {
-		return "place the engine in the car";
+		return "install "+this+" engine";
 	}
 }

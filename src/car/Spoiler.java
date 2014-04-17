@@ -1,17 +1,21 @@
 package car;
 
-public class Spoiler extends CarPart<Spoiler.Options> {
+public enum Spoiler implements CarPart {
 
-	public enum Options {
-		HIGH, LOW;
+	HIGH, LOW;
+
+	@Override
+	public void install(Car car) {
+		car.setSpoiler(this);;
 	}
-	
-	protected Spoiler(Options option) {
-		super(option);
+
+	@Override
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getSpoiler());
 	}
 
 	@Override
 	public String getAssemblyInstructions() {
-		return "bolt the spoiler on the car";
+		return "install "+this+" spoiler.";
 	}
 }

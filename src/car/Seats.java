@@ -1,18 +1,21 @@
 package car;
 
-public class Seats extends CarPart<Seats.Options> {
+public enum Seats implements CarPart {
 
-	public enum Options {
-		LEATHER_BLACK, LEATHER_WHITE, VINYL_GREY;
+	LEATHER_BLACK, LEATHER_WHITE, VINYL_GREY;
+
+	@Override
+	public void install(Car car) {
+		car.setSeats(this);
 	}
 
-	protected Seats(Options option) {
-		super(option);
+	@Override
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getSeats());
 	}
 
 	@Override
 	public String getAssemblyInstructions() {
-		// TODO Auto-generated method stub
-		return "pick up the seats and insert them in the car";
+		return "install "+this+" seats";
 	}
 }

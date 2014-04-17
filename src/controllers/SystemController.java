@@ -70,7 +70,7 @@ public class SystemController
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
 	
-	public List<CarPart<?>> getWorkPostOverview(String id)
+	public List<CarPart> getWorkPostOverview(String id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{

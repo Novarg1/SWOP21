@@ -1,19 +1,21 @@
 package car;
 
-public class Airco extends CarPart<Airco.Options> {
+public enum Airco implements CarPart {
 
-	public Airco(Options option) {
-		super(option);
-	}
+	MANUAL, AUTOMATIC;
 
-	public enum Options {
-		MANUAL,
-		AUTOMATIC;
+	@Override
+	public void install(Car car) {
+		car.setAirco(this);
 	}
 
 	@Override
-	public String getAssemblyInstructions() {
-		return "install the airco";
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getAirco());
 	}
-
+	
+	@Override
+	public String getAssemblyInstructions() {
+		return "install "+this+" airco";
+	}
 }

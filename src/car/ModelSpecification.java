@@ -24,8 +24,8 @@ public abstract class ModelSpecification {
 
 	protected final String type;
 	private Restriction restriction;
-	
-	private final int buildingTime; 
+
+	private final int buildingTime;
 	private static final int DEFAULT_BUILDING_TIME = 60;
 
 	/**
@@ -34,7 +34,7 @@ public abstract class ModelSpecification {
 	public ModelSpecification(String model) {
 		this(model, DEFAULT_BUILDING_TIME);
 	}
-	
+
 	public ModelSpecification(String model, int buildingTime) {
 		type = model;
 		restriction = getModelRestriction();
@@ -56,7 +56,7 @@ public abstract class ModelSpecification {
 	 * @param body
 	 */
 	public void setBody(Body body) {
-		if (!getViableBodyOptions().contains(body)) {
+		if (!getViableBodies().contains(body)) {
 			throw new IllegalArgumentException("invalid body");
 		}
 		this.body = body;
@@ -72,16 +72,17 @@ public abstract class ModelSpecification {
 	/**
 	 * @return a list with viable body options for this model specification.
 	 *         This method takes the restrictions and previously selected
-	 *         carparts into account. returns null if body was already chosen.
+	 *         carparts into account. returns empty set if body was already
+	 *         chosen.
 	 */
-	public Set<Body.Options> getViableBodyOptions() {
+	public Set<Body> getViableBodies() {
 		if (bodyChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Body.Options> result = getAllBodyOptions();
-		for(Body.Options option : result) {
-			this.body = new Body(option);
-			if(!this.isPartiallyValid()) {
+		Set<Body> result = getAllBodies();
+		for (Body option : result) {
+			this.body = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.body = null;
@@ -92,7 +93,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the body options that this model offers
 	 */
-	protected abstract Set<Body.Options> getAllBodyOptions();
+	protected abstract Set<Body> getAllBodies();
 
 	/**
 	 * inspector for this.color
@@ -109,7 +110,7 @@ public abstract class ModelSpecification {
 	 * @param color
 	 */
 	public void setColor(Color color) {
-		if (!getViableColorOptions().contains(color)) {
+		if (!getViableColors().contains(color)) {
 			throw new IllegalArgumentException("invalid color");
 		}
 		this.color = color;
@@ -129,14 +130,14 @@ public abstract class ModelSpecification {
 	 *         This method takes the restrictions and previously selected
 	 *         carparts into account. returns null if color was already chosen.
 	 */
-	public Set<Color.Options> getViableColorOptions() {
+	public Set<Color> getViableColors() {
 		if (colorChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Color.Options> result = getAllColorOptions();
-		for(Color.Options option : result) {
-			this.color = new Color(option);
-			if(!this.isPartiallyValid()) {
+		Set<Color> result = getAllColors();
+		for (Color option : result) {
+			this.color = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.color = null;
@@ -147,7 +148,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the color options that this model offers
 	 */
-	protected abstract Set<Color.Options> getAllColorOptions();
+	protected abstract Set<Color> getAllColors();
 
 	/**
 	 * inspector for this.engine
@@ -164,7 +165,7 @@ public abstract class ModelSpecification {
 	 * @param engine
 	 */
 	public void setEngine(Engine engine) {
-		if (!getViableEngineOptions().contains(engine)) {
+		if (!getViableEngines().contains(engine)) {
 			throw new IllegalArgumentException("invalid engine");
 		}
 		this.engine = engine;
@@ -184,14 +185,14 @@ public abstract class ModelSpecification {
 	 *         This method takes the restrictions and previously selected
 	 *         carparts into account. returns null if engine was already chosen.
 	 */
-	public Set<Engine.Options> getViableEngineOptions() {
+	public Set<Engine> getViableEngines() {
 		if (engineChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Engine.Options> result = getAllEngineOptions();
-		for(Engine.Options option : result) {
-			this.engine = new Engine(option);
-			if(!this.isPartiallyValid()) {
+		Set<Engine> result = getAllEngines();
+		for (Engine option : result) {
+			this.engine = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.engine = null;
@@ -202,7 +203,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the engine options that this model offers
 	 */
-	protected abstract Set<Engine.Options> getAllEngineOptions();
+	protected abstract Set<Engine> getAllEngines();
 
 	/**
 	 * inspector for this.gearbox
@@ -219,7 +220,7 @@ public abstract class ModelSpecification {
 	 * @param gearbox
 	 */
 	public void setGearbox(Gearbox gearbox) {
-		if (!getViableGearboxOptions().contains(gearbox)) {
+		if (!getViableGearboxes().contains(gearbox)) {
 			throw new IllegalArgumentException("invalid gearbox");
 		}
 		this.gearbox = gearbox;
@@ -237,16 +238,17 @@ public abstract class ModelSpecification {
 	/**
 	 * @return a list with viable gearbox options for this model specification.
 	 *         This method takes the restrictions and previously selected
-	 *         carparts into account. returns null if gearbox was already chosen.
+	 *         carparts into account. returns null if gearbox was already
+	 *         chosen.
 	 */
-	public Set<Gearbox.Options> getViableGearboxOptions() {
+	public Set<Gearbox> getViableGearboxes() {
 		if (gearboxChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Gearbox.Options> result = getAllGearboxOptions();
-		for(Gearbox.Options option : result) {
-			this.gearbox = new Gearbox(option);
-			if(!this.isPartiallyValid()) {
+		Set<Gearbox> result = getAllGearboxes();
+		for (Gearbox option : result) {
+			this.gearbox = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.gearbox = null;
@@ -257,7 +259,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the gearbox options that this model offers
 	 */
-	protected abstract Set<Gearbox.Options> getAllGearboxOptions();
+	protected abstract Set<Gearbox> getAllGearboxes();
 
 	/**
 	 * inspector for this.seats
@@ -274,7 +276,7 @@ public abstract class ModelSpecification {
 	 * @param seats
 	 */
 	public void setSeats(Seats seats) {
-		if (!getViableSeatsOptions().contains(seats)) {
+		if (!getViableSeats().contains(seats)) {
 			throw new IllegalArgumentException("invalid seats");
 		}
 		this.seats = seats;
@@ -294,14 +296,14 @@ public abstract class ModelSpecification {
 	 *         This method takes the restrictions and previously selected
 	 *         carparts into account. returns null if seats was already chosen.
 	 */
-	public Set<Seats.Options> getViableSeatsOptions() {
+	public Set<Seats> getViableSeats() {
 		if (seatsChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Seats.Options> result = getAllSeatsOptions();
-		for(Seats.Options option : result) {
-			this.seats = new Seats(option);
-			if(!this.isPartiallyValid()) {
+		Set<Seats> result = getAllSeats();
+		for (Seats option : result) {
+			this.seats = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.seats = null;
@@ -312,7 +314,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the seats options that this model offers
 	 */
-	protected abstract Set<Seats.Options> getAllSeatsOptions();
+	protected abstract Set<Seats> getAllSeats();
 
 	/**
 	 * inspector for this.airco
@@ -329,7 +331,7 @@ public abstract class ModelSpecification {
 	 * @param airco
 	 */
 	public void setAirco(Airco airco) {
-		if (!getViableAircoOptions().contains(airco)) {
+		if (!getViableAircos().contains(airco)) {
 			throw new IllegalArgumentException("invalid airco");
 		}
 		this.airco = airco;
@@ -349,14 +351,14 @@ public abstract class ModelSpecification {
 	 *         This method takes the restrictions and previously selected
 	 *         carparts into account. returns null if airco was already chosen.
 	 */
-	public Set<Airco.Options> getViableAircoOptions() {
+	public Set<Airco> getViableAircos() {
 		if (aircoChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Airco.Options> result = getAllAircoOptions();
-		for(Airco.Options option : result) {
-			this.airco = new Airco(option);
-			if(!this.isPartiallyValid()) {
+		Set<Airco> result = getAllAircos();
+		for (Airco option : result) {
+			this.airco = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.airco = null;
@@ -367,7 +369,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the airco options that this model offers
 	 */
-	protected abstract Set<Airco.Options> getAllAircoOptions();
+	protected abstract Set<Airco> getAllAircos();
 
 	/**
 	 * inspector for this.wheels
@@ -384,7 +386,7 @@ public abstract class ModelSpecification {
 	 * @param wheels
 	 */
 	public void setWheels(Wheels wheels) {
-		if (!getViableWheelsOptions().contains(wheels)) {
+		if (!getViableWheels().contains(wheels)) {
 			throw new IllegalArgumentException("invalid wheels");
 		}
 		this.wheels = wheels;
@@ -404,14 +406,14 @@ public abstract class ModelSpecification {
 	 *         This method takes the restrictions and previously selected
 	 *         carparts into account. returns null if wheels was already chosen.
 	 */
-	public Set<Wheels.Options> getViableWheelsOptions() {
+	public Set<Wheels> getViableWheels() {
 		if (wheelsChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Wheels.Options> result = getAllWheelsOptions();
-		for(Wheels.Options option : result) {
-			this.wheels = new Wheels(option);
-			if(!this.isPartiallyValid()) {
+		Set<Wheels> result = getAllWheels();
+		for (Wheels option : result) {
+			this.wheels = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.wheels = null;
@@ -422,7 +424,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the wheels options that this model offers
 	 */
-	protected abstract Set<Wheels.Options> getAllWheelsOptions();
+	protected abstract Set<Wheels> getAllWheels();
 
 	/**
 	 * inspector for this.spoiler
@@ -439,7 +441,7 @@ public abstract class ModelSpecification {
 	 * @param spoiler
 	 */
 	public void setSpoiler(Spoiler spoiler) {
-		if (!getViableSpoilerOptions().contains(spoiler)) {
+		if (!getViableSpoilers().contains(spoiler)) {
 			throw new IllegalArgumentException("invalid spoiler");
 		}
 		this.spoiler = spoiler;
@@ -457,16 +459,17 @@ public abstract class ModelSpecification {
 	/**
 	 * @return a list with viable spoiler options for this model specification.
 	 *         This method takes the restrictions and previously selected
-	 *         carparts into account. returns null if spoiler was already chosen.
+	 *         carparts into account. returns null if spoiler was already
+	 *         chosen.
 	 */
-	public Set<Spoiler.Options> getViableSpoilerOptions() {
+	public Set<Spoiler> getViableSpoilers() {
 		if (spoilerChosen()) {
 			return Collections.emptySet();
 		}
-		Set<Spoiler.Options> result = getAllSpoilerOptions();
-		for(Spoiler.Options option : result) {
-			this.spoiler = new Spoiler(option);
-			if(!this.isPartiallyValid()) {
+		Set<Spoiler> result = getAllSpoilers();
+		for (Spoiler option : result) {
+			this.spoiler = option;
+			if (!this.isPartiallyValid()) {
 				result.remove(option);
 			}
 			this.spoiler = null;
@@ -477,7 +480,7 @@ public abstract class ModelSpecification {
 	/**
 	 * returns a set containing all the spoiler options that this model offers
 	 */
-	protected abstract Set<Spoiler.Options> getAllSpoilerOptions();
+	protected abstract Set<Spoiler> getAllSpoilers();
 
 	/**
 	 * Adds the passed restriction to the chain of restrictions
@@ -503,21 +506,21 @@ public abstract class ModelSpecification {
 
 	/**
 	 * @return Restriction that states that all chosen parts must be supported
-	 * 		by this model.
+	 *         by this model.
 	 */
 	private Restriction getModelRestriction() {
 		return new Restriction() {
 
 			@Override
 			protected boolean isFulfilled(ModelSpecification spec) {
-				return (!bodyChosen() || getAllBodyOptions().contains(getBody().getOptionType()))
-						&& (!colorChosen() || getAllColorOptions().contains(getColor().getOptionType()))
-						&& (!engineChosen() || getAllEngineOptions().contains(getEngine().getOptionType()))
-						&& (!gearboxChosen() || getAllGearboxOptions().contains(getGearbox().getOptionType()))
-						&& (!seatsChosen() || getAllSeatsOptions().contains(getSeats().getOptionType()))
-						&& (!wheelsChosen() || getAllWheelsOptions().contains(getWheels().getOptionType()))
-						&& (!aircoChosen() || getAllAircoOptions().contains(getAirco().getOptionType()))
-						&& (!spoilerChosen() || getAllSpoilerOptions().contains(getSpoiler().getOptionType()));
+				return (!bodyChosen() || getAllBodies().contains(getBody()))
+						&& (!colorChosen() || getAllColors().contains(getColor()))
+						&& (!engineChosen() || getAllEngines().contains(getEngine()))
+						&& (!gearboxChosen() || getAllGearboxes().contains(getGearbox()))
+						&& (!seatsChosen() || getAllSeats().contains(getSeats()))
+						&& (!wheelsChosen() || getAllWheels().contains(getWheels()))
+						&& (!aircoChosen() || getAllAircos().contains(getAirco()))
+						&& (!spoilerChosen() || getAllSpoilers().contains(getSpoiler()));
 			}
 
 			@Override

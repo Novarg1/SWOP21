@@ -1,17 +1,21 @@
 package car;
 
-public class Body extends CarPart<Body.Options> {
+public enum Body implements CarPart {
 
-	public enum Options {
-		SEDAN, BREAK, SPORT;
-	}
-
-	public Body(Options option) {
-		super(option);
+	SEDAN, BREAK, SPORT;
+	
+	@Override
+	public void install(Car car) {
+		car.setBody(this);
 	}
 
 	@Override
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getBody());
+	}
+	
+	@Override
 	public String getAssemblyInstructions() {
-		return "install the body";
+		return "install "+this+" body";
 	}
 }

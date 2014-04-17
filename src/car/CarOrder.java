@@ -14,7 +14,7 @@ public class CarOrder {
 	public final ModelSpecification SPECIFICATION;
 	private TimeStamp completionTime;
 	private boolean finished = false;
-	private Map<String, List<CarPart<?>>> productionScheme = null;
+	private Map<String, List<CarPart>> productionScheme = null;
 
 	public CarOrder(String client, ModelSpecification specification) {
 		if (specification == null || !specification.isValid()) {
@@ -70,11 +70,11 @@ public class CarOrder {
 	}
 
 	public void setProductionScheme(
-			Map<String, List<CarPart<?>>> productionScheme) {
+			Map<String, List<CarPart>> productionScheme) {
 		this.productionScheme = productionScheme;
 	}
 
-	public List<CarPart<?>> getProductionSchemeFor(String workstationId) {
+	public List<CarPart> getProductionSchemeFor(String workstationId) {
 		if (this.productionScheme.containsKey(workstationId))
 			return this.productionScheme.get(workstationId);
 		return null;

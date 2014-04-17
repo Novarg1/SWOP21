@@ -8,10 +8,10 @@ public class RestricitionSportEngine extends Restriction {
 	@Override
 	protected boolean isFulfilled(ModelSpecification spec) {
 		try {
-			return ! spec.getBody().getOptionType().equals(Body.Options.SPORT)
-					|| spec.getEngine().getOptionType().equals(Engine.Options.PERFORMANCE)
-					|| spec.getEngine().getOptionType().equals(Engine.Options.ULTRA);
-		} catch(NullPointerException e) {
+			return !spec.getBody().equals(Body.SPORT)
+					|| spec.getEngine().equals(Engine.PERFORMANCE)
+					|| spec.getEngine().equals(Engine.ULTRA);
+		} catch (NullPointerException e) {
 			return false;
 		}
 	}

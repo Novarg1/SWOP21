@@ -8,8 +8,7 @@ import car.CarOrder;
 import car.CarPart;
 
 /**
- * Represents any workstation in this company. Subclasses should define a list
- * of carpart-classes that this workstation can install on cars
+ * Represents any workstation in this company.
  */
 public abstract class WorkStation {
 
@@ -48,13 +47,13 @@ public abstract class WorkStation {
 	 * @return a list of tasks that still need to be completed for the current
 	 *         job
 	 */
-	public List<CarPart<?>> getPendingTasks() {
+	public List<CarPart> getPendingTasks() {
 		if(current == null) {
 			return Collections.emptyList();
 		}
-		List<CarPart<?>> list = new LinkedList<>();
-		for(CarPart<?> p : current.getProductionSchemeFor(id))
-			if(!p.isInstalled())
+		List<CarPart> list = new LinkedList<>();
+		for(CarPart p : current.getProductionSchemeFor(id))
+			if(!p.isInstalled(current))
 				list.add(p);
 		return list;
 	}

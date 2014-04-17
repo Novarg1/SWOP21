@@ -1,16 +1,20 @@
 package car;
 
-public class Gearbox extends CarPart<Gearbox.Options> {
+public enum Gearbox implements CarPart {
 
-	public enum Options {
-		MANUAL5, MANUAL6, AUTOMATIC;
+	MANUAL5, MANUAL6, AUTOMATIC;
+
+	@Override
+	public void install(Car car) {
+		car.setGearbox(this);
 	}
-	
-	protected Gearbox(Options option) {
-		super(option);
+
+	@Override
+	public boolean isInstalled(Car car) {
+		return this.equals(car.getGearbox());
 	}
-	
+
 	public String getAssemblyInstructions() {
-		return "install the gearbox";
+		return "install "+this+" gearbox";
 	}
 }

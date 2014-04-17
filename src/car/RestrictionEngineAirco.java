@@ -8,10 +8,10 @@ public class RestrictionEngineAirco extends Restriction {
 	@Override
 	protected boolean isFulfilled(ModelSpecification spec) {
 		try {
-			return ! spec.getEngine().getOptionType().equals(Engine.Options.ULTRA)
+			return !spec.getEngine().equals(Engine.ULTRA)
 					|| !spec.aircoChosen()
-					|| spec.getAirco().getOptionType().equals(Airco.Options.MANUAL);
-		} catch(NullPointerException e) {
+					|| spec.getAirco().equals(Airco.MANUAL);
+		} catch (NullPointerException e) {
 			return false;
 		}
 	}
@@ -20,5 +20,4 @@ public class RestrictionEngineAirco extends Restriction {
 	protected boolean isPartiallyFulfilled(ModelSpecification spec) {
 		return !spec.aircoChosen() || !spec.engineChosen() || isFulfilled(spec);
 	}
-
 }

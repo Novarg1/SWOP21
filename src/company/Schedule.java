@@ -147,20 +147,20 @@ public class Schedule {
 
 	public CarOrder prepareNextOrder() {
 		CarOrder order = this.getNextOrder();
-		Map<String, List<CarPart<?>>> productionSchedule = new HashMap<>();
+		Map<String, List<CarPart>> productionSchedule = new HashMap<>();
 
 		// preparing the schedule for the car body post
-		LinkedList<CarPart<?>> carBodyPost = new LinkedList<>();
+		LinkedList<CarPart> carBodyPost = new LinkedList<>();
 		carBodyPost.add(order.SPECIFICATION.getBody());
 		carBodyPost.add(order.SPECIFICATION.getColor());
 
 		// preparing the schedule for the drive train post
-		LinkedList<CarPart<?>> driveTrainPost = new LinkedList<>();
+		LinkedList<CarPart> driveTrainPost = new LinkedList<>();
 		driveTrainPost.add(order.SPECIFICATION.getEngine());
 		driveTrainPost.add(order.SPECIFICATION.getGearbox());
 
 		// preparing the schedule for the accessoires post
-		LinkedList<CarPart<?>> accessoiresPost = new LinkedList<>();
+		LinkedList<CarPart> accessoiresPost = new LinkedList<>();
 		accessoiresPost.add(order.SPECIFICATION.getSeats());
 		if(order.SPECIFICATION.aircoChosen())
 			accessoiresPost.add(order.SPECIFICATION.getAirco());
