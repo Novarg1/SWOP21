@@ -39,13 +39,14 @@ public abstract class Restriction {
 	}
 
 	/**
-	 * checks whether this constraint is fulfilled.
+	 * @return true if this restriction is fulfilled for the given specification
 	 */
 	protected abstract boolean isFulfilled(ModelSpecification spec);
 
 	/**
-	 * @return false if there is no way to complete the given specification,
-	 * 		without it violating this restriction.
+	 * @return false if there is no way to complete the given specification
+	 *         (without changing any already chosen carparts) without it
+	 *         violating this restriction.
 	 */
 	protected abstract boolean isPartiallyFulfilled(ModelSpecification spec);
 

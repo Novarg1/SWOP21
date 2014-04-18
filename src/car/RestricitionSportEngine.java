@@ -3,22 +3,12 @@ package car;
 /**
  * If a car has a sports body it must have the performance or ultra engine.
  */
-public class RestricitionSportEngine extends Restriction {
+public class RestricitionSportEngine extends StrictRestriction {
 
 	@Override
 	protected boolean isFulfilled(ModelSpecification spec) {
-		try {
-			return !spec.getBody().equals(Body.SPORT)
-					|| spec.getEngine().equals(Engine.PERFORMANCE)
-					|| spec.getEngine().equals(Engine.ULTRA);
-		} catch (NullPointerException e) {
-			return false;
-		}
-	}
-
-	@Override
-	protected boolean isPartiallyFulfilled(ModelSpecification spec) {
-		return !spec.engineChosen() || !spec.bodyChosen()
-				|| this.isFulfilled(spec);
+		return !spec.hasPart(Body.SPORT)
+				|| spec.hasPart(Engine.PERFORMANCE)
+				|| spec.hasPart(Engine.ULTRA);
 	}
 }

@@ -1,5 +1,6 @@
 package company;
 
+import car.Car;
 import car.CarOrder;
 
 /**
@@ -7,52 +8,44 @@ import car.CarOrder;
  */
 public class AssemblyLine {
 
-	private WorkStation[] workStations;
+	private WorkStation[] workstations;
+	private Schedule schedule;
 
 	/**
 	 * Creates a new assemblyLine with the given list of workstations
-	 * @param workStations
+	 * @param workstations
 	 */
-	public AssemblyLine(WorkStation[] workStations) {
-		if(workStations == null || workStations.length < 1) {
+	public AssemblyLine(Schedule schedule) {
+		if(schedule == null) {
 			throw new IllegalArgumentException();
 		}
-		this.workStations = workStations;
+		this.schedule = schedule;
+		workstations = new WorkStation[] {
+				new CarBodyPost(),
+				new DriveTrainPost(),
+				new AccessoiresPost()
+		};
 	}
 
 	/**
 	 * advances the assembly line
-	 * 
-	 * @return
-	 * 		The carOrder that was finished;
-	 * 		null if no car was finished
 	 */
-	public CarOrder advance(CarOrder order) {
+	public void advance() {
 		if(!isReadyToAdvance()) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
-//		CarInProduction next = new CarInProduction(new Car(), order);
-//		for (int i = 0; i < workStations.length; i++) {
-//			CarInProduction temp = workStations[i].getCurrentJob();
-//			workStations[i].setCurrentJob(next);
-//			next = temp;
-//		}
-//		return next==null ? null : next.ORDER;
-		CarOrder toReturn = workStations[workStations.length - 1].getCurrentJob();
-		for(int i = workStations.length - 1; i > 0; --i)
-		{
-			workStations[i].setCurrentJob(workStations[i - 1].getCurrentJob());
+		for(int i = workstations.length - 1; i > 0; i--) {
+			workstations[i].setCurrentCar(workstations[i - 1].getCurrentCar());
 		}
-		workStations[0].setCurrentJob(order);
-		return toReturn;
+		workstations[0].setCurrentCar(new Car());
 	}
 
 	/**
 	 * @return true if all workstations on this line are ready
 	 */
 	public boolean isReadyToAdvance() {
-		for (int i = 0; i < workStations.length; i++) {
-			if(workStations[i] != null && !workStations[i].isReady()) {
+		for (int i = 0; i < workstations.length; i++) {
+			if(workstations[i] != null && !workstations[i].isReady()) {
 				return false;
 			}
 		}
@@ -63,13 +56,13 @@ public class AssemblyLine {
 	 * @return The list of workstations this assemblyLine contains
 	 */
 	public WorkStation[] getWorkstations() {
-		return workStations;
+		return workstations;
 	}
 	
 	public boolean isEmpty()
 	{
-		for(WorkStation w : workStations)
-			if(w.getCurrentJob() != null)
+		for(WorkStation w : workstations)
+			if(w.getCurrentCar() != null)
 				return false;
 		return true;
 	}

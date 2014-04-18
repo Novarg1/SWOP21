@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import util.TimeStamp;
+import car.Airco;
+import car.Body;
 import car.CarOrder;
 import car.CarPart;
-
-/*
- * TODO ideetje (voor mezelf om morgen verder te denken):
- * maak terug car klasse; 
- * geef car maar geen carOrder aan workposts;
- * workposts vragen aan schedule wat er op hun car moet;
- * modelspecification houdt dan geen parts maar types bij;
- */
+import car.Color;
+import car.Engine;
+import car.Gearbox;
+import car.Seats;
+import car.Spoiler;
+import car.Wheels;
 
 /**
  * Represents the schedule of the company. Contains a list of pending orders,
@@ -27,6 +27,7 @@ public class Schedule {
 		FIFO, SPECIFICATION_BATCH;
 	}
 
+	private LinkedList<CarOrder> finished;
 	private LinkedList<CarOrder> pending;
 	private LinkedList<CarOrder> schedule;
 	private TimeStamp currentTime;
@@ -131,7 +132,7 @@ public class Schedule {
 	/**
 	 * @return All upcoming orders, in the order they are scheduled.
 	 */
-	public LinkedList<CarOrder> getUpcomingOrders() {
+	public List<CarOrder> getUpcomingOrders() {
 		return new LinkedList<>(schedule);
 	}
 
@@ -140,40 +141,38 @@ public class Schedule {
 		//TODO incorrect; take other orders into account
 	}
 
-	public boolean canNextOrderBeBuildToday(int numberOfWorkstations) {
-		int additionalTime = this.getExpectedWorkTimeForNextOrder(numberOfWorkstations);
+	public boolean nextOrderCanBeBuildToday() {
+		int additionalTime = this.getExpectedWorkTimeForNextOrder(3); //TODO
 		return !this.currentTime.shouldBeFinishedAfter(additionalTime);
 	}
 
-	public CarOrder prepareNextOrder() {
+	public CarOrder prepareNextOrder() { //TODO
 		CarOrder order = this.getNextOrder();
 		Map<String, List<CarPart>> productionSchedule = new HashMap<>();
 
 		// preparing the schedule for the car body post
 		LinkedList<CarPart> carBodyPost = new LinkedList<>();
-		carBodyPost.add(order.SPECIFICATION.getBody());
-		carBodyPost.add(order.SPECIFICATION.getColor());
+		carBodyPost.add(order.SPECIFICATION.getPart(Body.class));
+		carBodyPost.add(order.SPECIFICATION.getPart(Color.class));
 
 		// preparing the schedule for the drive train post
 		LinkedList<CarPart> driveTrainPost = new LinkedList<>();
-		driveTrainPost.add(order.SPECIFICATION.getEngine());
-		driveTrainPost.add(order.SPECIFICATION.getGearbox());
+		driveTrainPost.add(order.SPECIFICATION.getPart(Engine.class));
+		driveTrainPost.add(order.SPECIFICATION.getPart(Gearbox.class));
 
 		// preparing the schedule for the accessoires post
 		LinkedList<CarPart> accessoiresPost = new LinkedList<>();
-		accessoiresPost.add(order.SPECIFICATION.getSeats());
-		if(order.SPECIFICATION.aircoChosen())
-			accessoiresPost.add(order.SPECIFICATION.getAirco());
-		accessoiresPost.add(order.SPECIFICATION.getWheels());
-		if(order.SPECIFICATION.spoilerChosen())
-			accessoiresPost.add(order.SPECIFICATION.getSpoiler());
+		accessoiresPost.add(order.SPECIFICATION.getPart(Seats.class));
+		if(order.SPECIFICATION.hasPart(Airco.class))
+			accessoiresPost.add(order.SPECIFICATION.getPart(Airco.class));
+		accessoiresPost.add(order.SPECIFICATION.getPart(Wheels.class));
+		if(order.SPECIFICATION.hasPart(Spoiler.class))
+			accessoiresPost.add(order.SPECIFICATION.getPart(Spoiler.class));
 
 		// creating the hashmap
 		productionSchedule.put("CARBODY", carBodyPost);
 		productionSchedule.put("DRIVETRAIN", driveTrainPost);	//TODO String-based; moet anders
 		productionSchedule.put("ACCESSOIRES", accessoiresPost);
-
-		order.setProductionScheme(productionSchedule);
 
 		return order;
 	}

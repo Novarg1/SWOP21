@@ -5,7 +5,7 @@ package company;
  */
 public class AccessoiresPost extends WorkStation {
 
-	private static final String ID = "ACCESOIRES";
+	private static final int ID = 3;
 	
 	public AccessoiresPost() {
 		super(ID);

@@ -5,7 +5,7 @@ package company;
  */
 public class DriveTrainPost extends WorkStation {
 
-	private static final String id = "DRIVETRAIN";
+	private static final int id = 2;
 
 	public DriveTrainPost() {
 		super(id);

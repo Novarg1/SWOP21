@@ -5,7 +5,7 @@ package company;
  */
 public class CarBodyPost extends WorkStation {
 
-	private static final String id = "CARBODY";
+	private static final int id = 1;
 
 	public CarBodyPost() {
 		super(id);
