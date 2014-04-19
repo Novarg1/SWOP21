@@ -8,7 +8,7 @@ import java.util.Map;
 import util.TimeStamp;
 import car.Airco;
 import car.Body;
-import car.CarOrder;
+import car.Order;
 import car.CarPart;
 import car.Color;
 import car.Engine;
@@ -27,9 +27,11 @@ public class Schedule {
 		FIFO, SPECIFICATION_BATCH;
 	}
 
-	private LinkedList<CarOrder> finished;
-	private LinkedList<CarOrder> pending;
-	private LinkedList<CarOrder> schedule;
+	private static final int NB_WORKPOSTS = 3;
+	private LinkedList<Order> finished;
+	private LinkedList<Order> pending;
+	private LinkedList<Order> schedule;
+	private Order[] inAssembly;
 	private TimeStamp currentTime;
 	private Algorithm algorithm;
 
@@ -41,6 +43,8 @@ public class Schedule {
 	public Schedule() {
 		this.pending = new LinkedList<>();
 		this.schedule = new LinkedList<>();
+		this.finished = new LinkedList<>();
+		inAssembly = new Order[NB_WORKPOSTS];
 		this.currentTime = TimeStamp.FirstDay();
 		this.algorithm = Algorithm.FIFO;
 	}
@@ -116,7 +120,7 @@ public class Schedule {
 	 * adds given order to the list of pending orders and updates the schedule.
 	 * Estimated completion time will be set in order.
 	 */
-	public void placeOrder(CarOrder order) {
+	public void placeOrder(Order order) {
 		this.pending.addLast(order);
 		updateSchedule();
 	}
@@ -125,15 +129,22 @@ public class Schedule {
 	 * Returns the next order that is scheduled to start assembly and removes
 	 * it from the pending orders.
 	 */
-	private CarOrder getNextOrder() {
+	private Order getNextOrder() {
 		return this.pending.pop();
 	}
 
 	/**
 	 * @return All upcoming orders, in the order they are scheduled.
 	 */
-	public List<CarOrder> getUpcomingOrders() {
+	public List<Order> getUpcomingOrders() {
 		return new LinkedList<>(schedule);
+	}
+	
+	/**
+	 * @return All finished orders, in the order they were completed.
+	 */
+	public List<Order> getFinishedOrders() {
+		return new LinkedList<>(finished);
 	}
 
 	public int getExpectedWorkTimeForNextOrder(int numberOfWorkstations) {
@@ -146,8 +157,8 @@ public class Schedule {
 		return !this.currentTime.shouldBeFinishedAfter(additionalTime);
 	}
 
-	public CarOrder prepareNextOrder() { //TODO
-		CarOrder order = this.getNextOrder();
+	public Order prepareNextOrder() { //TODO
+		Order order = this.getNextOrder();
 		Map<String, List<CarPart>> productionSchedule = new HashMap<>();
 
 		// preparing the schedule for the car body post

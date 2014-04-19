@@ -4,14 +4,11 @@ public enum Spoiler implements CarPart {
 
 	HIGH, LOW;
 
+	private static final int workStationID = 2;
+	
 	@Override
-	public void install(Car car) {
-		car.setSpoiler(this);;
-	}
-
-	@Override
-	public boolean isInstalled(Car car) {
-		return this.equals(car.getSpoiler());
+	public int getWorkStationID() {
+		return workStationID;
 	}
 
 	@Override

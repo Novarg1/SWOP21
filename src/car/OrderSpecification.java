@@ -3,32 +3,47 @@ package car;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
+import car.restrictions.Restriction;
+
+/*
  * invariant: Van elke subklasse van carPart mag hoogstens 1 instantie in de
  * lijst van parts zitten
  */
-public abstract class ModelSpecification {
+
+/**
+ * Represents the specification of an order.
+ */
+public abstract class OrderSpecification {
 
 	private Set<CarPart> parts;
 	private Restriction restriction;
 
+	private final String name;
 	private final int buildingTime;
 	private static final int DEFAULT_BUILDING_TIME = 60;
 
 	/**
 	 * model with default building time per workstation
 	 */
-	public ModelSpecification() {
-		this(DEFAULT_BUILDING_TIME);
+	public OrderSpecification(String modelName) {
+		this(modelName, DEFAULT_BUILDING_TIME);
 	}
 
 	/**
 	 * model with given building time per workstation
 	 */
-	public ModelSpecification(int buildingTime) {
+	public OrderSpecification(String modelName, int buildingTime) {
+		name = modelName;
 		restriction = getModelRestriction();
 		this.buildingTime = buildingTime;
 		parts = new HashSet<>();
+	}
+
+	/**
+	 * @return A set containing all parts this specification has.
+	 */
+	public Set<CarPart> getParts() {
+		return new HashSet<>(parts);
 	}
 
 	/**
@@ -72,7 +87,7 @@ public abstract class ModelSpecification {
 	 * @return All parts of the given type that (1) are supported by this model
 	 *         and (2) would not render this specification invalid.
 	 */
-	public <Part extends CarPart> Set<CarPart> getViableOptions(Class<Part> type) {
+	public Set<CarPart> getViableOptions(Class<? extends CarPart> type) {
 		CarPart current = getPart(type);
 		Set<CarPart> result = getAllOptions(type);
 		for (CarPart part : result) {
@@ -88,7 +103,7 @@ public abstract class ModelSpecification {
 	/**
 	 * @return All parts of the given type that are supported by this model.
 	 */
-	private <Part extends CarPart> Set<CarPart> getAllOptions(Class<Part> type) {
+	private Set<CarPart> getAllOptions(Class<? extends CarPart> type) {
 		Set<CarPart> result = new HashSet<>();
 		for (CarPart part : getAllSupportedParts()) {
 			if (part.getClass().equals(type)) {
@@ -113,6 +128,15 @@ public abstract class ModelSpecification {
 	 * @return all CarParts that are supported by this model.
 	 */
 	protected abstract CarPart[] getAllSupportedParts();
+
+	/**
+	 * @return true if this and other have the same set of carParts and are the
+	 *         same type of orderspecification.
+	 */
+	public boolean matches(OrderSpecification other) {
+		return this.getClass().equals(other.getClass())
+				&& this.parts.equals(other.parts);
+	}
 
 	/**
 	 * Adds the given restriction to the chain of restrictions of this
@@ -149,7 +173,7 @@ public abstract class ModelSpecification {
 		return new Restriction() {
 
 			@Override
-			protected boolean isFulfilled(ModelSpecification spec) {
+			protected boolean isFulfilled(OrderSpecification spec) {
 				for (Class<? extends CarPart> type : getAllPartTypes()) {
 					CarPart part = getPart(type);
 					if (part != null && !getAllOptions(type).contains(part)) {
@@ -160,7 +184,7 @@ public abstract class ModelSpecification {
 			}
 
 			@Override
-			protected boolean isPartiallyFulfilled(ModelSpecification spec) {
+			protected boolean isPartiallyFulfilled(OrderSpecification spec) {
 				return this.isFulfilled(spec);
 			}
 		};
@@ -174,15 +198,22 @@ public abstract class ModelSpecification {
 	}
 
 	/**
+	 * @return the name of this orderSpecification (e.g. "modelA")
+	 */
+	public String getModelName() {
+		return name;
+	}
+
+	/**
 	 * returns a string representation for this object
 	 * 
 	 * @return a string representation for this object
 	 */
 	@Override
 	public String toString() {
-		String result = "";
+		String result = getModelName();
 		for (Class<? extends CarPart> type : getAllPartTypes()) {
-			result += type.getName() + ": " + getPart(type) + "\n";
+			result += "\n" + type.getName() + ": " + getPart(type);
 		}
 		return result;
 	}

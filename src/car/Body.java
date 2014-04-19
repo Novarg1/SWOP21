@@ -4,16 +4,13 @@ public enum Body implements CarPart {
 
 	SEDAN, BREAK, SPORT;
 	
+	private static final int workStationID = 0;
+	
 	@Override
-	public void install(Car car) {
-		car.setBody(this);
+	public int getWorkStationID() {
+		return workStationID;
 	}
 
-	@Override
-	public boolean isInstalled(Car car) {
-		return this.equals(car.getBody());
-	}
-	
 	@Override
 	public String getAssemblyInstructions() {
 		return "install "+this+" body";

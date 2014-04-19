@@ -1,7 +1,11 @@
 package car;
 
-public class ModelBSpec extends ModelSpecification {
+/**
+ * Orderspecification for a complete car of Model B
+ */
+public class ModelBSpec extends OrderSpecification {
 
+	private static String name = "ModelB";
 	private static final CarPart[] supportedParts = new CarPart[] {
 		Body.SEDAN, Body.BREAK, Body.SPORT,
 		Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW,
@@ -13,6 +17,10 @@ public class ModelBSpec extends ModelSpecification {
 		Spoiler.LOW
 	};
 
+	public ModelBSpec() {
+		super(name);
+	}
+	
 	@Override
 	protected CarPart[] getAllSupportedParts() {
 		return supportedParts;

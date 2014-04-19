@@ -1,4 +1,6 @@
-package car;
+package car.restrictions;
+
+import car.OrderSpecification;
 
 /**
  * A strict restriction is partially fulfilled for a given specification if and
@@ -7,7 +9,7 @@ package car;
 public abstract class StrictRestriction extends Restriction {
 
 	@Override
-	public boolean isPartiallyFulfilled(ModelSpecification spec) {
+	public boolean isPartiallyFulfilled(OrderSpecification spec) {
 		return this.isFulfilled(spec);
 	}
 }

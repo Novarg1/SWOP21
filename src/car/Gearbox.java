@@ -4,14 +4,11 @@ public enum Gearbox implements CarPart {
 
 	MANUAL5, MANUAL6, AUTOMATIC;
 
+	private static final int workStationID = 1;
+	
 	@Override
-	public void install(Car car) {
-		car.setGearbox(this);
-	}
-
-	@Override
-	public boolean isInstalled(Car car) {
-		return this.equals(car.getGearbox());
+	public int getWorkStationID() {
+		return workStationID;
 	}
 
 	public String getAssemblyInstructions() {

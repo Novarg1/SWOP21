@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.LineReader;
-import car.ModelSpecification;
+import car.OrderSpecification;
 import car.ModelASpec;
-import car.CarOrder;
+import car.Order;
 import car.Airco;
 import car.Body;
 import car.Color;
@@ -18,8 +18,8 @@ import car.Wheels;
 
 public class UseCaseControllerGarageHolder implements UseCaseController {
 	private String user;
-	private List<CarOrder> upcommingOrders;
-	private List<CarOrder> prevOrders;
+	private List<Order> upcommingOrders;
+	private List<Order> prevOrders;
 	private SystemController systemController;
 
 	@Override
@@ -48,11 +48,11 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 	private void presentUserHistory() {
 		int index = 1;
 		System.out.println("Upcomming orders:");
-		for (CarOrder o : upcommingOrders)
+		for (Order o : upcommingOrders)
 			System.out.println("(" + (index++) + ") order "
 					+ o.SPECIFICATION.getType());
 		System.out.println("Finished orders:");
-		for (CarOrder o : prevOrders)
+		for (Order o : prevOrders)
 			System.out.println("(" + (index++) + ") " + o);
 	}
 
@@ -68,7 +68,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 
 		int choice = Integer.parseInt(LineReader.readLine());
 
-		ModelSpecification spec = this.getSpecification(choice);
+		OrderSpecification spec = this.getSpecification(choice);
 
 		setBody(spec);
 		setColor(spec);
@@ -79,7 +79,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		setWheels(spec);
 		setSpoiler(spec);
 
-		CarOrder order = new CarOrder(user, spec);
+		Order order = new Order(user, spec);
 
 		System.out.println("Are you sure you want to place this order:");
 		System.out.println(order);
@@ -98,11 +98,11 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		upcommingOrders = systemController.getScheduledOrdersFor(user);
 	}
 
-	private ModelSpecification getSpecification(int n) {
+	private OrderSpecification getSpecification(int n) {
 		return new ModelASpec();
 	}
 
-	private void setBody(ModelSpecification spec) {
+	private void setBody(OrderSpecification spec) {
 		while(!spec.bodyChosen()) {
 			System.out.println("What body type would you like?");
 
@@ -119,7 +119,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setColor(ModelSpecification spec) {
+	private void setColor(OrderSpecification spec) {
 		while(!spec.colorChosen()) {
 			System.out.println("What color type would you like?");
 
@@ -137,7 +137,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setEngine(ModelSpecification spec) {
+	private void setEngine(OrderSpecification spec) {
 		while (!spec.engineChosen()) {
 			System.out.println("What engine type would you like?");
 
@@ -155,7 +155,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setGearbox(ModelSpecification spec) {
+	private void setGearbox(OrderSpecification spec) {
 		while (!spec.gearboxChosen()) {
 			System.out.println("What Gearbox type would you like?");
 
@@ -173,7 +173,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setSeats(ModelSpecification spec) {
+	private void setSeats(OrderSpecification spec) {
 		while (!spec.seatsChosen()) {
 			System.out.println("What Seats type would you like?");
 
@@ -191,7 +191,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setAirco(ModelSpecification spec) {
+	private void setAirco(OrderSpecification spec) {
 		if (spec.getViableAircos().isEmpty()) {
 			return;
 		}
@@ -217,7 +217,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setWheels(ModelSpecification spec) {
+	private void setWheels(OrderSpecification spec) {
 		while (!spec.wheelsChosen()) {
 			System.out.println("What Wheels type would you like?");
 
@@ -235,7 +235,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		}
 	}
 
-	private void setSpoiler(ModelSpecification spec) {
+	private void setSpoiler(OrderSpecification spec) {
 		if (spec.getViableSpoilers().isEmpty()) {
 			return;
 		}

@@ -1,7 +1,7 @@
 package company;
 
 import car.Car;
-import car.CarOrder;
+import car.Order;
 
 /**
  * An assemblyline has a list of workstations and can be advanced.
@@ -9,17 +9,12 @@ import car.CarOrder;
 public class AssemblyLine {
 
 	private WorkStation[] workstations;
-	private Schedule schedule;
 
 	/**
 	 * Creates a new assemblyLine with the given list of workstations
 	 * @param workstations
 	 */
-	public AssemblyLine(Schedule schedule) {
-		if(schedule == null) {
-			throw new IllegalArgumentException();
-		}
-		this.schedule = schedule;
+	public AssemblyLine() {
 		workstations = new WorkStation[] {
 				new CarBodyPost(),
 				new DriveTrainPost(),
@@ -29,23 +24,25 @@ public class AssemblyLine {
 
 	/**
 	 * advances the assembly line
+	 * 
+	 * @param order The order that is to be assembled next.
 	 */
-	public void advance() {
+	public void advance(Order order) {
 		if(!isReadyToAdvance()) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
 		for(int i = workstations.length - 1; i > 0; i--) {
 			workstations[i].setCurrentCar(workstations[i - 1].getCurrentCar());
 		}
-		workstations[0].setCurrentCar(new Car());
+		workstations[0].setCurrentCar(new Car(order));
 	}
 
 	/**
 	 * @return true if all workstations on this line are ready
 	 */
 	public boolean isReadyToAdvance() {
-		for (int i = 0; i < workstations.length; i++) {
-			if(workstations[i] != null && !workstations[i].isReady()) {
+		for (WorkStation workstation : workstations) {
+			if(!workstation.isReady()) {
 				return false;
 			}
 		}
@@ -59,8 +56,10 @@ public class AssemblyLine {
 		return workstations;
 	}
 	
-	public boolean isEmpty()
-	{
+	/**
+	 * @return true if no workstation on this assemblyline has a car.
+	 */
+	public boolean isEmpty() {
 		for(WorkStation w : workstations)
 			if(w.getCurrentCar() != null)
 				return false;

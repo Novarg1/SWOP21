@@ -4,14 +4,11 @@ public enum Seats implements CarPart {
 
 	LEATHER_BLACK, LEATHER_WHITE, VINYL_GREY;
 
+	private static final int workStationID = 2;
+	
 	@Override
-	public void install(Car car) {
-		car.setSeats(this);
-	}
-
-	@Override
-	public boolean isInstalled(Car car) {
-		return this.equals(car.getSeats());
+	public int getWorkStationID() {
+		return workStationID;
 	}
 
 	@Override

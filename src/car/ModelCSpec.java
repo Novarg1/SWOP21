@@ -1,7 +1,11 @@
 package car;
 
-public class ModelCSpec extends ModelSpecification {
+/**
+ * Orderspecification for a complete car of Model C
+ */
+public class ModelCSpec extends OrderSpecification {
 
+	private static final String name = "ModelC";
 	private static final int BUILDING_TIME = 70;
 	private static final CarPart[] supportedParts = new CarPart[] {
 		Body.SPORT,
@@ -15,7 +19,7 @@ public class ModelCSpec extends ModelSpecification {
 	};
 	
 	public ModelCSpec() {
-		super(BUILDING_TIME);
+		super(name, BUILDING_TIME);
 	}
 
 	@Override

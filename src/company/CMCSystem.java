@@ -3,7 +3,7 @@ package company;
 import java.util.LinkedList;
 import java.util.List;
 
-import car.CarOrder;
+import car.Order;
 
 public class CMCSystem 
 {
@@ -11,26 +11,26 @@ public class CMCSystem
 	private AssemblyLine assemblyLine;
 	private UserManager userManager;
 	
-	private List<CarOrder> finishedOrders;
+	private List<Order> finishedOrders;
 	
 	public CMCSystem() {
 		schedule = new Schedule();
 		assemblyLine = new AssemblyLine(schedule);
-		finishedOrders = new LinkedList<CarOrder>();
+		finishedOrders = new LinkedList<Order>();
 		userManager = new UserManager();
 	}
 	
-	public List<CarOrder> getScheduledOrdersForUser(String user) {
-		LinkedList<CarOrder> list = schedule.getUpcomingOrders();
-		for(CarOrder o : list)
+	public List<Order> getScheduledOrdersForUser(String user) {
+		LinkedList<Order> list = schedule.getUpcomingOrders();
+		for(Order o : list)
 			if(o.CLIENT != user)
 				list.remove(o);
 		return list;
 	}
 	
-	public List<CarOrder> getFinishedOrdersForUser(String user) {
-		List<CarOrder> list = new LinkedList<CarOrder>();
-		for(CarOrder o : finishedOrders)
+	public List<Order> getFinishedOrdersForUser(String user) {
+		List<Order> list = new LinkedList<Order>();
+		for(Order o : finishedOrders)
 			if(o.CLIENT == user)
 				list.add(o);
 		return list;
@@ -54,7 +54,7 @@ public class CMCSystem
 		// scenario 1: the next order can be pushed on the assembly line today
 		// scenario 2: the next order is for tomorrow however the time has to be
 		//             increased and the assembly line pushed
-		CarOrder orderToPush = null;
+		Order orderToPush = null;
 		if(this.schedule.canNextOrderBeBuildToday()) {
 			orderToPush = this.schedule.prepareNextOrder();
 		}

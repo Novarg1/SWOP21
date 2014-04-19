@@ -4,14 +4,11 @@ public enum Color implements CarPart {
 
 	RED, BLUE, BLACK, WHITE, GREEN, YELLOW;
 
+	private static final int workStationID = 0;
+	
 	@Override
-	public void install(Car car) {
-		car.setColor(this);
-	}
-
-	@Override
-	public boolean isInstalled(Car car) {
-		return this.equals(car.getColor());
+	public int getWorkStationID() {
+		return workStationID;
 	}
 
 	@Override

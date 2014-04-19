@@ -5,7 +5,7 @@ package util;
  * but rather a working day with a worktime, which is the standard worktime
  * diminished by the overtime of the day before
  */
-public class TimeStamp {
+public class TimeStamp implements Comparable<TimeStamp> {
 
 	private final int day;
 	private final int time;
@@ -43,7 +43,7 @@ public class TimeStamp {
 	public int getWorkTime() {
 		return STANDARD_WORKTIME - overtime;
 	}
-	
+
 	/**
 	 * This function initializes the next day based on the current day
 	 * it automatically passes the time that was worked too much today
@@ -103,5 +103,16 @@ public class TimeStamp {
 	 */
 	public TimeStamp increaseTime(int timeToIncrease) {
 		return new TimeStamp(day, time+timeToIncrease, overtime);
+	}
+
+	@Override
+	public int compareTo(TimeStamp other) {
+		if(this.day<other.day || (this.day==other.day && this.time<other.time)) {
+			return -1;
+		}
+		if(this.day==other.day && this.time==other.time) {
+			return 0;
+		}
+		return 1;
 	}
 }

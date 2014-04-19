@@ -2,7 +2,7 @@ package tests;
 
 import org.junit.Test;
 
-import car.ModelSpecification;
+import car.OrderSpecification;
 import car.ModelASpec;
 import car.Engine;
 
@@ -11,7 +11,7 @@ public class TestCarSpecification
 	@Test
 	public void TestSpecificationA()
 	{
-		ModelSpecification spec = new ModelASpec();
+		OrderSpecification spec = new ModelASpec();
 		
 		assert(spec.getViableBodyOptions().size() == 2);
 		assert(spec.getViableColorOptions().size() == 4);

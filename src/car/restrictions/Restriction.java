@@ -1,4 +1,6 @@
-package car;
+package car.restrictions;
+
+import car.OrderSpecification;
 
 /**
  * this class represents a specific restriction and a chain to manage all
@@ -23,7 +25,7 @@ public abstract class Restriction {
 	 * checks whether this constraint and all successors are fulfilled for the
 	 * given specification
 	 */
-	public boolean checkValidity(ModelSpecification spec) {
+	public boolean checkValidity(OrderSpecification spec) {
 		return this.isFulfilled(spec)
 				&& (successor == null || successor.checkValidity(spec));
 	}
@@ -33,7 +35,7 @@ public abstract class Restriction {
 	 * specification but does not take into account whether all required parts
 	 * have been selected or not
 	 */
-	public boolean checkPartialValidity(ModelSpecification spec) {
+	public boolean checkPartialValidity(OrderSpecification spec) {
 		return this.isPartiallyFulfilled(spec)
 				&& (successor == null || successor.checkPartialValidity(spec));
 	}
@@ -41,14 +43,14 @@ public abstract class Restriction {
 	/**
 	 * @return true if this restriction is fulfilled for the given specification
 	 */
-	protected abstract boolean isFulfilled(ModelSpecification spec);
+	protected abstract boolean isFulfilled(OrderSpecification spec);
 
 	/**
 	 * @return false if there is no way to complete the given specification
 	 *         (without changing any already chosen carparts) without it
 	 *         violating this restriction.
 	 */
-	protected abstract boolean isPartiallyFulfilled(ModelSpecification spec);
+	protected abstract boolean isPartiallyFulfilled(OrderSpecification spec);
 
 	/**
 	 * @return trivial restriction that is always fulfilled
@@ -57,12 +59,12 @@ public abstract class Restriction {
 		return new Restriction() {
 
 			@Override
-			protected boolean isFulfilled(ModelSpecification spec) {
+			protected boolean isFulfilled(OrderSpecification spec) {
 				return true;
 			}
 
 			@Override
-			protected boolean isPartiallyFulfilled(ModelSpecification spec) {
+			protected boolean isPartiallyFulfilled(OrderSpecification spec) {
 				return true;
 			}
 		};

@@ -1,12 +1,20 @@
-package car;
+package car.restrictions;
+
+import car.Body;
+import car.Color;
+import car.Engine;
+import car.Gearbox;
+import car.OrderSpecification;
+import car.Seats;
+import car.Wheels;
 
 /**
  * Body, color, engine, gearbox, seats and wheels are mandatory.
  */
-public class RestrictionMandatoryParts extends PartialRestriction {
+public class MandatoryParts extends PartialRestriction {
 
 	@Override
-	protected boolean isFulfilled(ModelSpecification spec) {
+	protected boolean isFulfilled(OrderSpecification spec) {
 		return spec.hasPart(Body.class)
 				&& spec.hasPart(Color.class)
 				&& spec.hasPart(Engine.class)

@@ -4,14 +4,11 @@ public enum Wheels implements CarPart {
 
 	WINTER, COMFORT, SPORTS;
 
+	private static final int workStationID = 2;
+	
 	@Override
-	public void install(Car car) {
-		car.setWheels(this);
-	}
-
-	@Override
-	public boolean isInstalled(Car car) {
-		return this.equals(car.getWheels());
+	public int getWorkStationID() {
+		return workStationID;
 	}
 
 	@Override

@@ -5,14 +5,14 @@ import util.TimeStamp;
 /**
  * Represents an order for a car.
  */
-public class CarOrder {
+public class Order {
 
 	public final String CLIENT;
-	public final ModelSpecification SPECIFICATION;
+	public final OrderSpecification SPECIFICATION;
 	private TimeStamp completionTime;
 	private boolean finished = false;
 
-	public CarOrder(String client, ModelSpecification specification) {
+	public Order(String client, OrderSpecification specification) {
 		if (specification == null || !specification.isValid()) {
 			throw new IllegalArgumentException("invalid specification");
 		}
@@ -38,7 +38,7 @@ public class CarOrder {
 	 * 
 	 * @throws IllegalStateException if this order is already finished
 	 */
-	public void setCompletionTime(TimeStamp time) {
+	public void setEstimatedCompletionTime(TimeStamp time) {
 		if (finished) {
 			throw new IllegalStateException("this order is already finished");
 		}

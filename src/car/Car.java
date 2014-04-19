@@ -1,134 +1,50 @@
 package car;
 
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * invariant: Van elke subklasse van carPart mag hoogstens 1 instantie in de
+ * lijst van parts zitten
+ */
 public class Car {
 
-	private Body body;
-	private Color color;
-	private Engine engine;
-	private Gearbox gearbox;
-	private Seats seats;
-	private Wheels wheels;
-	private Airco airco;
-	private Spoiler spoiler;
+	private Order order;
+	private Set<CarPart> parts;
 
-	/**
-	 * @return the body
-	 */
-	public Body getBody() {
-		return body;
+	public Car(Order order) {
+		this.order = order;
+		parts = new HashSet<>();
 	}
 
-	/**
-	 * @param body
-	 *            the body to set
-	 */
-	public void setBody(Body body) {
-		this.body = body;
+	public Order getOrder() {
+		return order;
 	}
 
-	/**
-	 * @return the color
-	 */
-	public Color getColor() {
-		return color;
+	public CarPart getPart(Class<? extends CarPart> type) {
+		for (CarPart part : parts) {
+			if(part.getClass().equals(type)) {
+				return part;
+			}
+		}
+		return null;
+	}
+	
+	public void install(CarPart part) {
+		parts.remove(getPart(part.getClass()));
+		parts.add(part);
+	}
+	
+	public boolean hasPart(Class<? extends CarPart> type) {
+		return getPart(type) != null;
 	}
 
-	/**
-	 * @param color
-	 *            the color to set
-	 */
-	public void setColor(Color color) {
-		this.color = color;
+	public boolean hasPart(CarPart part) {
+		return parts.contains(part);
+
 	}
 
-	/**
-	 * @return the engine
-	 */
-	public Engine getEngine() {
-		return engine;
+	public boolean matchesOrder() {
+		return parts.equals(order.SPECIFICATION.getParts());
 	}
-
-	/**
-	 * @param engine
-	 *            the engine to set
-	 */
-	public void setEngine(Engine engine) {
-		this.engine = engine;
-	}
-
-	/**
-	 * @return the gearbox
-	 */
-	public Gearbox getGearbox() {
-		return gearbox;
-	}
-
-	/**
-	 * @param gearbox
-	 *            the gearbox to set
-	 */
-	public void setGearbox(Gearbox gearbox) {
-		this.gearbox = gearbox;
-	}
-
-	/**
-	 * @return the seats
-	 */
-	public Seats getSeats() {
-		return seats;
-	}
-
-	/**
-	 * @param seats
-	 *            the seats to set
-	 */
-	public void setSeats(Seats seats) {
-		this.seats = seats;
-	}
-
-	/**
-	 * @return the wheels
-	 */
-	public Wheels getWheels() {
-		return wheels;
-	}
-
-	/**
-	 * @param wheels
-	 *            the wheels to set
-	 */
-	public void setWheels(Wheels wheels) {
-		this.wheels = wheels;
-	}
-
-	/**
-	 * @return the airco
-	 */
-	public Airco getAirco() {
-		return airco;
-	}
-
-	/**
-	 * @param airco
-	 *            the airco to set
-	 */
-	public void setAirco(Airco airco) {
-		this.airco = airco;
-	}
-
-	/**
-	 * @return the spoiler
-	 */
-	public Spoiler getSpoiler() {
-		return spoiler;
-	}
-
-	/**
-	 * @param spoiler
-	 *            the spoiler to set
-	 */
-	public void setSpoiler(Spoiler spoiler) {
-		this.spoiler = spoiler;
-	}
-
 }

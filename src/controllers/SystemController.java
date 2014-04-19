@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import car.CarOrder;
+import car.Order;
 import car.CarPart;
 import company.AssemblyLine;
 import company.CMCSystem;
@@ -48,7 +48,7 @@ public class SystemController
 		s.startNewDay();
 	}
 	
-	public int placeOrder(CarOrder order)
+	public int placeOrder(Order order)
 	{
 		Schedule s = cmcSytem.getSchedule();
 		return s.placeOrder(order);
@@ -60,12 +60,12 @@ public class SystemController
 		return a.isReadyToAdvance();
 	}
 	
-	public List<CarOrder> getScheduledOrdersFor(String user)
+	public List<Order> getScheduledOrdersFor(String user)
 	{
 		return cmcSytem.getScheduledOrdersForUser(user);
 	}
 	
-	public List<CarOrder> getFinishedOrdersFor(String user)
+	public List<Order> getFinishedOrdersFor(String user)
 	{
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
