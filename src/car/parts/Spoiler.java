@@ -1,6 +1,6 @@
-package car;
+package car.parts;
 
-public enum Spoiler implements CarPart {
+public enum Spoiler implements Carpart {
 
 	HIGH, LOW;
 

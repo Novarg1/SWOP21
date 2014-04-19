@@ -3,7 +3,7 @@ package controllers;
 import java.util.List;
 
 import car.Order;
-import car.CarPart;
+import car.parts.Carpart;
 import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;
@@ -70,7 +70,7 @@ public class SystemController
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
 	
-	public List<CarPart> getWorkPostOverview(String id)
+	public List<Carpart> getWorkPostOverview(String id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{

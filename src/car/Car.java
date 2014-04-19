@@ -1,50 +1,61 @@
 package car;
 
-import java.util.HashSet;
-import java.util.Set;
+import car.parts.Carpart;
+import car.parts.CarpartsSet;
 
 /**
- * invariant: Van elke subklasse van carPart mag hoogstens 1 instantie in de
- * lijst van parts zitten
+ * Represents a car. A car has a set of installed carparts and an associated
+ * order.
  */
 public class Car {
 
 	private Order order;
-	private Set<CarPart> parts;
+	private CarpartsSet parts;
 
+	/**
+	 * Creates a new car, associated with the given order.
+	 * 
+	 * @param order
+	 */
 	public Car(Order order) {
 		this.order = order;
-		parts = new HashSet<>();
+		parts = new CarpartsSet();
 	}
 
+	/**
+	 * @return The order associated with this car.
+	 */
 	public Order getOrder() {
 		return order;
 	}
 
-	public CarPart getPart(Class<? extends CarPart> type) {
-		for (CarPart part : parts) {
-			if(part.getClass().equals(type)) {
-				return part;
-			}
+	/**
+	 * @return a copy of the set containing the parts installed on this car.
+	 */
+	public CarpartsSet getParts() {
+		return parts.clone();
+	}
+
+	/**
+	 * installs the given part on this car if no part of this type is installed
+	 * already.
+	 * 
+	 * @return true if the given part was succesfully installed; false if this
+	 *         car already had a part of the given type installed.
+	 */
+	public boolean install(Carpart part) {
+		if (parts.containsType(part.getClass())) {
+			return false;
 		}
-		return null;
-	}
-	
-	public void install(CarPart part) {
-		parts.remove(getPart(part.getClass()));
 		parts.add(part);
-	}
-	
-	public boolean hasPart(Class<? extends CarPart> type) {
-		return getPart(type) != null;
+		return true;
 	}
 
-	public boolean hasPart(CarPart part) {
-		return parts.contains(part);
-
-	}
-
+	/**
+	 * @return true if all parts specified on the order are installed on this
+	 *         car, and all parts installed are specified on the order.
+	 */
 	public boolean matchesOrder() {
-		return parts.equals(order.SPECIFICATION.getParts());
+		return parts.equals(order.getParts());
 	}
 }

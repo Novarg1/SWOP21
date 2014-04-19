@@ -1,6 +1,6 @@
-package car;
+package car.parts;
 
-public enum Gearbox implements CarPart {
+public enum Gearbox implements Carpart {
 
 	MANUAL5, MANUAL6, AUTOMATIC;
 

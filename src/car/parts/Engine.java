@@ -1,6 +1,6 @@
-package car;
+package car.parts;
 
-public enum Engine implements CarPart {
+public enum Engine implements Carpart {
 
 	STANDARD, PERFORMANCE, ULTRA;
 

@@ -3,15 +3,15 @@ package tests;
 import org.junit.Test;
 
 import car.OrderSpecification;
-import car.ModelASpec;
-import car.Engine;
+import car.models.ModelA;
+import car.parts.Engine;
 
 public class TestCarSpecification 
 {
 	@Test
 	public void TestSpecificationA()
 	{
-		OrderSpecification spec = new ModelASpec();
+		OrderSpecification spec = new ModelA();
 		
 		assert(spec.getViableBodyOptions().size() == 2);
 		assert(spec.getViableColorOptions().size() == 4);

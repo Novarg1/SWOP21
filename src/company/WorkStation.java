@@ -1,11 +1,8 @@
 package company;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import car.Car;
-import car.CarPart;
+import car.parts.Carpart;
+import car.parts.CarpartsSet;
 
 /**
  * Represents any workstation in this company.
@@ -36,13 +33,13 @@ public abstract class WorkStation {
 	/**
 	 * Installs the given part to the car currently in this WorkStation.
 	 */
-	public void install(CarPart part) {
-		if(current == null) {
+	public void install(Carpart part) {
+		if (current == null) {
 			throw new IllegalStateException("No car in this workstation");
 		}
 		current.install(part);
 	}
-	
+
 	/**
 	 * @return true if all tasks are completed for the current car in this
 	 *         workstation
@@ -55,13 +52,14 @@ public abstract class WorkStation {
 	 * @return a set of tasks that still need to be completed for the current
 	 *         car. If no car is present, returns an empty set.
 	 */
-	public Set<CarPart> getPendingTasks() {
-		if(current == null) {
-			return Collections.emptySet();
+	public CarpartsSet getPendingTasks() {
+		CarpartsSet pendingTasks = new CarpartsSet();
+		if (current == null) {
+			return pendingTasks; // empty set
 		}
-		Set<CarPart> pendingTasks = new HashSet<>();
-		for(CarPart part : current.getOrder().SPECIFICATION.getParts()) {
-			if(part.getWorkStationID() == this.getId() && !(current.hasPart(part))) {
+		for (Carpart part : current.getOrder().getParts()) {
+			if ((part.getWorkStationID() == this.getId())
+					&& !(current.getParts().contains(part))) {
 				pendingTasks.add(part);
 			}
 		}

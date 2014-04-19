@@ -1,6 +1,6 @@
 package car.restrictions;
 
-import car.OrderSpecification;
+import car.parts.CarpartsSet;
 
 /**
  * A partialrestriction is always 'partially fulfilled'.
@@ -8,7 +8,7 @@ import car.OrderSpecification;
 public abstract class PartialRestriction extends Restriction {
 
 	@Override
-	protected boolean isPartiallyFulfilled(OrderSpecification spec) {
+	protected boolean isPartiallyFulfilled(CarpartsSet set) {
 		return true;
 	}
 }

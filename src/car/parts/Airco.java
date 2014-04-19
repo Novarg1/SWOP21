@@ -1,6 +1,6 @@
-package car;
+package car.parts;
 
-public enum Airco implements CarPart {
+public enum Airco implements Carpart {
 
 	MANUAL, AUTOMATIC;
 	

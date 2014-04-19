@@ -1,8 +1,8 @@
-package car;
+package car.parts;
 
-public enum Wheels implements CarPart {
+public enum Seats implements Carpart {
 
-	WINTER, COMFORT, SPORTS;
+	LEATHER_BLACK, LEATHER_WHITE, VINYL_GREY;
 
 	private static final int workStationID = 2;
 	
@@ -13,6 +13,6 @@ public enum Wheels implements CarPart {
 
 	@Override
 	public String getAssemblyInstructions() {
-		return "install "+this+" wheels";
+		return "install "+this+" seats";
 	}
 }

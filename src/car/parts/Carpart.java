@@ -1,10 +1,10 @@
-package car;
+package car.parts;
 
 /**
  * interface for representing all carParts a carpart knows how to install itself
  * and whether or not it has been installed already on a given car.
  */
-public interface CarPart {
+public interface Carpart {
 
 	/**
 	 * @return Instructions in text-format for installing this part.

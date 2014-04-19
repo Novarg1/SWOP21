@@ -1,6 +1,6 @@
-package car;
+package car.parts;
 
-public enum Body implements CarPart {
+public enum Body implements Carpart {
 
 	SEDAN, BREAK, SPORT;
 	

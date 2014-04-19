@@ -1,9 +1,9 @@
 package car.restrictions;
 
-import car.OrderSpecification;
+import car.parts.CarpartsSet;
 
 /**
- * this class represents a specific restriction and a chain to manage all
+ * this class represents a setific restriction and a chain to manage all
  * restrictions
  */
 public abstract class Restriction {
@@ -23,34 +23,34 @@ public abstract class Restriction {
 
 	/**
 	 * checks whether this constraint and all successors are fulfilled for the
-	 * given specification
+	 * given set.
 	 */
-	public boolean checkValidity(OrderSpecification spec) {
-		return this.isFulfilled(spec)
-				&& (successor == null || successor.checkValidity(spec));
+	public boolean checkValidity(CarpartsSet set) {
+		return this.isFulfilled(set)
+				&& (successor == null || successor.checkValidity(set));
 	}
 
 	/**
-	 * Checks wheter this restriction and successors pass for given
-	 * specification but does not take into account whether all required parts
-	 * have been selected or not
+	 * Checks whether this restriction and successors pass for given set but does
+	 * not take into account whether all required parts have been selected or
+	 * not.
 	 */
-	public boolean checkPartialValidity(OrderSpecification spec) {
-		return this.isPartiallyFulfilled(spec)
-				&& (successor == null || successor.checkPartialValidity(spec));
+	public boolean checkPartialValidity(CarpartsSet set) {
+		return this.isPartiallyFulfilled(set)
+				&& (successor == null || successor.checkPartialValidity(set));
 	}
 
 	/**
-	 * @return true if this restriction is fulfilled for the given specification
+	 * @return true if this restriction is fulfilled for the given set.
 	 */
-	protected abstract boolean isFulfilled(OrderSpecification spec);
+	protected abstract boolean isFulfilled(CarpartsSet set);
 
 	/**
-	 * @return false if there is no way to complete the given specification
-	 *         (without changing any already chosen carparts) without it
-	 *         violating this restriction.
+	 * @return false if there is no way to complete the given set (without
+	 *         changing any already chosen carparts) without it violating this
+	 *         restriction.
 	 */
-	protected abstract boolean isPartiallyFulfilled(OrderSpecification spec);
+	protected abstract boolean isPartiallyFulfilled(CarpartsSet set);
 
 	/**
 	 * @return trivial restriction that is always fulfilled
@@ -59,12 +59,12 @@ public abstract class Restriction {
 		return new Restriction() {
 
 			@Override
-			protected boolean isFulfilled(OrderSpecification spec) {
+			protected boolean isFulfilled(CarpartsSet set) {
 				return true;
 			}
 
 			@Override
-			protected boolean isPartiallyFulfilled(OrderSpecification spec) {
+			protected boolean isPartiallyFulfilled(CarpartsSet set) {
 				return true;
 			}
 		};
@@ -74,6 +74,10 @@ public abstract class Restriction {
 	 * @return default chain of restrictions
 	 */
 	public static Restriction getDefaultRestrictions() {
-		return null; // TODO
+		EngineAircoRestriction restriction = new EngineAircoRestriction();
+		restriction.setSuccessor(new MandatoryPartsRestriction());
+		restriction.setSuccessor(new SportEngineRestriction());
+		restriction.setSuccessor(new SportSpoilerRestriction());
+		return restriction;
 	}
 }

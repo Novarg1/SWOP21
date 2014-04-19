@@ -1,6 +1,6 @@
-package car;
+package car.parts;
 
-public enum Color implements CarPart {
+public enum Color implements Carpart {
 
 	RED, BLUE, BLACK, WHITE, GREEN, YELLOW;
 

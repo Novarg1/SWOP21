@@ -5,16 +5,16 @@ import java.util.List;
 
 import util.LineReader;
 import car.OrderSpecification;
-import car.ModelASpec;
 import car.Order;
-import car.Airco;
-import car.Body;
-import car.Color;
-import car.Engine;
-import car.Gearbox;
-import car.Seats;
-import car.Spoiler;
-import car.Wheels;
+import car.models.ModelA;
+import car.parts.Airco;
+import car.parts.Body;
+import car.parts.Color;
+import car.parts.Engine;
+import car.parts.Gearbox;
+import car.parts.Seats;
+import car.parts.Spoiler;
+import car.parts.Wheels;
 
 public class UseCaseControllerGarageHolder implements UseCaseController {
 	private String user;
@@ -99,7 +99,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 	}
 
 	private OrderSpecification getSpecification(int n) {
-		return new ModelASpec();
+		return new ModelA();
 	}
 
 	private void setBody(OrderSpecification spec) {

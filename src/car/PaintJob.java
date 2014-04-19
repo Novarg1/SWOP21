@@ -1,15 +1,26 @@
 package car;
 
-public class PaintJob extends CustomsSpec {
+import util.TimeStamp;
+import car.parts.Carpart;
+import car.parts.CarpartsSet;
+import car.parts.Color;
 
-	private static final String name = "Spray painting job";
-	
-	public PaintJob() {
-		super(name);
+/**
+ * An order for spray painting a car.
+ */
+public class PaintJob extends CustomOrder {
+
+	public PaintJob(String client, TimeStamp deadline, Color color) {
+		super(client, deadline, new CarpartsSet(new Carpart[] { color }));
 	}
 
 	@Override
-	protected CarPart[] getAllSupportedParts() {
-		return Color.values();
+	protected boolean isValidCarpartsSet(CarpartsSet parts) {
+		return (getParts().size() == 1) && getParts().containsType(Color.class);
+	}
+
+	@Override
+	public String toString() {
+		return "Order for spray painting\n" + getParts();
 	}
 }

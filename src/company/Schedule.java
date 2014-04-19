@@ -1,21 +1,10 @@
 package company;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import util.TimeStamp;
-import car.Airco;
-import car.Body;
 import car.Order;
-import car.CarPart;
-import car.Color;
-import car.Engine;
-import car.Gearbox;
-import car.Seats;
-import car.Spoiler;
-import car.Wheels;
 
 /**
  * Represents the schedule of the company. Contains a list of pending orders,
@@ -147,44 +136,44 @@ public class Schedule {
 		return new LinkedList<>(finished);
 	}
 
-	public int getExpectedWorkTimeForNextOrder(int numberOfWorkstations) {
-		return this.pending.peek().SPECIFICATION.getBuildingTimePerWorkstation() * numberOfWorkstations;
-		//TODO incorrect; take other orders into account
-	}
-
-	public boolean nextOrderCanBeBuildToday() {
-		int additionalTime = this.getExpectedWorkTimeForNextOrder(3); //TODO
-		return !this.currentTime.shouldBeFinishedAfter(additionalTime);
-	}
-
-	public Order prepareNextOrder() { //TODO
-		Order order = this.getNextOrder();
-		Map<String, List<CarPart>> productionSchedule = new HashMap<>();
-
-		// preparing the schedule for the car body post
-		LinkedList<CarPart> carBodyPost = new LinkedList<>();
-		carBodyPost.add(order.SPECIFICATION.getPart(Body.class));
-		carBodyPost.add(order.SPECIFICATION.getPart(Color.class));
-
-		// preparing the schedule for the drive train post
-		LinkedList<CarPart> driveTrainPost = new LinkedList<>();
-		driveTrainPost.add(order.SPECIFICATION.getPart(Engine.class));
-		driveTrainPost.add(order.SPECIFICATION.getPart(Gearbox.class));
-
-		// preparing the schedule for the accessoires post
-		LinkedList<CarPart> accessoiresPost = new LinkedList<>();
-		accessoiresPost.add(order.SPECIFICATION.getPart(Seats.class));
-		if(order.SPECIFICATION.hasPart(Airco.class))
-			accessoiresPost.add(order.SPECIFICATION.getPart(Airco.class));
-		accessoiresPost.add(order.SPECIFICATION.getPart(Wheels.class));
-		if(order.SPECIFICATION.hasPart(Spoiler.class))
-			accessoiresPost.add(order.SPECIFICATION.getPart(Spoiler.class));
-
-		// creating the hashmap
-		productionSchedule.put("CARBODY", carBodyPost);
-		productionSchedule.put("DRIVETRAIN", driveTrainPost);	//TODO String-based; moet anders
-		productionSchedule.put("ACCESSOIRES", accessoiresPost);
-
-		return order;
-	}
+//	public int getExpectedWorkTimeForNextOrder(int numberOfWorkstations) {
+//		return this.pending.peek().getBuildingTimePerWorkstation() * numberOfWorkstations;
+//		//TODO incorrect; take other orders into account
+//	}
+//
+//	public boolean nextOrderCanBeBuildToday() {
+//		int additionalTime = this.getExpectedWorkTimeForNextOrder(3); //TODO
+//		return !this.currentTime.shouldBeFinishedAfter(additionalTime);
+//	}
+//
+//	public Order prepareNextOrder() { //TODO
+//		Order order = this.getNextOrder();
+//		Map<String, List<Carpart>> productionSchedule = new HashMap<>();
+//
+//		// preparing the schedule for the car body post
+//		LinkedList<Carpart> carBodyPost = new LinkedList<>();
+//		carBodyPost.add(order.SPECIFICATION.get(Body.class));
+//		carBodyPost.add(order.SPECIFICATION.get(Color.class));
+//
+//		// preparing the schedule for the drive train post
+//		LinkedList<Carpart> driveTrainPost = new LinkedList<>();
+//		driveTrainPost.add(order.SPECIFICATION.get(Engine.class));
+//		driveTrainPost.add(order.SPECIFICATION.get(Gearbox.class));
+//
+//		// preparing the schedule for the accessoires post
+//		LinkedList<Carpart> accessoiresPost = new LinkedList<>();
+//		accessoiresPost.add(order.SPECIFICATION.get(Seats.class));
+//		if(order.SPECIFICATION.containsType(Airco.class))
+//			accessoiresPost.add(order.SPECIFICATION.get(Airco.class));
+//		accessoiresPost.add(order.SPECIFICATION.get(Wheels.class));
+//		if(order.SPECIFICATION.containsType(Spoiler.class))
+//			accessoiresPost.add(order.SPECIFICATION.get(Spoiler.class));
+//
+//		// creating the hashmap
+//		productionSchedule.put("CARBODY", carBodyPost);
+//		productionSchedule.put("DRIVETRAIN", driveTrainPost);	//TODO String-based; moet anders
+//		productionSchedule.put("ACCESSOIRES", accessoiresPost);
+//
+//		return order;
+//	}
 }
