@@ -61,12 +61,12 @@ public class SystemController
 		return a.isReadyToAdvance();
 	}
 	
-	public List<Order> getScheduledOrdersFor(String user)
+	public List<Order> getScheduledOrdersFor(User user)
 	{
 		return cmcSytem.getScheduledOrdersForUser(user);
 	}
 	
-	public List<Order> getFinishedOrdersFor(String user)
+	public List<Order> getFinishedOrdersFor(User user)
 	{
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}

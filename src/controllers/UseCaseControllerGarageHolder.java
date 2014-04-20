@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import user.User;
 import util.LineReader;
 import car.OrderSpecification;
 import car.Order;
@@ -17,7 +18,7 @@ import car.parts.Spoiler;
 import car.parts.Wheels;
 
 public class UseCaseControllerGarageHolder implements UseCaseController {
-	private String user;
+	private User user;
 	private List<Order> upcommingOrders;
 	private List<Order> prevOrders;
 	private SystemController systemController;
