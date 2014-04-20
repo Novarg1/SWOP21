@@ -3,6 +3,7 @@ package car;
 import java.util.HashSet;
 import java.util.Set;
 
+import user.User;
 import util.TimeStamp;
 import car.parts.Carpart;
 import car.parts.CarpartsSet;
@@ -152,9 +153,9 @@ public abstract class OrderSpecification {
 	 * @throws IllegalStateException
 	 *             if this specification is not valid.
 	 */
-	public Order extractOrder() {
+	public Order extractOrder(User client) {
 		try {
-			return new Order(this);
+			return new Order(this, client);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalStateException(
 					"must be valid before order can be extracted");

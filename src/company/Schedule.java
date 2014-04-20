@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import util.TimeStamp;
 import car.Order;
@@ -95,11 +96,11 @@ public class Schedule {
 	 * @return the next order to be assembled, or null if there are no more
 	 *         orders planned for today or if there are no more pending orders.
 	 */
-	public Order getNextOrder(int time) { //TODO corrigeer
+	public Order getNextOrder(int time) { // TODO corrigeer
 		TimeStamp prev = currentTime;
 		currentTime = currentTime.increaseTime(time);
-		if(!nextIsToday()) {
-			if(assemblyLineIsEmpty()) {
+		if (!nextIsToday()) {
+			if (assemblyLineIsEmpty()) {
 				currentTime = prev;
 				startNewDay();
 			} else {
@@ -168,7 +169,6 @@ public class Schedule {
 					"scheduling algorithm can't be null");
 		}
 		this.algorithm = algorithm;
-		getSchedule();
 	}
 
 	/**
@@ -222,7 +222,7 @@ public class Schedule {
 	 * @return the n-th first order for a new day or null if no such order
 	 *         exists.
 	 */
-	private Order getFirstOrders(int n) {
+	private Order getFirstOrder(int n) {
 		int ordersFound = 0;
 		for (Order order : pending) {
 			Set<Integer> ws = getNeededWorkstations(order);
@@ -249,7 +249,7 @@ public class Schedule {
 	 * @return the (n+1)th first order for a new day or null if no such order
 	 *         exists.
 	 */
-	private Order getLastOrders(int n) {
+	private Order getLastOrder(int n) {
 		int ordersFound = 0;
 		for (Order order : pending) {
 			Set<Integer> ws = getNeededWorkstations(order);
@@ -260,6 +260,16 @@ public class Schedule {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @return A sorted map containing all pending orders with a deadline as
+	 *         values and their deadline as keys.
+	 */
+	private SortedMap<TimeStamp, Order> getDeadlines() {
+		SortedMap<TimeStamp, Order> result = new TreeMap<>();
+		
+		return result;
 	}
 
 	/**

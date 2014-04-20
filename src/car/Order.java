@@ -13,10 +13,11 @@ public class Order {
 	private TimeStamp completionTime = null;
 	private boolean finished = false;
 
-	protected Order(OrderSpecification spec) {
+	protected Order(OrderSpecification spec, User client) {
 		if(spec == null || !spec.isValid()) {
 			throw new IllegalArgumentException("invalid specification");
 		}
+		this.client = client;
 		this.parts = spec.getParts();
 		this.buildingtime = spec.getBuildingTimePerWorkstation();
 		this.deadline = spec.getDeadline();
