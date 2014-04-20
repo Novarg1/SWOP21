@@ -1,8 +1,10 @@
 package company;
 
 import java.util.HashSet;
+import java.util.SortedMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import util.TimeStamp;
@@ -19,7 +21,7 @@ public class Schedule {
 	/*
 	 * alternative: make every algorithm a subclass of the same supertype and
 	 * implement the actual scheduling algorithm in those classes. Not really
-	 * necessary, but could be nice when the amount of algorithms gets high.
+	 * necessary, but could be nice when the amount of algorithms gets higher.
 	 */
 	public enum Algorithm {
 		FIFO, SPECIFICATION_BATCH;
@@ -28,7 +30,6 @@ public class Schedule {
 	private static final int NB_WORKPOSTS = 3;
 	private LinkedList<Order> finished;
 	private LinkedList<Order> pending;
-	private LinkedList<Order> schedule;
 	private Order[] inAssembly;
 	private TimeStamp currentTime;
 	private Algorithm algorithm;
@@ -40,7 +41,6 @@ public class Schedule {
 	 */
 	public Schedule() {
 		this.pending = new LinkedList<>();
-		this.schedule = new LinkedList<>();
 		this.finished = new LinkedList<>();
 		inAssembly = new Order[NB_WORKPOSTS];
 		this.currentTime = TimeStamp.FirstDay();
@@ -57,10 +57,9 @@ public class Schedule {
 	/**
 	 * Sets current time to beginning of next day.
 	 */
-	public void startNewDay() {
+	private void startNewDay() {
 		if (!assemblyLineIsEmpty()) {
-			throw new IllegalStateException(
-					"assemblyline must be empty before new day can start");
+			throw new IllegalStateException("assemblyline must be empty");
 		}
 		currentTime = currentTime.getNextDay();
 	}
@@ -75,27 +74,20 @@ public class Schedule {
 	}
 
 	/**
-	 * increases the current time with given time.
-	 * 
-	 * @param time
-	 *            increase in time (minutes)
-	 */
-	public void increaseDayTime(int time) {
-		currentTime = currentTime.increaseTime(time);
-	}
-
-	/**
 	 * adds given order to the list of pending orders and updates the schedule.
 	 * Estimated completion time will be set in order.
 	 */
 	public void placeOrder(Order order) {
+		if (order == null) {
+			throw new IllegalArgumentException("invalid order");
+		}
 		this.pending.addLast(order);
-		updateSchedule();
 	}
 
 	/**
 	 * Returns the next order that is scheduled to start assembly and removes it
-	 * from the pending orders.
+	 * from the pending orders. This method should therefore only be called when
+	 * the assemblyLine advances.
 	 * 
 	 * @param time
 	 *            The time the previous cycle on the assemblyLine took.
@@ -103,17 +95,22 @@ public class Schedule {
 	 * @return the next order to be assembled, or null if there are no more
 	 *         orders planned for today or if there are no more pending orders.
 	 */
-	public Order getNextOrder(int time) {
+	public Order getNextOrder(int time) { //TODO corrigeer
 		TimeStamp prev = currentTime;
 		currentTime = currentTime.increaseTime(time);
-		updateSchedule();
-		if (assemblyLineIsEmpty() && !nextIsToday()) {
-			currentTime = prev;
-			updateSchedule();
-			throw new IllegalStateException("A new day must start");
+		if(!nextIsToday()) {
+			if(assemblyLineIsEmpty()) {
+				currentTime = prev;
+				startNewDay();
+			} else {
+				return null; // wait until assemblyLine is empty
+			}
 		}
-		advanceAssemblyLine(schedule.peek());
-		return nextIsToday() ? schedule.poll() : null;
+		SortedMap<TimeStamp, Order> schedule = getSchedule();
+		Order next = schedule.get(schedule.firstKey());
+		pending.remove(next);
+		advanceAssemblyLine(next);
+		return next; // TODO remove next
 	}
 
 	/**
@@ -130,10 +127,10 @@ public class Schedule {
 	}
 
 	/**
-	 * @return All upcoming orders, in the order they are scheduled.
+	 * @return All pending orders, in the order they were placed.
 	 */
-	public List<Order> getUpcomingOrders() {
-		return new LinkedList<>(schedule);
+	public List<Order> getPendingOrders() {
+		return new LinkedList<>(pending);
 	}
 
 	/**
@@ -171,41 +168,42 @@ public class Schedule {
 					"scheduling algorithm can't be null");
 		}
 		this.algorithm = algorithm;
-		updateSchedule();
+		getSchedule();
 	}
 
 	/**
-	 * updates the schedule, using the currently selected scheduling algorithm.
+	 * @return An ordered map containing all pending orders as keys and their
+	 *         estimated completion times as values, in the order they are
+	 *         scheduled.
 	 */
-	private void updateSchedule() {
+	private SortedMap<TimeStamp, Order> getSchedule() {
 		switch (algorithm) {
 		case FIFO:
-			scheduleFIFO();
-			break;
+			return scheduleFIFO();
 		case SPECIFICATION_BATCH:
-			scheduleSpecificationBatch();
-			break;
+			return scheduleSpecificationBatch();
 		}
+		// should be unreachable
+		throw new IllegalStateException("no scheduling algorithm selected");
 	}
 
 	/**
-	 * updates the schedule using the FIFO algorithm
+	 * @return the schedule, based on pending orders, using the FIFO algorithm.
 	 */
-	private void scheduleFIFO() {
-		schedule.clear();
+	private SortedMap<TimeStamp, Order> scheduleFIFO() {
 		TimeStamp time = currentTime;
 		for (Order order : pending) {
 
-			// TODO complete
 		}
+		return null; // TODO complete
 	}
 
 	/**
-	 * updates the schedule using the specification batch algorithm
+	 * @return the schedule, based on pending orders, using the specification
+	 *         batch algorithm
 	 */
-	private void scheduleSpecificationBatch() {
-		schedule.clear();
-		// TODO
+	private SortedMap<TimeStamp, Order> scheduleSpecificationBatch() {
+		return null; // TODO
 	}
 
 	// TODO getFirstOrders en getLastorders dynamisch maken (nu: fixed aantal
@@ -265,18 +263,31 @@ public class Schedule {
 	}
 
 	/**
-	 * @return Total expected time the car associated with the next scheduled
-	 *         order will spend on the assemblyLine.
+	 * @return estimated completion time of the given order, or null if the
+	 *         given order is not present in the list of pending orders of this
+	 *         schedule.
 	 */
-	public int getWorktimeForNext() {
-		return -1; // TODO
+	public TimeStamp getETA(Order order) {
+		Map<TimeStamp, Order> schedule = getSchedule();
+		for (Map.Entry<TimeStamp, Order> entry : schedule.entrySet()) {
+			if (order == entry.getValue()) {
+				return entry.getKey();
+			}
+		}
+		return null;
 	}
 
 	/**
 	 * @return true if the next scheduled order is scheduled for today.
 	 */
 	public boolean nextIsToday() {
-		return schedule.peek().getCompletionTime().getDay() == currentTime
-				.getDay();
+		return getSchedule().firstKey().getDay() == currentTime.getDay();
+	}
+
+	/**
+	 * @return true if there are no pending orders.
+	 */
+	public boolean isOutOfOrders() {
+		return pending.isEmpty();
 	}
 }

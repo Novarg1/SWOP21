@@ -8,7 +8,8 @@ import java.util.Set;
 
 /**
  * Represents a set of carParts. In this set it is impossible to add two
- * different parts of the same type.
+ * different parts of the same type. This class does not permit the null
+ * element.
  */
 public class CarpartsSet implements Iterable<Carpart> {
 
@@ -41,6 +42,7 @@ public class CarpartsSet implements Iterable<Carpart> {
 		for (Carpart part : collection) {
 			add(part);
 		}
+		set.remove(null);
 	}
 
 	/**
@@ -115,14 +117,14 @@ public class CarpartsSet implements Iterable<Carpart> {
 	public boolean isEmpty() {
 		return set.isEmpty();
 	}
-	
+
 	/**
 	 * @return the amount of parts this set contains.
 	 */
 	public int size() {
 		return set.size();
 	}
-	
+
 	/**
 	 * @return true if this set contains the same carParts as the given set.
 	 */

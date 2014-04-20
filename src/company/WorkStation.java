@@ -1,16 +1,21 @@
 package company;
 
+import java.util.Map;
+
 import car.Car;
 import car.parts.Carpart;
 import car.parts.CarpartsSet;
 
 /**
- * Represents any workstation in this company.
+ * Represents any workstation in this company. A workstation can contain a car
+ * and a log, showing which carparts were already installed during this cycle
+ * and how long it took to install them.
  */
 public abstract class WorkStation {
 
-	private Car current = null;
 	private final int id;
+	private Car current = null;
+	private Map<Carpart, Integer> log;
 
 	protected WorkStation(int id) {
 		this.id = id;
@@ -21,6 +26,7 @@ public abstract class WorkStation {
 	 */
 	public void setCurrentCar(Car current) {
 		this.current = current;
+		log.clear();
 	}
 
 	/**
@@ -32,11 +38,23 @@ public abstract class WorkStation {
 
 	/**
 	 * Installs the given part to the car currently in this WorkStation.
+	 * 
+	 * @param part
+	 *            the carpart that is installed.
+	 * @param time
+	 *            the time it took to install the given part.
 	 */
-	public void install(Carpart part) {
+	public void install(Carpart part, int time) {
 		if (current == null) {
 			throw new IllegalStateException("No car in this workstation");
 		}
+		if (!getPendingTasks().contains(part)) {
+			throw new IllegalArgumentException("invalid carpart");
+		}
+		if (time < 0) {
+			throw new IllegalArgumentException("invalid time");
+		}
+		log.put(part, time);
 		current.install(part);
 	}
 
@@ -46,6 +64,18 @@ public abstract class WorkStation {
 	 */
 	public boolean isReady() {
 		return this.getPendingTasks().isEmpty();
+	}
+
+	/**
+	 * @return the time in minutes that has been spent installing carparts this
+	 *         cycle.
+	 */
+	public int getWorktime() {
+		int result = 0;
+		for (int time : log.values()) {
+			result += time;
+		}
+		return result;
 	}
 
 	/**
