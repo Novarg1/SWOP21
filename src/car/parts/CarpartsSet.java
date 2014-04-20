@@ -69,6 +69,17 @@ public class CarpartsSet implements Iterable<Carpart> {
 	}
 
 	/**
+	 * @return A set containing all the types of which this set contains a part.
+	 */
+	public Set<Class<? extends Carpart>> getTypes() {
+		Set<Class<? extends Carpart>> result = new HashSet<>();
+		for (Carpart part : set) {
+			result.add(part.getClass());
+		}
+		return result;
+	}
+	
+	/**
 	 * Adds the given part to the set and removes possible previous part of the
 	 * same type. If the given part == null, this method does nothing.
 	 */

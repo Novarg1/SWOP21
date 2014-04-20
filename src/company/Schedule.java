@@ -96,14 +96,15 @@ public class Schedule {
 	 * @return the next order to be assembled, or null if there are no more
 	 *         orders planned for today or if there are no more pending orders.
 	 */
-	public Order getNextOrder(int time) { // TODO corrigeer
+	public Order getNextOrder(int time) {
 		TimeStamp prev = currentTime;
 		currentTime = currentTime.increaseTime(time);
-		if (!nextIsToday()) {
+		if (nextIsTomorrow()) {
 			if (assemblyLineIsEmpty()) {
 				currentTime = prev;
 				startNewDay();
 			} else {
+				advanceAssemblyLine(null);
 				return null; // wait until assemblyLine is empty
 			}
 		}
@@ -111,7 +112,7 @@ public class Schedule {
 		Order next = schedule.get(schedule.firstKey());
 		pending.remove(next);
 		advanceAssemblyLine(next);
-		return next; // TODO remove next
+		return next;
 	}
 
 	/**
@@ -139,18 +140,6 @@ public class Schedule {
 	 */
 	public List<Order> getFinishedOrders() {
 		return new LinkedList<>(finished);
-	}
-
-	/**
-	 * @return a set containing the id's of all workstations in which parts
-	 *         should be installed for the given order.
-	 */
-	private static Set<Integer> getNeededWorkstations(Order order) {
-		Set<Integer> result = new HashSet<>();
-		for (Carpart part : order.getParts()) {
-			result.add(part.getWorkStationID());
-		}
-		return result;
 	}
 
 	/**
@@ -191,9 +180,10 @@ public class Schedule {
 	 * @return the schedule, based on pending orders, using the FIFO algorithm.
 	 */
 	private SortedMap<TimeStamp, Order> scheduleFIFO() {
+		SortedMap<TimeStamp, Order> result = new TreeMap<>();
 		TimeStamp time = currentTime;
 		for (Order order : pending) {
-
+			
 		}
 		return null; // TODO complete
 	}
@@ -204,72 +194,6 @@ public class Schedule {
 	 */
 	private SortedMap<TimeStamp, Order> scheduleSpecificationBatch() {
 		return null; // TODO
-	}
-
-	// TODO getFirstOrders en getLastorders dynamisch maken (nu: fixed aantal
-	// workstations)
-	/**
-	 * returns the first order for a new day, if any. This is calculated in such
-	 * way that the amount of idle workstations at the start of the day is
-	 * minimal. The order will therefore be an order for which there is no work
-	 * in the first workstation. This method applies FIFO in finding fitting
-	 * orders and returns the n-th one.
-	 * 
-	 * @param n
-	 *            if n is 0, returns the first order that meets the requirement.
-	 *            If n is 1, the second one is returned, and so on
-	 * 
-	 * @return the n-th first order for a new day or null if no such order
-	 *         exists.
-	 */
-	private Order getFirstOrder(int n) {
-		int ordersFound = 0;
-		for (Order order : pending) {
-			Set<Integer> ws = getNeededWorkstations(order);
-			if (ws.size() < NB_WORKPOSTS && !ws.contains(0)) {
-				if (++ordersFound > n) {
-					return order;
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * returns the last order for an ending day, if any. This is calculated in
-	 * such way that the amount of idle workstations at the ending of the day is
-	 * minimal. The order will therefore be an order for which there is no work
-	 * in the last workstation. This method applies FIFO in finding fitting
-	 * orders and returns the n-th one.
-	 * 
-	 * @param n
-	 *            if n is 0, returns the first order that meets the requirement.
-	 *            If n is 1, the second one is returned, and so on
-	 * 
-	 * @return the (n+1)th first order for a new day or null if no such order
-	 *         exists.
-	 */
-	private Order getLastOrder(int n) {
-		int ordersFound = 0;
-		for (Order order : pending) {
-			Set<Integer> ws = getNeededWorkstations(order);
-			if (ws.size() < NB_WORKPOSTS && !ws.contains(NB_WORKPOSTS - 1)) {
-				if (++ordersFound > n) {
-					return order;
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @return A sorted map containing all pending orders with a deadline as
-	 *         values and their deadline as keys.
-	 */
-	private SortedMap<TimeStamp, Order> getDeadlines() {
-		SortedMap<TimeStamp, Order> result = new TreeMap<>();
-		
-		return result;
 	}
 
 	/**
@@ -288,10 +212,14 @@ public class Schedule {
 	}
 
 	/**
-	 * @return true if the next scheduled order is scheduled for today.
+	 * @return true if the next scheduled order is scheduled for tomorrow. If
+	 *         there are no orders left, returns false.
 	 */
-	public boolean nextIsToday() {
-		return getSchedule().firstKey().getDay() == currentTime.getDay();
+	public boolean nextIsTomorrow() {
+		if(pending.isEmpty()) {
+			return false;
+		}
+		return getSchedule().firstKey().getDay() == currentTime.getDay() + 1;
 	}
 
 	/**
