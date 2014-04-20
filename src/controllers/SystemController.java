@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import user.User;
 import car.Order;
 import car.parts.Carpart;
 import company.AssemblyLine;
@@ -22,7 +23,7 @@ public class SystemController
 		this.cmcSytem = new CMCSystem();
 	}
 
-	public String getLoggedInUser()
+	public User getLoggedInUser()
 	{
 		return cmcSytem.getLoggedInUser();
 	}

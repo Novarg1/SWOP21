@@ -3,6 +3,7 @@ package company;
 import java.util.LinkedList;
 import java.util.List;
 
+import user.User;
 import user.UserManager;
 import car.Order;
 
@@ -21,18 +22,18 @@ public class CMCSystem
 		userManager = new UserManager();
 	}
 	
-	public List<Order> getScheduledOrdersForUser(String user) {
-		LinkedList<Order> list = schedule.getUpcomingOrders();
+	public List<Order> getScheduledOrdersForUser(User user) {
+		List<Order> list = schedule.getPendingOrders();
 		for(Order o : list)
-			if(o.CLIENT != user)
+			if(o.getClient() != user)
 				list.remove(o);
 		return list;
 	}
 	
-	public List<Order> getFinishedOrdersForUser(String user) {
+	public List<Order> getFinishedOrdersForUser(User user) {
 		List<Order> list = new LinkedList<Order>();
 		for(Order o : finishedOrders)
-			if(o.CLIENT == user)
+			if(o.getClient() == user)
 				list.add(o);
 		return list;
 	}
@@ -81,7 +82,7 @@ public class CMCSystem
 		this.userManager.logInUser(n);
 	}
 	
-	public String getLoggedInUser()
+	public User getLoggedInUser()
 	{
 		return this.userManager.getLoggedInUser();
 	}

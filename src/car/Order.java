@@ -1,11 +1,12 @@
 package car;
 
 import car.parts.CarpartsSet;
+import user.User;
 import util.TimeStamp;
 
 public class Order {
 
-	private final User client; //TODO import
+	private final User client;
 	private final CarpartsSet parts;
 	private final int buildingtime;
 	private final TimeStamp deadline;
