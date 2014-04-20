@@ -1,5 +1,7 @@
 package company;
 
+import java.util.Arrays;
+
 import car.Car;
 import car.Order;
 
@@ -23,9 +25,9 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * advances the assembly line
+	 * advances the assembly line. If 
 	 * 
-	 * @param order The order that is to be assembled next.
+	 * @param order The order for the car that is to be assembled next.
 	 */
 	public void advance(Order order) {
 		if(!isReadyToAdvance()) {
@@ -53,7 +55,7 @@ public class AssemblyLine {
 	 * @return The list of workstations this assemblyLine contains
 	 */
 	public WorkStation[] getWorkstations() {
-		return workstations;
+		return Arrays.copyOf(workstations, workstations.length);
 	}
 	
 	/**

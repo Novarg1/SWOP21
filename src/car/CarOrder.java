@@ -43,6 +43,11 @@ public class CarOrder extends Order {
 	}
 
 	@Override
+	public int getBuildingTimePerWorkstation() {
+		return model.getBuildingTimePerWorkstation();
+	}
+	
+	@Override
 	public String toString() {
 		return "Order for complete car:\nModel: " + model + "\n"
 				+ super.getParts();

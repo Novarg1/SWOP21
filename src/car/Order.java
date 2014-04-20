@@ -10,6 +10,7 @@ public abstract class Order {
 	private TimeStamp completionTime;
 	private boolean finished = false;
 	private CarpartsSet parts;
+	private static final int DEFAULT_BUILDING_TIME = 60;
 
 	protected Order(String client, CarpartsSet parts) {
 		if (client == null) {
@@ -102,6 +103,14 @@ public abstract class Order {
 				&& this.parts.equals(other.parts);
 	}
 
+	/**
+	 * @return time in minutes that is spent in each workstation in normal
+	 *         circumstances.
+	 */
+	public int getBuildingTimePerWorkstation() {
+		return DEFAULT_BUILDING_TIME;
+	}
+	
 	@Override
 	public abstract String toString();
 }
