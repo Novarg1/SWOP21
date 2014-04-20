@@ -1,29 +1,30 @@
 package car;
 
-import car.parts.Carpart;
 import car.parts.CarpartsSet;
 import util.TimeStamp;
 
-public abstract class Order {
+public class Order {
 
-	private String client;
-	private TimeStamp completionTime;
+	private final User client; //TODO import
+	private final CarpartsSet parts;
+	private final int buildingtime;
+	private final TimeStamp deadline;
+	private TimeStamp completionTime = null;
 	private boolean finished = false;
-	private CarpartsSet parts;
-	private static final int DEFAULT_BUILDING_TIME = 60;
 
-	protected Order(String client, CarpartsSet parts) {
-		if (client == null) {
-			throw new IllegalArgumentException("invalid client");
+	protected Order(OrderSpecification spec) {
+		if(spec == null || !spec.isValid()) {
+			throw new IllegalArgumentException("invalid specification");
 		}
-		this.client = client;
-		this.parts = parts.clone();
+		this.parts = spec.getParts();
+		this.buildingtime = spec.getBuildingTimePerWorkstation();
+		this.deadline = spec.getDeadline();
 	}
 
 	/**
-	 * @return the client that placed this order.
+	 * @return the client associated with this order.
 	 */
-	public String getClient() {
+	public User getClient() {
 		return client;
 	}
 	
@@ -42,21 +43,7 @@ public abstract class Order {
 	}
 
 	/**
-	 * sets estimated completion time to the given time.
-	 * 
-	 * @throws IllegalStateException
-	 *             if this order is already finished
-	 */
-	public void setEstimatedCompletionTime(TimeStamp time) {
-		if (finished) {
-			throw new IllegalStateException("this order is already finished");
-		}
-		completionTime = time;
-	}
-
-	/**
-	 * @return estimated completion time, or actual completion time if this
-	 *         order is finished
+	 * @return completion time, or null time if this order is not yet finished
 	 */
 	public TimeStamp getCompletionTime() {
 		return completionTime;
@@ -65,7 +52,9 @@ public abstract class Order {
 	/**
 	 * @return deadline of this order or null if this order has no deadline.
 	 */
-	public abstract TimeStamp getDeadline();
+	public TimeStamp getDeadline() {
+		return deadline;
+	}
 
 	/**
 	 * @return true if this order has been finished
@@ -82,25 +71,11 @@ public abstract class Order {
 	}
 
 	/**
-	 * @return The part of the given type that this specification contains. Null
-	 *         if this specification does not contain a part of this type (yet).
-	 */
-	public Carpart getPart(Class<? extends Carpart> type) {
-		for (Carpart part : parts) {
-			if (type.equals(part.getClass())) {
-				return part;
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * @return true if this order and the given order have the same set of
-	 *         carParts and are the same type of order.
+	 *         carParts (not necessarily the same model/task).
 	 */
 	public boolean matches(Order other) {
-		return this.getClass().equals(other.getClass())
-				&& this.parts.equals(other.parts);
+		return this.parts.equals(other.parts);
 	}
 
 	/**
@@ -108,9 +83,11 @@ public abstract class Order {
 	 *         circumstances.
 	 */
 	public int getBuildingTimePerWorkstation() {
-		return DEFAULT_BUILDING_TIME;
+		return buildingtime;
 	}
-	
+
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return "Order"; //TODO
+	}
 }

@@ -1,4 +1,4 @@
-package car.models;
+package car;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,23 +11,19 @@ import car.parts.Color;
 import car.parts.Engine;
 import car.parts.Gearbox;
 import car.parts.Seats;
-import car.parts.Spoiler;
 import car.parts.Wheels;
 
-/**
- * Represents model B
- */
-public class ModelB extends CarModel {
+public class ModelASpec extends ModelSpec {
 
+	private static final int BUILDING_TIME = 50;
 	private static final Carpart[] supportedParts = new Carpart[] {
-		Body.SEDAN, Body.BREAK, Body.SPORT,
-		Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW,
-		Engine.PERFORMANCE, Engine.STANDARD, Engine.ULTRA,
-		Gearbox.AUTOMATIC, Gearbox.MANUAL6,
+		Body.SEDAN, Body.BREAK,
+		Color.RED, Color.BLUE, Color.BLACK, Color.WHITE,
+		Engine.PERFORMANCE, Engine.STANDARD,
+		Gearbox.AUTOMATIC, Gearbox.MANUAL5, Gearbox.MANUAL6,
 		Seats.LEATHER_BLACK, Seats.LEATHER_WHITE, Seats.VINYL_GREY,
 		Airco.MANUAL, Airco.AUTOMATIC,
-		Wheels.COMFORT, Wheels.SPORTS, Wheels.WINTER,
-		Spoiler.LOW
+		Wheels.COMFORT, Wheels.SPORTS, Wheels.WINTER
 	};
 
 	@Override
@@ -36,7 +32,12 @@ public class ModelB extends CarModel {
 	}
 
 	@Override
+	public int getBuildingTimePerWorkstation() {
+		return BUILDING_TIME;
+	}
+	
+	@Override
 	public String toString() {
-		return "Model B";
+		return "Model A";
 	}
 }

@@ -1,4 +1,4 @@
-package car.models;
+package car;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,24 +11,26 @@ import car.parts.Color;
 import car.parts.Engine;
 import car.parts.Gearbox;
 import car.parts.Seats;
+import car.parts.Spoiler;
 import car.parts.Wheels;
 
 /**
- * Represents model A.
+ * Represents model C
  */
-public class ModelA extends CarModel {
+public class ModelCSpec extends ModelSpec {
 
-	private static final int BUILDING_TIME = 50;
+	private static final int BUILDING_TIME = 70;
 	private static final Carpart[] supportedParts = new Carpart[] {
-		Body.SEDAN, Body.BREAK,
-		Color.RED, Color.BLUE, Color.BLACK, Color.WHITE,
-		Engine.PERFORMANCE, Engine.STANDARD,
-		Gearbox.AUTOMATIC, Gearbox.MANUAL5, Gearbox.MANUAL6,
-		Seats.LEATHER_BLACK, Seats.LEATHER_WHITE, Seats.VINYL_GREY,
+		Body.SPORT,
+		Color.BLACK, Color.WHITE,
+		Engine.PERFORMANCE, Engine.ULTRA,
+		Gearbox.MANUAL6,
+		Seats.LEATHER_BLACK, Seats.LEATHER_WHITE,
 		Airco.MANUAL, Airco.AUTOMATIC,
-		Wheels.COMFORT, Wheels.SPORTS, Wheels.WINTER
+		Wheels.SPORTS, Wheels.WINTER,
+		Spoiler.LOW, Spoiler.HIGH
 	};
-
+	
 	@Override
 	public Set<Carpart> getSupportedCarparts() {
 		return new HashSet<>(Arrays.asList(supportedParts));
@@ -41,6 +43,6 @@ public class ModelA extends CarModel {
 	
 	@Override
 	public String toString() {
-		return "Model A";
+		return "Model C";
 	}
 }
