@@ -65,12 +65,8 @@ public class UseCaseControllerAssemblyTasks implements UseCaseController
 		int index = LineReader.readInt();
 		System.out.println("Assembly instructions:\n" +
 							list.get(index).getAssemblyInstructions() + 
-							"\nDid you install the part?");
-		if(LineReader.readLine().toLowerCase().startsWith("y"))
-		{
-			// install the part: list.get(index).
-		}
-
+							"\nHow long the the installation of this part take?");
+		// install the part
 	}
 
 	private List<Carpart> tasksAsList()
