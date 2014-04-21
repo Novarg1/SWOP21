@@ -16,6 +16,7 @@ public abstract class OrderSpecification {
 	private CarpartsSet parts;
 
 	protected OrderSpecification() {
+		parts = new CarpartsSet();
 		addRestriction(getRestriction());
 		addRestriction(Restriction.getDefaultRestrictions());
 	}
@@ -67,7 +68,7 @@ public abstract class OrderSpecification {
 		Set<Carpart> result = getSupportedCarparts(type);
 		for (Carpart part : result) {
 			parts.add(part);
-			if (!restriction.checkPartialValidity(parts)) {
+			if (!isPartiallyValid()) {
 				result.remove(part);
 			}
 			parts.remove(part);
