@@ -4,6 +4,7 @@ import controllers.SystemController;
 import controllers.UseCaseController;
 import controllers.UseCaseControllerGarageHolder;
 import controllers.UseCaseControllerLogIn;
+import user.User;
 import util.LineReader;
 
 public class ConveyerBeltProgram {
@@ -20,8 +21,8 @@ public class ConveyerBeltProgram {
 			UseCaseController c = new UseCaseControllerLogIn();
 			if(c.guideUseCase(s))
 			{
-				String user = s.getLoggedInUser();
-				switch(user)
+				User user = s.getLoggedInUser();
+				switch(user.getUserName())
 				{
 				case "Manager":	break;
 				case "GarageHolder": 	handleGarageHolder();

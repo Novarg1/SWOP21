@@ -2,74 +2,72 @@ package tests;
 
 import org.junit.Test;
 
+import car.ModelASpec;
 import car.OrderSpecification;
-import car.models.ModelA;
+import car.parts.Airco;
+import car.parts.Body;
+import car.parts.Carpart;
+import car.parts.Color;
 import car.parts.Engine;
+import car.parts.Gearbox;
+import car.parts.Seats;
+import car.parts.Spoiler;
+import car.parts.Wheels;
 
 public class TestCarSpecification 
 {
 	@Test
 	public void TestSpecificationA()
 	{
-		OrderSpecification spec = new ModelA();
+		OrderSpecification spec = new ModelASpec();
 		
-		assert(spec.getViableBodyOptions().size() == 2);
-		assert(spec.getViableColorOptions().size() == 4);
-		assert(spec.getViableEngineOptions().size() == 2);
-		assert(spec.getViableGearboxOptions().size() == 3);
-		assert(spec.getViableAircoOptions().size() == 2);
-		assert(spec.getViableSeatsOptions().size() == 3);
-		assert(spec.getViableWheelsOptions().size() == 3);
-		assert(spec.getViableSpoilerOptions().size() == 0);
+		assert(spec.getViableOptions(Body.class).size() == 2);
+		assert(spec.getViableOptions(Color.class).size() == 4);
+		assert(spec.getViableOptions(Engine.class).size() == 2);
+		assert(spec.getViableOptions(Gearbox.class).size() == 3);
+		assert(spec.getViableOptions(Airco.class).size() == 2);
+		assert(spec.getViableOptions(Seats.class).size() == 3);
+		assert(spec.getViableOptions(Wheels.class).size() == 3);
+		assert(spec.getViableOptions(Spoiler.class).size() == 0);
 		
-		assert(!spec.bodyChosen());
-		assert(!spec.colorChosen());
-		assert(!spec.engineChosen());
-		assert(!spec.gearboxChosen());
-		assert(!spec.aircoChosen());
-		assert(!spec.seatsChosen());
-		assert(!spec.wheelsChosen());
-		assert(!spec.spoilerChosen());
+		assert(!spec.containsPart(Body.class));
+		assert(!spec.containsPart(Color.class));
+		assert(!spec.containsPart(Engine.class));
+		assert(!spec.containsPart(Gearbox.class));
+		assert(!spec.containsPart(Airco.class));
+		assert(!spec.containsPart(Seats.class));
+		assert(!spec.containsPart(Wheels.class));
+		assert(!spec.containsPart(Spoiler.class));
 		
-		spec.setBody(spec.getViableBodyOptions().get(0));
-		assert(spec.isValid(true));
-		assert(!spec.isValid(false));
+		spec.add((Carpart) spec.getViableOptions(Body.class).toArray(null)[0]);
+		assert(!spec.isValid());
+
+		spec.add((Carpart) spec.getViableOptions(Color.class).toArray(null)[0]);
+		assert(!spec.isValid());
 		
-		spec.setColor(spec.getViableColorOptions().get(0));
-		assert(spec.isValid(true));
-		assert(!spec.isValid(false));
+		spec.add(Engine.ULTRA);
+		assert(!spec.isValid());
+
+		spec.add((Carpart) spec.getViableOptions(Gearbox.class).toArray(null)[0]);
+		assert(!spec.isValid());
 		
-		spec.setEngine(Engine.ULTRA);
-		assert(!spec.isValid(true));
+		spec.add((Carpart) spec.getViableOptions(Airco.class).toArray(null)[0]);
+		assert(!spec.isValid());
+
+		spec.add((Carpart) spec.getViableOptions(Seats.class).toArray(null)[0]);
+		assert(!spec.isValid());
+
+		spec.add((Carpart) spec.getViableOptions(Wheels.class).toArray(null)[0]);
 		
-		spec.setEngine(spec.getViableEngineOptions().get(0));
-		assert(spec.isValid(true));
-		assert(!spec.isValid(false));
+		assert(spec.isValid());
 		
-		spec.setGearbox(spec.getViableGearboxOptions().get(0));
-		assert(spec.isValid(true));
-		assert(!spec.isValid(false));
-		
-		spec.setSeats(spec.getViableSeatsOptions().get(0));
-		assert(spec.isValid(true));
-		assert(!spec.isValid(false));
-		
-		spec.setAirco(spec.getViableAircoOptions().get(0));
-		assert(spec.isValid(true));
-		assert(!spec.isValid(false));
-		
-		spec.setWheels(spec.getViableWheelsOptions().get(0));
-		assert(spec.isValid(true));
-		
-		assert(spec.isValid(false));
-		
-		assert(spec.bodyChosen());
-		assert(spec.colorChosen());
-		assert(spec.engineChosen());
-		assert(spec.gearboxChosen());
-		assert(spec.seatsChosen());
-		assert(spec.aircoChosen());
-		assert(spec.wheelsChosen());
-		assert(!spec.spoilerChosen());
+		assert(spec.containsPart(Body.class));
+		assert(spec.containsPart(Color.class));
+		assert(spec.containsPart(Engine.class));
+		assert(spec.containsPart(Gearbox.class));
+		assert(spec.containsPart(Airco.class));
+		assert(spec.containsPart(Seats.class));
+		assert(spec.containsPart(Wheels.class));
+		assert(!spec.containsPart(Spoiler.class));
 	}
 }

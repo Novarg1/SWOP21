@@ -5,6 +5,7 @@ import java.util.List;
 import user.User;
 import car.Order;
 import car.parts.Carpart;
+import car.parts.CarpartsSet;
 import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;
@@ -46,13 +47,14 @@ public class SystemController
 	public void startNewDay()
 	{
 		Schedule s = cmcSytem.getSchedule();
-		s.startNewDay();
+		//s.startNewDay();
 	}
 	
 	public int placeOrder(Order order)
 	{
 		Schedule s = cmcSytem.getSchedule();
-		return s.placeOrder(order);
+		return 0;
+		//return s.placeOrder(order);
 	}
 	
 	public boolean canAdvance()
@@ -71,7 +73,7 @@ public class SystemController
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
 	
-	public List<Carpart> getWorkPostOverview(String id)
+	public CarpartsSet getWorkPostOverview(int id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{
@@ -81,7 +83,7 @@ public class SystemController
 		return null;
 	}
 	
-	public boolean isWorkPostFinished(String id)
+	public boolean isWorkPostFinished(int id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{
