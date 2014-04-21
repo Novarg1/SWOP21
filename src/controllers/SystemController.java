@@ -73,7 +73,7 @@ public class SystemController
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
 	
-	public CarpartsSet getWorkPostOverview(int id)
+	public CarpartsSet getPendingTasksForWorkstation(int id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{
