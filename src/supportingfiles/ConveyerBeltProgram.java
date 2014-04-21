@@ -1,5 +1,8 @@
 package supportingfiles;
 
+import car.ModelASpec;
+import car.OrderSpecification;
+import car.parts.Body;
 import controllers.SystemController;
 import controllers.UseCaseController;
 import controllers.UseCaseControllerGarageHolder;
@@ -12,6 +15,12 @@ public class ConveyerBeltProgram {
 
 	public static void main(String[] args) 
 	{
+		/**
+		 * the following generates a nasty nullpointer exception
+		 */
+		OrderSpecification spec = new ModelASpec();
+		spec.getViableOptions(Body.class);
+		
 		s = new SystemController();
 
 		boolean running = true;
