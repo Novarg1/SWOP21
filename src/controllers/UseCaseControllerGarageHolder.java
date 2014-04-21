@@ -5,11 +5,14 @@ import java.util.List;
 
 import user.User;
 import util.LineReader;
+import car.ModelASpec;
+import car.ModelBSpec;
+import car.ModelCSpec;
 import car.OrderSpecification;
 import car.Order;
-import car.models.ModelA;
 import car.parts.Airco;
 import car.parts.Body;
+import car.parts.Carpart;
 import car.parts.Color;
 import car.parts.Engine;
 import car.parts.Gearbox;
@@ -51,10 +54,10 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		System.out.println("Upcomming orders:");
 		for (Order o : upcommingOrders)
 			System.out.println("(" + (index++) + ") order "
-					+ o.SPECIFICATION.getType());
+					+ o.toString().substring(0, 25) + "...");
 		System.out.println("Finished orders:");
 		for (Order o : prevOrders)
-			System.out.println("(" + (index++) + ") " + o);
+			System.out.println("(" + (index++) + ") " + o.toString().substring(0,25) + "...");
 	}
 
 	private int presentMenu() {
@@ -80,7 +83,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		setWheels(spec);
 		setSpoiler(spec);
 
-		Order order = new Order(user, spec);
+		Order order = new Order(spec, user);
 
 		System.out.println("Are you sure you want to place this order:");
 		System.out.println(order);
@@ -100,165 +103,127 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 	}
 
 	private OrderSpecification getSpecification(int n) {
-		return new ModelA();
+		OrderSpecification spec = null;
+		switch(n)
+		{
+		case 1: spec = new ModelASpec();break;
+		case 2: spec = new ModelBSpec();break;
+		case 3: spec = new ModelCSpec();break;
+		default: throw new IllegalArgumentException("model type does not exist");
+		}
+		return spec;
+	}
+	
+	private void setOption(OrderSpecification spec, Class<? extends Carpart> type, boolean mandatory) throws Exception
+	{
+		if(mandatory ==  false)
+		{
+			if(spec.getViableOptions(type).size() == 0)
+			{
+				return;
+			}
+			System.out.println("Would you like to order a " + type.toString() + "?");
+			if(LineReader.readLine().toLowerCase().startsWith("n"))
+				return;
+		}
+		else
+		{
+			if(spec.getViableOptions(type).size() == 0)
+			{
+				throw new Exception("mandatory part has no options");
+			}
+			if(spec.getViableOptions(type).size() == 1)
+			{
+				List<Carpart> l = new ArrayList<>(spec.getViableOptions(type));
+				System.out.println("Added " + l.get(0));
+				spec.add(l.get(0));
+			}
+		}
+		while(!spec.containsPart(type))
+		{
+			System.out.println("What " + type.toString() + " would you like?");
+			List<Carpart> options = new ArrayList<>(spec.getViableOptions(type));
+			
+			int index = 1;
+			for(Carpart p : options)
+				System.out.println("(" + (index++) + ") " + p);
+			
+			int choice = LineReader.readInt();
+			
+			if(choice > 0 && choice <= options.size())
+				spec.add(options.get(choice - 1));
+		}
 	}
 
 	private void setBody(OrderSpecification spec) {
-		while(!spec.bodyChosen()) {
-			System.out.println("What body type would you like?");
-
-			List<Body> options = new ArrayList<>(spec.getViableBodies());
-			int index = 1;
-			for (Body b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setBody(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Body.class, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setColor(OrderSpecification spec) {
-		while(!spec.colorChosen()) {
-			System.out.println("What color type would you like?");
-
-			List<Color> options = new ArrayList<>(spec.getViableColors());
-
-			int index = 1;
-			for (Color b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setColor(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Color.class, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setEngine(OrderSpecification spec) {
-		while (!spec.engineChosen()) {
-			System.out.println("What engine type would you like?");
-
-			List<Engine> options = new ArrayList<>(spec.getViableEngines());
-
-			int index = 1;
-			for (Engine b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setEngine(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Engine.class, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setGearbox(OrderSpecification spec) {
-		while (!spec.gearboxChosen()) {
-			System.out.println("What Gearbox type would you like?");
-
-			List<Gearbox> options = new ArrayList<>(spec.getViableGearboxes());
-
-			int index = 1;
-			for (Gearbox b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setGearbox(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Gearbox.class, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setSeats(OrderSpecification spec) {
-		while (!spec.seatsChosen()) {
-			System.out.println("What Seats type would you like?");
-
-			List<Seats> options = new ArrayList<>(spec.getViableSeats());
-
-			int index = 1;
-			for (Seats b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setSeats(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Seats.class, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setAirco(OrderSpecification spec) {
-		if (spec.getViableAircos().isEmpty()) {
-			return;
-		}
-
-		while (!spec.aircoChosen()) {
-			System.out.println("Do you want an airco system? (y/n)");
-			if (LineReader.readLine().toLowerCase().startsWith("n")) {
-				return;
-			}
-			System.out.println("What Airco type would you like?");
-
-			List<Airco> options = new ArrayList<>(spec.getViableAircos());
-
-			int index = 1;
-			for (Airco b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setAirco(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Airco.class, false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setWheels(OrderSpecification spec) {
-		while (!spec.wheelsChosen()) {
-			System.out.println("What Wheels type would you like?");
-
-			List<Wheels> options = new ArrayList<>(spec.getViableWheels());
-
-			int index = 1;
-			for (Wheels b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setWheels(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Wheels.class, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	private void setSpoiler(OrderSpecification spec) {
-		if (spec.getViableSpoilers().isEmpty()) {
-			return;
-		}
-
-		while (!spec.spoilerChosen()) {
-			System.out.println("Do you want an Spoiler system? (y/n)");
-			if (LineReader.readLine().toLowerCase().startsWith("n")) {
-				return;
-			}
-			System.out.println("What Spoiler type would you like?");
-
-			List<Spoiler> options = new ArrayList<>(spec.getViableSpoilers());
-
-			int index = 1;
-			for (Spoiler b : options)
-				System.out.println("(" + (index++) + ") " + b);
-
-			int choice = LineReader.readInt();
-
-			if (choice > 0 && choice <= options.size()) {
-				spec.setSpoiler(options.get(choice - 1));
-			}
+		try {
+			this.setOption(spec, Spoiler.class, false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

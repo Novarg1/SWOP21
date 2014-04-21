@@ -161,6 +161,11 @@ public abstract class OrderSpecification {
 					"must be valid before order can be extracted");
 		}
 	}
+	
+	public boolean containsPart(Class<? extends Carpart> type)
+	{
+		return this.getParts().containsType(type);
+	}
 
 	@Override
 	public abstract String toString();
