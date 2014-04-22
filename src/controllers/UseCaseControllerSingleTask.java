@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import car.CustomSeatsSpec;
+import car.Order;
 import car.OrderSpecification;
 import car.PaintJobSpec;
 import car.parts.Carpart;
@@ -46,6 +47,9 @@ public class UseCaseControllerSingleTask implements UseCaseController
 		index = LineReader.readInt();
 		
 		spec.add(options.get(index));
+		
+		systemController.placeOrder(new Order(spec,
+							systemController.getLoggedInUser()));
 	}
 	
 	private void orderSeatsJob()
@@ -64,5 +68,8 @@ public class UseCaseControllerSingleTask implements UseCaseController
 		index = LineReader.readInt();
 		
 		spec.add(options.get(index));
+		
+		systemController.placeOrder(new Order(spec,
+				systemController.getLoggedInUser()));
 	}
 }

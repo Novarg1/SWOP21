@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import user.User;
@@ -9,6 +10,8 @@ import car.parts.CarpartsSet;
 import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;
+import company.Schedule.Algorithm;
+import company.SchedulingAlgorithm;
 import company.WorkStation;
 
 /** System Controller
@@ -92,5 +95,26 @@ public class SystemController
 				return w.isReady();
 		}
 		return false;
+	}
+	
+	public Algorithm getCurrentSchedulingAlgorithm()
+	{
+		Schedule s = this.cmcSytem.getSchedule();
+		return s.getCurrentAlgorithm();
+	}
+	
+	public void setSchedulingAlgorithm(Algorithm a)
+	{
+		this.cmcSytem.getSchedule().setAlgorithm(a);
+	}
+	
+	public List<WorkStation> getWorkstations()
+	{
+		List<WorkStation> list = new ArrayList<WorkStation>();
+		for(WorkStation w : this.cmcSytem.getAssemblyLine().getWorkstations())
+		{
+			list.add(w);
+		}
+		return list;
 	}
 }
