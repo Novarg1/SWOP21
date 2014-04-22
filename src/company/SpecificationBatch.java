@@ -41,18 +41,18 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 			return null;
 		}
 		while (!matching.isEmpty()) {
-
-			if(inAssembly.isEmpty() && !nextIsToday(matching.peek())) {
+			if(inAssembly.isEmpty() && !nextIsToday(matching.peek())) { //TODO add single task orders
 				time = time.getNextDay();
 			}
-			//TODO can linkedList contain multipe nulls?
 			Order next = null;
 			if(nextIsToday(matching.peek())) {
 				next = matching.poll();
 			}
-			Order completed = addToAssemblyList(matching.poll());
+			Order completed = addToAssemblyList(next);
 			time = time.increaseTime(getEstimatedCycleTime());
-			result.put(time, completed);
+			if(completed != null) {
+				result.put(time, completed);
+			}
 		}
 		result.putAll(new FIFO().schedule(time, orders, inAssembly));
 		return result;
