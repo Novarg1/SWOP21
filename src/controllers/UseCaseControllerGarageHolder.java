@@ -22,7 +22,7 @@ import car.parts.Wheels;
 
 public class UseCaseControllerGarageHolder implements UseCaseController {
 	private User user;
-	private List<Order> upcommingOrders;
+	private List<Order> upcomingOrders;
 	private List<Order> prevOrders;
 	private SystemController systemController;
 
@@ -30,7 +30,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 	public boolean guideUseCase(SystemController c) {
 		systemController = c;
 		user = systemController.getLoggedInUser();
-		upcommingOrders = systemController.getScheduledOrdersFor(user);
+		upcomingOrders = systemController.getScheduledOrdersFor(user);
 		prevOrders = systemController.getFinishedOrdersFor(user);
 
 		boolean running = true;
@@ -51,13 +51,17 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 
 	private void presentUserHistory() {
 		int index = 1;
-		System.out.println("Upcomming orders:");
-		for (Order o : upcommingOrders)
+		System.out.println("Upcoming orders:");
+		for (Order o : upcomingOrders)
 			System.out.println("(" + (index++) + ") order "
-					+ o.toString().substring(0, 25) + "...");
+					+ o.toString().substring(0, 
+					((o.toString().length() >= 25?25:o.toString().length()))		
+					) + "...");
 		System.out.println("Finished orders:");
 		for (Order o : prevOrders)
-			System.out.println("(" + (index++) + ") " + o.toString().substring(0,25) + "...");
+			System.out.println("(" + (index++) + ") " + o.toString().substring(0, 
+					((o.toString().length() >= 25?25:o.toString().length()))		
+					) + "...");
 	}
 
 	private int presentMenu() {
@@ -99,7 +103,7 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 		System.out.println("We expect your order to be ready on: "
 				+ expDelivery);
 
-		upcommingOrders = systemController.getScheduledOrdersFor(user);
+		upcomingOrders = systemController.getScheduledOrdersFor(user);
 	}
 
 	private OrderSpecification getSpecification(int n) {
@@ -232,12 +236,12 @@ public class UseCaseControllerGarageHolder implements UseCaseController {
 
 		int order = LineReader.readInt();
 
-		if (order > 0 && order <= upcommingOrders.size()) {
-			System.out.println(upcommingOrders.get(order - 1));
-		} else if (order > upcommingOrders.size()
-				&& order <= upcommingOrders.size() + prevOrders.size() + 1) {
+		if (order > 0 && order <= upcomingOrders.size()) {
+			System.out.println(upcomingOrders.get(order - 1));
+		} else if (order > upcomingOrders.size()
+				&& order <= upcomingOrders.size() + prevOrders.size() + 1) {
 			System.out.println(prevOrders.get(order - 1
-					- upcommingOrders.size()));
+					- upcomingOrders.size()));
 		}
 	}
 }

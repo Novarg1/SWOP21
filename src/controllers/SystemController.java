@@ -54,7 +54,8 @@ public class SystemController
 	{
 		Schedule s = cmcSytem.getSchedule();
 		s.placeOrder(order);
-		return s.getETA(order).getDay();
+		return 0;
+		//return s.getETA(order).getDay();
 	}
 	
 	public boolean canAdvance()
