@@ -125,4 +125,13 @@ public class CMCSystem
 	{
 		return this.userManager.getLoggedInUser();
 	}
+	
+	/**
+	 * inspector for finishedOrders
+	 * @return this.finishedOrders
+	 */
+	public List<Order> getAllFinishedOrders()
+	{
+		return finishedOrders;
+	}
 }

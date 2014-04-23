@@ -1,6 +1,7 @@
 package view;
 
 import util.LineReader;
+import util.TimeStamp;
 import car.CustomSeatsSpec;
 import car.OrderSpecification;
 import car.PaintJobSpec;
@@ -34,6 +35,7 @@ public class ViewCustomShop extends ViewOrderForm
 		OrderSpecification spec = new PaintJobSpec();
 		
 		setColor(spec);
+		setDeadLine(spec);
 		
 		orderController.placeOrder(spec);
 	}
@@ -43,7 +45,17 @@ public class ViewCustomShop extends ViewOrderForm
 		OrderSpecification spec = new CustomSeatsSpec();
 		
 		setSeats(spec);
+		setDeadLine(spec);
 		
 		orderController.placeOrder(spec);
+	}
+	
+	private void setDeadLine(OrderSpecification spec)
+	{
+		System.out.println("What deadline do you have in mind?");
+		
+		TimeStamp t = new TimeStamp(LineReader.readInt()+1,0,0);
+		
+		spec.setDeadline(t);
 	}
 }

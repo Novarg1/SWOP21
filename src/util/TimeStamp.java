@@ -20,7 +20,7 @@ public class TimeStamp implements Comparable<TimeStamp> {
 	 * @param day number of the day.
 	 * @param overtime overtime of the day before.
 	 */
-	private TimeStamp(int day, int time, int overtime) {
+	public TimeStamp(int day, int time, int overtime) {
 		if(day < 1 || time < 0 || overtime < 0) {
 			throw new IllegalArgumentException("invalid timestamp");
 		}
@@ -114,5 +114,10 @@ public class TimeStamp implements Comparable<TimeStamp> {
 			return 0;
 		}
 		return 1;
+	}
+	
+	public int getNumberOfOperationalDays()
+	{
+		return this.day;
 	}
 }

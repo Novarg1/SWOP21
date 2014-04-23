@@ -85,4 +85,9 @@ public class SystemController
 				return w;
 		return null;
 	}
+	
+	public List<Order> getAllFinishedOrders()
+	{
+		return cmcSytem.getAllFinishedOrders();
+	}
 }

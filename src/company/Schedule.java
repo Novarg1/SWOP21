@@ -228,4 +228,14 @@ public class Schedule {
 	public boolean isOutOfOrders() {
 		return pending.isEmpty();
 	}
+	
+	/**
+	 * @return the number of days that have passed since the system was initiated
+	 */
+	public int getNumberOfOperationalDays()
+	{
+		return currentTime.getNumberOfOperationalDays();
+	}
+	
+	
 }
