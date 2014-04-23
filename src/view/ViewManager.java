@@ -33,8 +33,8 @@ public class ViewManager extends View
 				+ "(2) adapt scheduling algorithm");
 		switch(LineReader.readInt())
 		{
-		case 1:new ViewStatistics(systemController);break;
-		case 2:new ViewAdaptSchedule(systemController);break;
+		case 1:new ViewStatistics(systemController).show();break;
+		case 2:new ViewAdaptSchedule(systemController).show();break;
 		}
 	}
 }

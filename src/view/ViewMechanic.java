@@ -18,8 +18,8 @@ public class ViewMechanic extends View
 				+ "\n(2) check assembly line status");
 		switch(LineReader.readInt())
 		{
-		case 1: new ViewAssemblyTasks(systemController);break;
-		case 2: new ViewAssemblyLineStatus(systemController);break;
+		case 1: new ViewAssemblyTasks(systemController).show();break;
+		case 2: new ViewAssemblyLineStatus(systemController).show();break;
 		}
 		return true;
 	}

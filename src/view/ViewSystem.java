@@ -24,10 +24,10 @@ public class ViewSystem extends View
 				User user = systemController.getLoggedInUser();
 				switch(user.getUserName())
 				{
-				case "Manager":	new ViewManager(systemController); break;
-				case "GarageHolder": new ViewGarageHolder(systemController);break;
-				case "Mechanic": new ViewMechanic(systemController); break;
-				case "ShopHolder":new ViewCustomShop(systemController); break;
+				case "Manager":	new ViewManager(systemController).show(); break;
+				case "GarageHolder": new ViewGarageHolder(systemController).show();break;
+				case "Mechanic": new ViewMechanic(systemController).show(); break;
+				case "ShopHolder":new ViewCustomShop(systemController).show(); break;
 				}
 			}
 			

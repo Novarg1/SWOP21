@@ -34,7 +34,7 @@ public class ViewAdaptSchedule extends View
 		index = LineReader.readInt();
 		
 		if(index > 0 && index <= algorithms.size())
-			scheduleController.setAlgorithm(algorithms.get(index));
+			scheduleController.setAlgorithm(algorithms.get(index-1));
 		return true;
 	}
 }
