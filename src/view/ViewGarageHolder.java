@@ -1,4 +1,4 @@
-package controllers;
+package view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import util.LineReader;
 import car.ModelASpec;
 import car.ModelBSpec;
 import car.ModelCSpec;
-import car.OrderSpecification;
 import car.Order;
+import car.OrderSpecification;
 import car.parts.Airco;
 import car.parts.Body;
 import car.parts.Carpart;
@@ -19,16 +19,22 @@ import car.parts.Gearbox;
 import car.parts.Seats;
 import car.parts.Spoiler;
 import car.parts.Wheels;
+import controllers.SystemController;
 
-public class UseCaseControllerGarageHolder implements UseCaseController {
+public class ViewGarageHolder extends View
+{	
+	protected ViewGarageHolder(SystemController c) {
+		super(c);
+		// TODO Auto-generated constructor stub
+	}
+
 	private User user;
 	private List<Order> upcomingOrders;
 	private List<Order> prevOrders;
 	private SystemController systemController;
-
-	@Override
-	public boolean guideUseCase(SystemController c) {
-		systemController = c;
+	
+	public boolean show() 
+	{
 		user = systemController.getLoggedInUser();
 		upcomingOrders = systemController.getScheduledOrdersFor(user);
 		prevOrders = systemController.getFinishedOrdersFor(user);

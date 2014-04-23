@@ -77,16 +77,6 @@ public class SystemController
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
 	
-	public CarpartsSet getPendingTasksForWorkstation(int id)
-	{
-		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
-		{
-			if(w.getId() == id)
-				return w.getPendingTasks();
-		}
-		return null;
-	}
-	
 	public boolean isWorkPostFinished(int id)
 	{
 		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
@@ -103,9 +93,9 @@ public class SystemController
 		return s.getCurrentAlgorithm();
 	}
 	
-	public void setSchedulingAlgorithm(Algorithm a)
+	public Schedule getSchedule()
 	{
-		this.cmcSytem.getSchedule().setAlgorithm(a);
+		return cmcSytem.getSchedule();
 	}
 	
 	public List<WorkStation> getWorkstations()
@@ -116,5 +106,13 @@ public class SystemController
 			list.add(w);
 		}
 		return list;
+	}
+	
+	public WorkStation getWorkstation(int id)
+	{
+		for(WorkStation w : this.cmcSytem.getAssemblyLine().getWorkstations())
+			if(w.getId() == id)
+				return w;
+		return null;
 	}
 }

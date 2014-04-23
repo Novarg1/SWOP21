@@ -1,8 +1,9 @@
-package controllers;
+package view;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import util.LineReader;
 import car.CustomSeatsSpec;
 import car.Order;
 import car.OrderSpecification;
@@ -10,15 +11,19 @@ import car.PaintJobSpec;
 import car.parts.Carpart;
 import car.parts.Color;
 import car.parts.Seats;
-import util.LineReader;
+import controllers.SystemController;
 
-public class UseCaseControllerSingleTask implements UseCaseController
+public class ViewCustomShop extends View
 {
-	private SystemController systemController;
-	
-	public boolean guideUseCase(SystemController c)
+
+	public ViewCustomShop(SystemController c) {
+		super(c);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean show() 
 	{
-		// TODO order a single task...
 		System.out.println("Do you want to: \n(1) Order a paintjob\n(2) Install custom seats");
 		int select = LineReader.readInt();
 		switch(select)

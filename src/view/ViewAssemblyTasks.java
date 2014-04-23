@@ -1,31 +1,35 @@
-package controllers;
+package view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import car.parts.Carpart;
-import car.parts.CarpartsSet;
-import util.LineReader;
 import company.WorkStation;
+import util.LineReader;
+import car.parts.Carpart;
+import controllers.SystemController;
+import controllers.AssemblyController;
 
-public class UseCaseControllerAssemblyTasks implements UseCaseController
+public class ViewAssemblyTasks extends View
 {
-	private SystemController systemController;
-	private int workstationId;
+	public ViewAssemblyTasks(SystemController c) {
+		super(c);
+		// TODO Auto-generated constructor stub
+	}
 	
 	@Override
-	public boolean guideUseCase(SystemController c) 
+	public boolean show() 
 	{
-		systemController = c;
-		
-		selectWorkstation();
+		int workstationId = selectWorkstation();
+		WorkStation w = systemController.getWorkstation(workstationId);
+		AssemblyController assemblyController = new AssemblyController(w);
 		
 		boolean running = true;
 		
 		while(running)
 		{
-			if(systemController.getPendingTasksForWorkstation(workstationId).size()==0)
+			List<Carpart> pendingTasks = assemblyController.getTasksForWorkstation();
+			if(pendingTasks.size()==0)
 			{
 				System.out.println("no pending tasks for this workstation \n press any key to return");
 				LineReader.readLine();
@@ -33,10 +37,8 @@ public class UseCaseControllerAssemblyTasks implements UseCaseController
 			}
 			else
 			{
-				List<Carpart> list = tasksAsList();
-				
-				displayTasks(list);
-				performTask(list);
+				displayTasks(pendingTasks);
+				performTask(pendingTasks);
 				
 				System.out.println("Do you want to select another task?");
 				if(LineReader.readLine().toLowerCase().startsWith("n"))
@@ -68,19 +70,10 @@ public class UseCaseControllerAssemblyTasks implements UseCaseController
 							"\nHow long the the installation of this part take?");
 		// install the part
 	}
-
-	private List<Carpart> tasksAsList()
-	{
-		List<Carpart> l = new ArrayList<Carpart>();
-		Iterator<Carpart> it = systemController.getPendingTasksForWorkstation(workstationId).iterator();
-		while(it.hasNext())
-			l.add(it.next());
-		return l;
-	}
-	private void selectWorkstation()
+	
+	private int selectWorkstation()
 	{
 		System.out.println("At which workstation do you want to work?");
-		workstationId = LineReader.readInt();
+		return LineReader.readInt();
 	}
-	
 }
