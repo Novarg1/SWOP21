@@ -71,13 +71,19 @@ public abstract class Restriction {
 	}
 
 	/**
-	 * @return default chain of restrictions
+	 * @return default chain of restrictions that apply for every order
 	 */
 	public static Restriction getDefaultRestrictions() {
 		EngineAircoRestriction restriction = new EngineAircoRestriction();
-		restriction.setSuccessor(new MandatoryPartsRestriction());
 		restriction.setSuccessor(new SportEngineRestriction());
 		restriction.setSuccessor(new SportSpoilerRestriction());
 		return restriction;
+	}
+	
+	/**
+	 * @return mandatory parts restriction
+	 */
+	public static Restriction getMandatoryPartsRestriction() {
+		return new MandatoryPartsRestriction();
 	}
 }

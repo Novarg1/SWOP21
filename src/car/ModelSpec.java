@@ -1,9 +1,14 @@
 package car;
 
+import car.restrictions.Restriction;
 import util.TimeStamp;
 
 public abstract class ModelSpec extends OrderSpecification {
 
+	public ModelSpec() {
+		addRestriction(Restriction.getMandatoryPartsRestriction());
+	}
+	
 	/**
 	 * @return null; this kind of order cannot have a deadline.
 	 */
