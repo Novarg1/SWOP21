@@ -11,7 +11,7 @@ public class FIFO extends SchedulingAlgorithm {
 
 	@Override
 	public SortedMap<TimeStamp, Order> schedule(TimeStamp currentTime,
-			List<Order> orders) {
+			List<Order> orders, List<Order> inAssembly) {
 		SortedMap<TimeStamp, Order> result = new TreeMap<>();
 
 		// TODO

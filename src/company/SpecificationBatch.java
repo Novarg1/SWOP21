@@ -29,27 +29,48 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	 */
 	@Override
 	public SortedMap<TimeStamp, Order> schedule(TimeStamp currentTime,
-			List<Order> orders) {
-		List<Order> matching = getMatchingOrders(orders);
+			List<Order> orders, List<Order> inAssembly) {
+		if(currentTime==null || orders==null || inAssembly==null) {
+			throw new IllegalArgumentException();
+		}
+		nbWorkstations = inAssembly.size();
+		SortedMap<TimeStamp, Order> result = new TreeMap<>();
+		TimeStamp time = currentTime;
+		LinkedList<Order> matching = getMatchingOrders(orders);
 		if (matching.isEmpty()) {
 			return null;
 		}
-		SortedMap<TimeStamp, Order> result = new TreeMap<>();
-
-		// TODO
-
+		while (!matching.isEmpty()) {
+			if(inAssembly.isEmpty() && !nextIsToday(matching.peek())) { //TODO add single task orders
+				time = time.getNextDay();
+			}
+			Order next = null;
+			if(nextIsToday(matching.peek())) {
+				next = matching.poll();
+			}
+			Order completed = addToAssemblyList(next);
+			time = time.increaseTime(getEstimatedCycleTime());
+			if(completed != null) {
+				result.put(time, completed);
+			}
+		}
+		result.putAll(new FIFO().schedule(time, orders, inAssembly));
 		return result;
 	}
 
 	/**
+	 * returns orders
+	 * 
 	 * @return list of orders with a carpartsSet that matches the specification
-	 *         of this specificationBatch algorithm.
+	 *         of this specificationBatch algorithm, in the order they were
+	 *         placed.
 	 */
-	private List<Order> getMatchingOrders(List<Order> orders) {
-		List<Order> result = new LinkedList<>();
+	private LinkedList<Order> getMatchingOrders(List<Order> orders) {
+		LinkedList<Order> result = new LinkedList<>();
 		for (Order order : orders) {
 			if (order.getParts().equals(spec)) {
 				result.add(order);
+				orders.remove(order);
 			}
 		}
 		return result;

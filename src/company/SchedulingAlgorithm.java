@@ -12,10 +12,31 @@ import car.Order;
 
 public abstract class SchedulingAlgorithm {
 
-	protected static final int NB_WORKPOSTS = 3;
+	protected int nbWorkstations = 3;
+	protected List<Order> orders;
+	protected List<Order> inAssembly;
+	protected TimeStamp time;
 
+	/**
+	 * schedules the given list of orders. This method will alter its
+	 * parameters.
+	 * 
+	 * @param currentTime
+	 *            The current time.
+	 * @param orders
+	 *            The pending orders that need to be scheduled.
+	 * @param inAssembly
+	 *            The orders that are currently being assembled on the
+	 *            assemblyLine. The first order in this list should be
+	 *            associated with the first workstation.
+	 * @return A sorted map, containing all the orders contained by the given
+	 *         list of pending orders, sorted in the order they are scheduled.
+	 *         The keys in this map are the times that the corresponding orders
+	 *         (values) are scheduled to be completed. The result includes the
+	 *         orders that are currently in assembly.
+	 */
 	public abstract SortedMap<TimeStamp, Order> schedule(TimeStamp currentTime,
-			List<Order> orders);
+			List<Order> orders, List<Order> inAssembly);
 
 	/**
 	 * returns the first order for a new day, if any. This is calculated in such
@@ -31,11 +52,11 @@ public abstract class SchedulingAlgorithm {
 	 * @return the n-th first order for a new day or null if no such order
 	 *         exists.
 	 */
-	protected static Order getFirstOrder(int n, List<Order> orders) {
+	protected Order getFirstOrder(int n) {
 		int ordersFound = 0;
 		for (Order order : orders) {
 			Set<Integer> ws = order.getNeededWorkstations();
-			if (ws.size() < NB_WORKPOSTS && !ws.contains(0)) {
+			if (ws.size() < nbWorkstations && !ws.contains(0)) {
 				if (++ordersFound > n) {
 					return order;
 				}
@@ -58,11 +79,11 @@ public abstract class SchedulingAlgorithm {
 	 * @return the (n+1)th first order for a new day or null if no such order
 	 *         exists.
 	 */
-	protected static Order getLastOrder(int n, List<Order> orders) {
+	protected Order getLastOrder(int n) {
 		int ordersFound = 0;
 		for (Order order : orders) {
 			Set<Integer> ws = order.getNeededWorkstations();
-			if (ws.size() < NB_WORKPOSTS && !ws.contains(NB_WORKPOSTS - 1)) {
+			if (ws.size() < nbWorkstations && !ws.contains(nbWorkstations)) {
 				if (++ordersFound > n) {
 					return order;
 				}
@@ -75,7 +96,7 @@ public abstract class SchedulingAlgorithm {
 	 * @return A list containing all pending orders with a deadline, sorted by
 	 *         their deadlines.
 	 */
-	protected static List<Order> getDeadlines(List<Order> orders) {
+	protected List<Order> getDeadlines() {
 		List<Order> result = new LinkedList<>();
 		for (Order order : orders) {
 			if (order.getDeadline() != null) {
@@ -89,5 +110,24 @@ public abstract class SchedulingAlgorithm {
 			}
 		});
 		return result;
+	}
+
+	protected int getEstimatedCycleTime() {
+		int result = 0;
+		for (Order order : inAssembly) {
+			if (order.getBuildingTimePerWorkstation() > result) {
+				result = order.getBuildingTimePerWorkstation();
+			}
+		}
+		return 0;
+	}
+
+	protected Order addToAssemblyList(Order next) {
+		inAssembly.add(0, next);
+		return inAssembly.remove(inAssembly.size() - 1);
+	}
+
+	protected boolean nextIsToday(Order next) {
+		return false; //TODO 
 	}
 }
