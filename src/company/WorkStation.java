@@ -1,6 +1,7 @@
 package company;
 
 import java.util.Map;
+import java.util.Observable;
 
 import car.Car;
 import car.parts.Carpart;
@@ -11,7 +12,7 @@ import car.parts.CarpartsSet;
  * and a log, showing which carparts were already installed during this cycle
  * and how long it took to install them.
  */
-public abstract class WorkStation {
+public abstract class WorkStation extends Observable {
 
 	private final int id;
 	private Car current = null;
@@ -56,6 +57,7 @@ public abstract class WorkStation {
 		}
 		log.put(part, time);
 		current.install(part);
+		notifyObservers();
 	}
 
 	/**

@@ -1,15 +1,18 @@
 package company;
 
 import java.util.Arrays;
+import java.util.Observable;
+import java.util.Observer;
 
 import car.Car;
+
+//TODO bugfix: wanneer schedule leeg is en dan een order krijgt, wordt dit niet
+//		automatisch op de assemblyLine gezet.
 
 /**
  * An assemblyline has a list of workstations and can be advanced.
  */
-public class AssemblyLine implements Runnable {
-
-	private static final int SLEEP_TIME = 200;
+public class AssemblyLine implements Observer {
 
 	private Schedule schedule;
 	private WorkStation[] workstations;
@@ -29,19 +32,12 @@ public class AssemblyLine implements Runnable {
 	}
 
 	/**
-	 * waits until all workstations are ready and advances automatically.
+	 * This method is called whenever a carpart is installed in one of the
+	 * workstations on this assemblyLine.
 	 */
 	@Override
-	public void run() {
-		while (true) {
-			while (!isReadyToAdvance()
-					|| (schedule.isOutOfOrders() && this.isEmpty())) {
-				try {
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+	public void update(Observable ws, Object obj) {
+		while (isReadyToAdvance() && !schedule.isOutOfOrders()) {
 			advance();
 		}
 	}

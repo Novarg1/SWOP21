@@ -30,7 +30,7 @@ public abstract class OrderSpecification {
 	 * sets the deadline of this orderspecification to the given time.
 	 */
 	public abstract void setDeadline(TimeStamp deadline);
-	
+
 	/**
 	 * @return time in minutes that is spent in each workstation in normal
 	 *         circumstances.
@@ -68,7 +68,7 @@ public abstract class OrderSpecification {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * @return All parts of the given type that (1) are supported by this
 	 *         specification and (2) would not render this specification
@@ -151,7 +151,7 @@ public abstract class OrderSpecification {
 			}
 		};
 	}
-	
+
 	/**
 	 * @return true if the given set is a valid set of carParts for this model.
 	 */
@@ -173,9 +173,8 @@ public abstract class OrderSpecification {
 					"must be valid before order can be extracted");
 		}
 	}
-	
-	public boolean containsPart(Class<? extends Carpart> type)
-	{
+
+	public boolean containsPart(Class<? extends Carpart> type) {
 		return this.getParts().containsType(type);
 	}
 

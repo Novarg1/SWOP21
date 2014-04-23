@@ -2,7 +2,6 @@ package company;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +9,6 @@ import java.util.SortedMap;
 
 import util.TimeStamp;
 import car.Order;
-import car.parts.Carpart;
 
 public abstract class SchedulingAlgorithm {
 
@@ -36,7 +34,7 @@ public abstract class SchedulingAlgorithm {
 	protected static Order getFirstOrder(int n, List<Order> orders) {
 		int ordersFound = 0;
 		for (Order order : orders) {
-			Set<Integer> ws = getNeededWorkstations(order);
+			Set<Integer> ws = order.getNeededWorkstations();
 			if (ws.size() < NB_WORKPOSTS && !ws.contains(0)) {
 				if (++ordersFound > n) {
 					return order;
@@ -63,7 +61,7 @@ public abstract class SchedulingAlgorithm {
 	protected static Order getLastOrder(int n, List<Order> orders) {
 		int ordersFound = 0;
 		for (Order order : orders) {
-			Set<Integer> ws = getNeededWorkstations(order);
+			Set<Integer> ws = order.getNeededWorkstations();
 			if (ws.size() < NB_WORKPOSTS && !ws.contains(NB_WORKPOSTS - 1)) {
 				if (++ordersFound > n) {
 					return order;
@@ -90,18 +88,6 @@ public abstract class SchedulingAlgorithm {
 				return o1.getDeadline().compareTo(o2.getDeadline());
 			}
 		});
-		return result;
-	}
-
-	/**
-	 * @return a set containing the id's of all workstations in which parts
-	 *         should be installed for the given order.
-	 */
-	protected static Set<Integer> getNeededWorkstations(Order order) {
-		Set<Integer> result = new HashSet<>();
-		for (Carpart part : order.getParts()) {
-			result.add(part.getWorkStationID());
-		}
 		return result;
 	}
 }

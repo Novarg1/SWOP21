@@ -1,5 +1,9 @@
 package car;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import car.parts.Carpart;
 import car.parts.CarpartsSet;
 import user.User;
 import util.TimeStamp;
@@ -88,6 +92,18 @@ public class Order {
 		return buildingtime;
 	}
 
+	/**
+	 * @return a set containing the id's of all workstations in which parts
+	 *         should be installed for the this order.
+	 */
+	public Set<Integer> getNeededWorkstations() {
+		Set<Integer> result = new HashSet<>();
+		for (Carpart part : this.getParts()) {
+			result.add(part.getWorkStationID());
+		}
+		return result;
+	}
+	
 	@Override
 	public String toString() {
 		return "Order"; //TODO
