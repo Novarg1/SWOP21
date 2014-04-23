@@ -1,7 +1,5 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import company.WorkStation;
@@ -12,18 +10,19 @@ import controllers.AssemblyController;
 
 public class ViewAssemblyTasks extends View
 {
+	private AssemblyController assemblyController;
+	
 	public ViewAssemblyTasks(SystemController c) {
 		super(c);
 		// TODO Auto-generated constructor stub
+		int workstationId = selectWorkstation();
+		WorkStation w = systemController.getWorkstation(workstationId);
+		assemblyController = new AssemblyController(w);
 	}
 	
 	@Override
 	public boolean show() 
 	{
-		int workstationId = selectWorkstation();
-		WorkStation w = systemController.getWorkstation(workstationId);
-		AssemblyController assemblyController = new AssemblyController(w);
-		
 		boolean running = true;
 		
 		while(running)
@@ -65,10 +64,14 @@ public class ViewAssemblyTasks extends View
 	{
 		System.out.println("Which tasks do you want to perform?");
 		int index = LineReader.readInt();
-		System.out.println("Assembly instructions:\n" +
+		if(index > 0 && index <= list.size())
+		{
+			System.out.println("Assembly instructions:\n" +
 							list.get(index).getAssemblyInstructions() + 
 							"\nHow long the the installation of this part take?");
-		// install the part
+			int t = LineReader.readInt();
+			assemblyController.installPart(list.get(index-1), t);
+		}
 	}
 	
 	private int selectWorkstation()

@@ -8,7 +8,7 @@ import company.Schedule;
 import company.Schedule.Algorithm;
 import util.LineReader;
 
-public class ScheduleController implements UseCaseController
+public class ScheduleController
 {
 	private Schedule schedule;
 	
@@ -32,5 +32,10 @@ public class ScheduleController implements UseCaseController
 		case "FIFO":schedule.setAlgorithm(Algorithm.FIFO);break;
 		case "Specification Batch":schedule.setAlgorithm(Algorithm.SPECIFICATION_BATCH);break;
 		}
+	}
+	
+	public Algorithm getCurrentAlgorithm()
+	{
+		return schedule.getCurrentAlgorithm();
 	}
 }

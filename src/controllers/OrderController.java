@@ -20,8 +20,26 @@ import car.parts.Seats;
 import car.parts.Spoiler;
 import car.parts.Wheels;
 
-public class OrderController implements UseCaseController {
-
-
-
+public class OrderController
+{
+	private SystemController systemController;
+	
+	public OrderController(SystemController s)
+	{
+		systemController = s;
+	}
+	
+	public int placeOrder(OrderSpecification specification)
+	{
+		Order order = new Order(specification,
+								systemController.getLoggedInUser());
+		systemController.getSchedule().placeOrder(order);
+		
+		return getExpectedDeliveryDayFor(order);
+	}
+	
+	public int getExpectedDeliveryDayFor(Order order)
+	{
+		return systemController.getSchedule().getETA(order).getDay();
+	}
 }

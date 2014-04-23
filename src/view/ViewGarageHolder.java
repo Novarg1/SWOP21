@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import user.User;
@@ -10,18 +9,9 @@ import car.ModelBSpec;
 import car.ModelCSpec;
 import car.Order;
 import car.OrderSpecification;
-import car.parts.Airco;
-import car.parts.Body;
-import car.parts.Carpart;
-import car.parts.Color;
-import car.parts.Engine;
-import car.parts.Gearbox;
-import car.parts.Seats;
-import car.parts.Spoiler;
-import car.parts.Wheels;
 import controllers.SystemController;
 
-public class ViewGarageHolder extends View
+public class ViewGarageHolder extends ViewOrderForm
 {	
 	protected ViewGarageHolder(SystemController c) {
 		super(c);
@@ -31,7 +21,6 @@ public class ViewGarageHolder extends View
 	private User user;
 	private List<Order> upcomingOrders;
 	private List<Order> prevOrders;
-	private SystemController systemController;
 	
 	public boolean show() 
 	{
@@ -93,18 +82,15 @@ public class ViewGarageHolder extends View
 		setWheels(spec);
 		setSpoiler(spec);
 
-		Order order = new Order(spec, user);
-
 		System.out.println("Are you sure you want to place this order:");
-		System.out.println(order);
 
 		if (LineReader.readLine().toLowerCase().startsWith("n")) {
 			System.out.println("Your order has been cancelled");
 			return;
 		}
-
-		int expDelivery = systemController.placeOrder(order);
-
+		
+		int expDelivery = orderController.placeOrder(spec);
+		
 		System.out.println("Your order has been placed");
 		System.out.println("We expect your order to be ready on: "
 				+ expDelivery);
@@ -122,119 +108,6 @@ public class ViewGarageHolder extends View
 		default: throw new IllegalArgumentException("model type does not exist");
 		}
 		return spec;
-	}
-	
-	private void setOption(OrderSpecification spec, Class<? extends Carpart> type, boolean mandatory) throws Exception
-	{
-		if(mandatory ==  false)
-		{
-			if(spec.getViableOptions(type).size() == 0)
-			{
-				return;
-			}
-			System.out.println("Would you like to order a " + type.toString() + "?");
-			if(LineReader.readLine().toLowerCase().startsWith("n"))
-				return;
-		}
-		else
-		{
-			if(spec.getViableOptions(type).size() == 0)
-			{
-				throw new Exception("mandatory part has no options");
-			}
-			if(spec.getViableOptions(type).size() == 1)
-			{
-				List<Carpart> l = new ArrayList<>(spec.getViableOptions(type));
-				System.out.println("Added " + l.get(0));
-				spec.add(l.get(0));
-			}
-		}
-		while(!spec.containsPart(type))
-		{
-			System.out.println("What " + type.toString() + " would you like?");
-			List<Carpart> options = new ArrayList<>(spec.getViableOptions(type));
-			
-			int index = 1;
-			for(Carpart p : options)
-				System.out.println("(" + (index++) + ") " + p);
-			
-			int choice = LineReader.readInt();
-			
-			if(choice > 0 && choice <= options.size())
-				spec.add(options.get(choice - 1));
-		}
-	}
-
-	private void setBody(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Body.class, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setColor(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Color.class, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setEngine(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Engine.class, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setGearbox(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Gearbox.class, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setSeats(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Seats.class, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setAirco(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Airco.class, false);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setWheels(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Wheels.class, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void setSpoiler(OrderSpecification spec) {
-		try {
-			this.setOption(spec, Spoiler.class, false);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	private void displayOrderDetails() {

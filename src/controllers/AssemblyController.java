@@ -9,7 +9,7 @@ import car.parts.CarpartsSet;
 import util.LineReader;
 import company.WorkStation;
 
-public class AssemblyController implements UseCaseController
+public class AssemblyController
 {
 	private WorkStation workstation;
 	
@@ -25,5 +25,10 @@ public class AssemblyController implements UseCaseController
 		while(it.hasNext())
 			l.add(it.next());
 		return l;
+	}
+	
+	public void installPart(Carpart p, int t)
+	{
+		workstation.install(p, t);
 	}
 }

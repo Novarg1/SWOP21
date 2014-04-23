@@ -37,30 +37,6 @@ public class SystemController
 		cmcSytem.logInUser(n);
 	}
 	
-	public void advanceAssemblyLine(int time)
-	{
-		try {
-			cmcSytem.advance(time);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public void startNewDay()
-	{
-		Schedule s = cmcSytem.getSchedule();
-		//s.startNewDay();
-	}
-	
-	public int placeOrder(Order order)
-	{
-		Schedule s = cmcSytem.getSchedule();
-		s.placeOrder(order);
-		return 0;
-		//return s.getETA(order).getDay();
-	}
-	
 	public boolean canAdvance()
 	{
 		AssemblyLine a = cmcSytem.getAssemblyLine();
@@ -85,12 +61,6 @@ public class SystemController
 				return w.isReady();
 		}
 		return false;
-	}
-	
-	public Algorithm getCurrentSchedulingAlgorithm()
-	{
-		Schedule s = this.cmcSytem.getSchedule();
-		return s.getCurrentAlgorithm();
 	}
 	
 	public Schedule getSchedule()

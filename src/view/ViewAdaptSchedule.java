@@ -22,7 +22,7 @@ public class ViewAdaptSchedule extends View
 		List<String> algorithms = scheduleController.getAlgorithms();
 		
 		System.out.print("The current selected scheduling algorithm is \"");
-		System.out.println(systemController.getCurrentSchedulingAlgorithm() + "\"");
+		System.out.println(scheduleController.getCurrentAlgorithm() + "\"");
 		
 		System.out.println("Do you want to change this to");
 		

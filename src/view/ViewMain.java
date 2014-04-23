@@ -4,9 +4,9 @@ import user.User;
 import util.LineReader;
 import controllers.SystemController;
 
-public class ViewSystem extends View
+public class ViewMain extends View
 {
-	public ViewSystem(SystemController c) {
+	public ViewMain(SystemController c) {
 		super(c);
 		// TODO Auto-generated constructor stub
 	}

@@ -1,7 +1,7 @@
 package supportingfiles;
 
 import controllers.SystemController;
-import view.ViewSystem;
+import view.ViewMain;
 
 public class ConveyerBeltProgram {
 
@@ -9,7 +9,7 @@ public class ConveyerBeltProgram {
 	{	
 		SystemController systemController = new SystemController();
 		
-		ViewSystem system = new ViewSystem(systemController);
+		ViewMain system = new ViewMain(systemController);
 		
 		system.show();
 	}
