@@ -1,8 +1,13 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import car.ModelASpec;
+import car.ModelBSpec;
+import car.ModelCSpec;
+import car.Order;
+import car.OrderSpecification;
 import car.parts.Carpart;
 import car.parts.CarpartsSet;
 import car.parts.Color;
@@ -10,11 +15,12 @@ import car.parts.Seats;
 import company.FIFO;
 import company.SchedulingAlgorithm;
 import company.SpecificationBatch;
+import user.User;
 import util.LineReader;
 import controllers.SystemController;
 import controllers.ScheduleController;
 
-public class ViewAdaptSchedule extends View
+public class ViewAdaptSchedule extends ViewOrderForm
 {
 	ScheduleController scheduleController;
 	
@@ -26,17 +32,10 @@ public class ViewAdaptSchedule extends View
 	@Override
 	public boolean show() 
 	{
-		//List<String> algorithms = scheduleController.getAlgorithms();
-		
 		System.out.print("The current selected scheduling algorithm is \"");
 		System.out.println(scheduleController.getCurrentAlgorithm() + "\"");
 		
 		System.out.println("Do you want to change this to");
-		
-		/*int index = 1;
-		
-		for(String a:algorithms)
-			System.out.println("(" + (index++) + ") " + a);*/
 		
 		System.out.println("(1) FIFO\n(2) SpecificationBatch");
 		
@@ -56,23 +55,37 @@ public class ViewAdaptSchedule extends View
 	
 	private SchedulingAlgorithm getSpecificationBatch()
 	{
-		System.out.println("What type of part do you want to set the specification option for?");
-		System.out.println("(1) Color\n(2) Seats");
+		System.out.println("For which specification do you want to set the batch processor");
+		User user = systemController.getLoggedInUser();
+		
+		System.out.println("For which model type?:\n(1) A\n(2) B\n(3) C");
 		int choice = LineReader.readInt();
-		Class<? extends Carpart> type = (choice==1?Color.class:Seats.class);
-		@SuppressWarnings("unchecked")
-		List<Carpart> list = (List<Carpart>) (new ModelASpec()).getViableOptions(type);
-		System.out.println("which option do you want to set it for?:");
-		int index = 1;
-		for(Carpart p : list)
-			System.out.println("(" + (index++) + ") " + p);
-		choice = LineReader.readInt();
-		if(choice > 0  && choice <= list.size())
+		
+		OrderSpecification spec = getSpecification(choice);
+		
+		setBody(spec);
+		setColor(spec);
+		setEngine(spec);
+		setGearbox(spec);
+		setSeats(spec);
+		setAirco(spec);
+		setWheels(spec);
+		setSpoiler(spec);
+		
+		Order order = new Order(spec, user);
+		
+		return new SpecificationBatch(order.getParts());
+	}
+
+	private OrderSpecification getSpecification(int n) {
+		OrderSpecification spec = null;
+		switch(n)
 		{
-			CarpartsSet set =  new CarpartsSet();
-			set.add(list.get(index-1));
-			return new SpecificationBatch(set);
+		case 1: spec = new ModelASpec();break;
+		case 2: spec = new ModelBSpec();break;
+		case 3: spec = new ModelCSpec();break;
+		default: throw new IllegalArgumentException("model type does not exist");
 		}
-		return null;
+		return spec;
 	}
 }
