@@ -4,6 +4,8 @@ import car.parts.Carpart;
 import car.parts.CarpartsSet;
 
 /**
+ * @author Wonne Joosen
+ * 
  * Represents a car. A car has a set of installed carparts and an associated
  * order.
  */

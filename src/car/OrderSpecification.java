@@ -48,7 +48,7 @@ public abstract class OrderSpecification {
 	 * @return all carparts of the given type that are supported by this
 	 *         specification.
 	 */
-	private Set<Carpart> getSupportedCarparts(Class<? extends Carpart> type) {
+	public Set<Carpart> getSupportedCarparts(Class<? extends Carpart> type) {
 		Set<Carpart> result = new HashSet<>();
 		for (Carpart part : getSupportedCarparts()) {
 			if (part.getClass().equals(type)) {

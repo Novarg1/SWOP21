@@ -110,7 +110,7 @@ public class CMCSystem
 	/**
 	 * this function logs user n in where n is that users position
 	 * in the usermanager's list
-	 * @param n
+	 * @param n - 1. Manager 2. GarageHolder 3. Mechanic 4. CustomShopOwner
 	 */
 	public void logInUser(int n)
 	{

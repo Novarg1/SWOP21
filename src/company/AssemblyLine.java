@@ -58,6 +58,8 @@ public class AssemblyLine implements Observer {
 	}
 
 	/**
+	 * Method to check whether the assemblyline can be advanced
+	 * 
 	 * @return true if all workstations on this line are ready
 	 */
 	public boolean isReadyToAdvance() {
@@ -77,6 +79,8 @@ public class AssemblyLine implements Observer {
 	}
 
 	/**
+	 * Method to check whether no workstation of the assembly line has a car
+	 * 
 	 * @return true if no workstation on this assemblyline has a car.
 	 */
 	public boolean isEmpty() {
@@ -87,6 +91,8 @@ public class AssemblyLine implements Observer {
 	}
 
 	/**
+	 * Helper method to find out how long it takes to be able to advance the assembly line
+	 * 
 	 * @return the highest of all worktimes of workstations on this
 	 *         assemblyline.
 	 */
