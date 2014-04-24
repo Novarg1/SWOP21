@@ -20,15 +20,22 @@ public class FIFO extends SchedulingAlgorithm {
 		time = currentTime;
 		this.orders = new LinkedList<>(pending);
 		this.inAssembly = new LinkedList<>(inAssembly);
-		
+
+		List<Order> deadlines = getDeadlines();
+
 		SortedMap<TimeStamp, Order> result = new TreeMap<>();
 		int nbFirstOrders = 0, nbLastOrders = 0;
 
 		while (!orders.isEmpty()) {
 			int i = 0;
-			Order order = orders.get(0);
-			while(order.getNeededWorkstations().size() < inAssembly.size()) {
-				order = orders.get(++i);
+			Order order = deadlines.get(0);
+			if(order.getDeadline().getDay() > time.getDay() + 1) {
+				order = orders.get(0);
+				while(order.getNeededWorkstations().size() < inAssembly.size()) {
+					order = orders.get(++i);
+				}
+			} else {
+				deadlines.remove(0);
 			}
 			if (inAssembly.isEmpty() && !nextIsToday(order)) {
 				Order last = getLastOrder(nbLastOrders++);
