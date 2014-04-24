@@ -1,6 +1,7 @@
 package company;
 
 import java.util.Arrays;
+import java.util.Observable;
 import java.util.SortedMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,7 @@ import car.Order;
  * Represents the schedule of the company. Contains a list of pending orders,
  * the current time and algorithms for scheduling the pending orders.
  */
-public class Schedule {
+public class Schedule extends Observable {
 
 	private static final int NB_WORKPOSTS = 3; // TODO nieuw plan: houd
 												// reference
@@ -72,6 +73,7 @@ public class Schedule {
 			throw new IllegalArgumentException("invalid order");
 		}
 		this.pending.addLast(order);
+		notifyObservers();
 	}
 
 	/**
