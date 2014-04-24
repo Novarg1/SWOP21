@@ -39,25 +39,25 @@ public class TestCarSpecification
 		assert(!spec.containsPart(Wheels.class));
 		assert(!spec.containsPart(Spoiler.class));
 		
-		spec.add((Carpart) spec.getViableOptions(Body.class).toArray(null)[0]);
+		spec.add((Carpart) spec.getViableOptions(Body.class).toArray()[0]);
 		assert(!spec.isValid());
 
-		spec.add((Carpart) spec.getViableOptions(Color.class).toArray(null)[0]);
+		spec.add((Carpart) spec.getViableOptions(Color.class).toArray()[0]);
 		assert(!spec.isValid());
 		
-		spec.add(Engine.ULTRA);
+		spec.add(Engine.PERFORMANCE);
 		assert(!spec.isValid());
 
-		spec.add((Carpart) spec.getViableOptions(Gearbox.class).toArray(null)[0]);
+		spec.add((Carpart) spec.getViableOptions(Gearbox.class).toArray()[0]);
 		assert(!spec.isValid());
 		
-		spec.add((Carpart) spec.getViableOptions(Airco.class).toArray(null)[0]);
+		spec.add((Carpart) spec.getViableOptions(Airco.class).toArray()[0]);
 		assert(!spec.isValid());
 
-		spec.add((Carpart) spec.getViableOptions(Seats.class).toArray(null)[0]);
+		spec.add((Carpart) spec.getViableOptions(Seats.class).toArray()[0]);
 		assert(!spec.isValid());
 
-		spec.add((Carpart) spec.getViableOptions(Wheels.class).toArray(null)[0]);
+		spec.add((Carpart) spec.getViableOptions(Wheels.class).toArray()[0]);
 		
 		assert(spec.isValid());
 		
