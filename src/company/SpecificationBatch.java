@@ -17,7 +17,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	private CarpartsSet spec;
 
 	public SpecificationBatch(CarpartsSet specification) {
-		if (spec == null) {
+		if (specification == null) {
 			throw new IllegalArgumentException("invalid specification");
 		}
 		spec = specification.clone();
