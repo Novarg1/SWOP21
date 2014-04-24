@@ -22,15 +22,8 @@ public class ScheduleController {
 		return list;
 	}
 
-	public void setAlgorithm(String algorithm) {
-		switch (algorithm) {
-		case "FIFO":
-			schedule.setAlgorithm(new FIFO());
-			break;
-		case "Specification Batch":
-			schedule.setAlgorithm(new SPECIFICATION_BATCH()); //TODO vraag specification op
-			break;
-		}
+	public void setAlgorithm(SchedulingAlgorithm algorithm) {
+		schedule.setAlgorithm(algorithm);
 	}
 
 	public SchedulingAlgorithm getCurrentAlgorithm() {
