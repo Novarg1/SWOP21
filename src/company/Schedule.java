@@ -1,39 +1,28 @@
 package company;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.SortedMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import util.TimeStamp;
 import car.Order;
-import car.parts.Carpart;
 
-//TODO getNeededWorkStations wordt heel vaak aangeroepen --> bijhouden per order?
 /**
  * Represents the schedule of the company. Contains a list of pending orders,
  * the current time and algorithms for scheduling the pending orders.
  */
 public class Schedule {
 
-	/*
-	 * alternative: make every algorithm a subclass of the same supertype and
-	 * implement the actual scheduling algorithm in those classes. Not really
-	 * necessary, but could be nice when the amount of algorithms gets higher.
-	 */
-	public enum Algorithm {
-		FIFO, SPECIFICATION_BATCH;
-	}
-
-	private static final int NB_WORKPOSTS = 3;
+	private static final int NB_WORKPOSTS = 3; // TODO nieuw plan: houd
+												// reference
+												// naar assemblyline bij
 	private LinkedList<Order> finished;
 	private LinkedList<Order> pending;
 	private Order[] inAssembly;
 	private TimeStamp currentTime;
-	private Algorithm algorithm;
+	private SchedulingAlgorithm algorithm;
 
 	/**
 	 * creates new schedule with an empty list of carOrders and a current time
@@ -45,7 +34,7 @@ public class Schedule {
 		this.finished = new LinkedList<>();
 		inAssembly = new Order[NB_WORKPOSTS];
 		this.currentTime = TimeStamp.FirstDay();
-		this.algorithm = Algorithm.FIFO;
+		this.algorithm = new FIFO();
 	}
 
 	/**
@@ -145,14 +134,14 @@ public class Schedule {
 	/**
 	 * @return the currently used scheduling algorithm.
 	 */
-	public Algorithm getCurrentAlgorithm() {
+	public SchedulingAlgorithm getCurrentAlgorithm() {
 		return algorithm;
 	}
 
 	/**
 	 * sets the scheduling algorithm to the given algorithm.
 	 */
-	public void setAlgorithm(Algorithm algorithm) {
+	public void setAlgorithm(SchedulingAlgorithm algorithm) {
 		if (algorithm == null) {
 			throw new IllegalArgumentException(
 					"scheduling algorithm can't be null");
@@ -166,34 +155,14 @@ public class Schedule {
 	 *         scheduled.
 	 */
 	private SortedMap<TimeStamp, Order> getSchedule() {
-		switch (algorithm) {
-		case FIFO:
-			return scheduleFIFO();
-		case SPECIFICATION_BATCH:
-			return scheduleSpecificationBatch();
+		SortedMap<TimeStamp, Order> schedule = algorithm.schedule(currentTime,
+				pending, Arrays.asList(inAssembly));
+		if (schedule == null) {
+			setAlgorithm(new FIFO());
+			schedule = algorithm.schedule(currentTime, pending,
+					Arrays.asList(inAssembly));
 		}
-		// should be unreachable
-		throw new IllegalStateException("no scheduling algorithm selected");
-	}
-
-	/**
-	 * @return the schedule, based on pending orders, using the FIFO algorithm.
-	 */
-	private SortedMap<TimeStamp, Order> scheduleFIFO() {
-		SortedMap<TimeStamp, Order> result = new TreeMap<>();
-		TimeStamp time = currentTime;
-		for (Order order : pending) {
-			
-		}
-		return null; // TODO complete
-	}
-
-	/**
-	 * @return the schedule, based on pending orders, using the specification
-	 *         batch algorithm
-	 */
-	private SortedMap<TimeStamp, Order> scheduleSpecificationBatch() {
-		return null; // TODO
+		return schedule;
 	}
 
 	/**
@@ -202,8 +171,7 @@ public class Schedule {
 	 *         schedule.
 	 */
 	public TimeStamp getETA(Order order) {
-		Map<TimeStamp, Order> schedule = getSchedule();
-		for (Map.Entry<TimeStamp, Order> entry : schedule.entrySet()) {
+		for (Map.Entry<TimeStamp, Order> entry : getSchedule().entrySet()) {
 			if (order == entry.getValue()) {
 				return entry.getKey();
 			}
@@ -216,7 +184,7 @@ public class Schedule {
 	 *         there are no orders left, returns false.
 	 */
 	public boolean nextIsTomorrow() {
-		if(pending.isEmpty()) {
+		if (pending.isEmpty()) {
 			return false;
 		}
 		return getSchedule().firstKey().getDay() == currentTime.getDay() + 1;
@@ -228,14 +196,12 @@ public class Schedule {
 	public boolean isOutOfOrders() {
 		return pending.isEmpty();
 	}
-	
+
 	/**
-	 * @return the number of days that have passed since the system was initiated
+	 * @return the number of days that have passed since the system was
+	 *         initiated
 	 */
-	public int getNumberOfOperationalDays()
-	{
+	public int getNumberOfOperationalDays() {
 		return currentTime.getNumberOfOperationalDays();
 	}
-	
-	
 }

@@ -12,18 +12,17 @@ import car.Order;
 
 public abstract class SchedulingAlgorithm {
 
-	protected int nbWorkstations = 3;
 	protected List<Order> orders;
 	protected List<Order> inAssembly;
 	protected TimeStamp time;
 
 	/**
-	 * schedules the given list of orders. This method will alter its
+	 * schedules the given list of orders. This method will not alter its
 	 * parameters.
 	 * 
 	 * @param currentTime
 	 *            The current time.
-	 * @param orders
+	 * @param pending
 	 *            The pending orders that need to be scheduled.
 	 * @param inAssembly
 	 *            The orders that are currently being assembled on the
@@ -36,7 +35,7 @@ public abstract class SchedulingAlgorithm {
 	 *         orders that are currently in assembly.
 	 */
 	public abstract SortedMap<TimeStamp, Order> schedule(TimeStamp currentTime,
-			List<Order> orders, List<Order> inAssembly);
+			List<Order> pending, List<Order> inAssembly);
 
 	/**
 	 * returns the first order for a new day, if any. This is calculated in such
@@ -56,7 +55,7 @@ public abstract class SchedulingAlgorithm {
 		int ordersFound = 0;
 		for (Order order : orders) {
 			Set<Integer> ws = order.getNeededWorkstations();
-			if (ws.size() < nbWorkstations && !ws.contains(0)) {
+			if (ws.size() < inAssembly.size() && !ws.contains(0)) {
 				if (++ordersFound > n) {
 					return order;
 				}
@@ -83,7 +82,8 @@ public abstract class SchedulingAlgorithm {
 		int ordersFound = 0;
 		for (Order order : orders) {
 			Set<Integer> ws = order.getNeededWorkstations();
-			if (ws.size() < nbWorkstations && !ws.contains(nbWorkstations)) {
+			if (ws.size() < inAssembly.size()
+					&& !ws.contains(inAssembly.size())) {
 				if (++ordersFound > n) {
 					return order;
 				}
@@ -128,6 +128,13 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	protected boolean nextIsToday(Order next) {
-		return false; //TODO 
+		LinkedList<Order> assembly = new LinkedList<>(inAssembly);
+		addToAssemblyList(next);
+		TimeStamp nextTime = time.increaseTime(getEstimatedCycleTime());
+		while (addToAssemblyList(null) != next) {
+			nextTime = nextTime.increaseTime(getEstimatedCycleTime());
+		}
+		inAssembly = assembly; // undo changes
+		return !nextTime.shouldBeFinished();
 	}
 }
