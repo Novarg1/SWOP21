@@ -97,8 +97,6 @@ public class ScenarioOrderNewCar {
 			cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
 		}
 		assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
-		cmcSystem.advance(2);
-		assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
 	}
 
 }

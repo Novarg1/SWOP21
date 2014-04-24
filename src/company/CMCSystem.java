@@ -13,6 +13,7 @@ import car.Order;
  * assembly line
  * 
  * @author jonathanlangens
+ * @author Wonne Joosen
  *
  */
 public class CMCSystem 
@@ -69,19 +70,19 @@ public class CMCSystem
 		return this.assemblyLine;
 	}
 	
-	public void advance(int time) {
-		if(!this.assemblyLine.isReadyToAdvance()) {
-			throw new IllegalStateException("assemblyLine is not ready to advance");
-		}
-		
-		if(time <= 0) {
-			throw new IllegalArgumentException("cannot advance to same or previous time");
-		}
-		
-		// there are 2 basic scenarios:
-		// scenario 1: the next order can be pushed on the assembly line today
-		// scenario 2: the next order is for tomorrow however the time has to be
-		//             increased and the assembly line pushed
+//	public void advance(int time) {
+//		if(!this.assemblyLine.isReadyToAdvance()) {
+//			throw new IllegalStateException("assemblyLine is not ready to advance");
+//		}
+//		
+//		if(time <= 0) {
+//			throw new IllegalArgumentException("cannot advance to same or previous time");
+//		}
+//		
+// there are 2 basic scenarios:
+// scenario 1: the next order can be pushed on the assembly line today
+// scenario 2: the next order is for tomorrow however the time has to be
+//             increased and the assembly line pushed
 //		Order orderToPush = null;
 //		if(this.schedule.canNextOrderBeBuildToday()) {
 //			orderToPush = this.schedule.prepareNextOrder();
@@ -96,7 +97,7 @@ public class CMCSystem
 //		{
 //			schedule.startNewDay();
 //		}
-	}
+//	}
 	
 	/**
 	 * inspector for the schedule
