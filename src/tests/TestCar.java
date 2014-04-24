@@ -13,6 +13,12 @@ import car.*;
 import car.parts.Carpart;
 import car.parts.CarpartsSet;
 
+/**
+ * This is a class that collects unit tests for the Car class
+ * 
+ * @author Wonne Joosen
+ *
+ */
 public class TestCar {
 
 

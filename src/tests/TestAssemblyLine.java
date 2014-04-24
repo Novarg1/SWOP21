@@ -19,7 +19,7 @@ import company.Schedule;
 import company.WorkStation;
 
 /**
- * This is a class that collect unit tests for the AssemblyLine class
+ * This is a class that collects unit tests for the AssemblyLine class
  * 
  * @author Wonne Joosen
  *
