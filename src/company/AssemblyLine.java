@@ -34,7 +34,8 @@ public class AssemblyLine implements Observer {
 
 	/**
 	 * This method is called whenever a carpart is installed in one of the
-	 * workstations on this assemblyLine.
+	 * workstations on this assemblyLine, and whenever schedule receives a new
+	 * order.
 	 */
 	@Override
 	public void update(Observable ws, Object obj) {
@@ -92,7 +93,8 @@ public class AssemblyLine implements Observer {
 	}
 
 	/**
-	 * Helper method to find out how long it takes to be able to advance the assembly line
+	 * Helper method to find out how long it takes to be able to advance the
+	 * assembly line
 	 * 
 	 * @return the highest of all worktimes of workstations on this
 	 *         assemblyline.
