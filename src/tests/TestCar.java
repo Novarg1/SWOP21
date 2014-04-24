@@ -39,7 +39,7 @@ public class TestCar {
 	public OrderSpecification makeOrderSpec(){
 		OrderSpecification os = new ModelASpec();
 		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
-			for(Carpart part : os.getSupportedCarparts(type)) {
+			for(Carpart part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}

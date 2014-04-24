@@ -16,8 +16,6 @@ import car.parts.CarpartsSet;
 import user.User;
 
 import company.CMCSystem;
-import controllers.OrderController;
-import controllers.SystemController;
 
 
 /**
@@ -50,7 +48,7 @@ public class ScenarioOrderNewCar {
 	public OrderSpecification makeOrderSpec(){
 		OrderSpecification os = new ModelASpec();
 		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
-			for(Carpart part : os.getSupportedCarparts(type)) {
+			for(Carpart part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}
