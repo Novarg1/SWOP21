@@ -6,9 +6,6 @@ import java.util.Observer;
 
 import car.Car;
 
-//TODO bugfix: wanneer schedule leeg is en dan een order krijgt, wordt dit niet
-//		automatisch op de assemblyLine gezet.
-
 /**
  * An assemblyline has a list of workstations and can be advanced.
  */
@@ -29,6 +26,10 @@ public class AssemblyLine implements Observer {
 		this.schedule = schedule;
 		workstations = new WorkStation[] { new CarBodyPost(),
 				new DriveTrainPost(), new AccessoiresPost() };
+		schedule.addObserver(this);
+		for (WorkStation ws : workstations) {
+			ws.addObserver(this);
+		}
 	}
 
 	/**
