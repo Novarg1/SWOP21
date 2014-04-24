@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 
 import util.LineReader;
-import company.Schedule.Algorithm;
 import controllers.SystemController;
 import controllers.ScheduleController;
 

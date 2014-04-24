@@ -5,13 +5,9 @@ import java.util.List;
 
 import user.User;
 import car.Order;
-import car.parts.Carpart;
-import car.parts.CarpartsSet;
 import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;
-import company.Schedule.Algorithm;
-import company.SchedulingAlgorithm;
 import company.WorkStation;
 
 /** System Controller
