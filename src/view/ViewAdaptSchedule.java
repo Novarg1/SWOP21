@@ -1,17 +1,10 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import car.ModelASpec;
 import car.ModelBSpec;
 import car.ModelCSpec;
 import car.Order;
 import car.OrderSpecification;
-import car.parts.Carpart;
-import car.parts.CarpartsSet;
-import car.parts.Color;
-import car.parts.Seats;
 import company.FIFO;
 import company.SchedulingAlgorithm;
 import company.SpecificationBatch;

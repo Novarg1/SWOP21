@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import car.parts.Carpart;
-import car.parts.CarpartsSet;
-import util.LineReader;
 import company.WorkStation;
 /**
  * assembly controller allows manipulation of 1 workstation

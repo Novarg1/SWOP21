@@ -2,8 +2,6 @@ package view;
 
 import util.LineReader;
 import controllers.SystemController;
-import controllers.ScheduleController;
-import controllers.StatisticsController;
 
 public class ViewManager extends View
 {

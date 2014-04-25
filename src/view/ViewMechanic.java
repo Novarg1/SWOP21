@@ -2,7 +2,6 @@ package view;
 
 import util.LineReader;
 import controllers.SystemController;
-import controllers.AssemblyController;
 
 public class ViewMechanic extends View
 {

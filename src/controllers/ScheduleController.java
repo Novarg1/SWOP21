@@ -1,12 +1,7 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import company.FIFO;
 import company.Schedule;
 import company.SchedulingAlgorithm;
-import util.LineReader;
 
 public class ScheduleController {
 	private Schedule schedule;
