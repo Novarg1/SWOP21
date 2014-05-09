@@ -9,9 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import user.User;
-import car.*;
-import car.parts.Carpart;
-import car.parts.CarpartsSet;
+import vehicle.*;
+import vehicle.order.ModelASpec;
+import vehicle.order.Order;
+import vehicle.order.OrderSpecification;
+import vehicle.parts.Carpart;
+import vehicle.parts.CarpartsSet;
 
 /**
  * This is a class that collects unit tests for the Car class
@@ -22,7 +25,7 @@ import car.parts.CarpartsSet;
 public class TestCar {
 
 
-	private Car testCar;
+	private Vehicle testCar;
 	private Order testOrder;
 	
 	@Before
@@ -70,7 +73,7 @@ public class TestCar {
 	 */
 	@Test
 	public void installTest(){
-		testCar = new Car(testOrder);
+		testCar = new Vehicle(testOrder);
 		CarpartsSet cpSet = testOrder.getParts();
 		for (Carpart cp : cpSet){
 			testCar.install(cp);
@@ -84,7 +87,7 @@ public class TestCar {
 	 */
 	@Test
 	public void installTwiceTest(){
-		testCar = new Car(testOrder);
+		testCar = new Vehicle(testOrder);
 		CarpartsSet cpSet = testOrder.getParts();
 		for (Carpart cp : cpSet){
 			testCar.install(cp);

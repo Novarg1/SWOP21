@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import util.TimeStamp;
-import car.Order;
+import vehicle.order.Order;
 
 /**
  * Represents the schedule of the company. Contains a list of pending orders,

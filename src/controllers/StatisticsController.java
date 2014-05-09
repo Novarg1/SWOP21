@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import car.Order;
+import vehicle.order.Order;
 
 public class StatisticsController
 {

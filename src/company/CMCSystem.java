@@ -5,7 +5,7 @@ import java.util.List;
 
 import user.User;
 import user.UserManager;
-import car.Order;
+import vehicle.order.Order;
 
 /**
  * this class represents the domains top level class

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
-import car.Car;
+import vehicle.Vehicle;
 
 /**
  * An assemblyline has a list of workstations and can be advanced.
@@ -52,7 +52,7 @@ public class AssemblyLine implements Observer {
 		if (!isReadyToAdvance()) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
-		Car next = new Car(schedule.getNextOrder(getHighestWorkTime()));
+		Vehicle next = new Vehicle(schedule.getNextOrder(getHighestWorkTime()));
 		for (int i = workstations.length - 1; i > 0; i--) {
 			workstations[i].setCurrentCar(workstations[i - 1].getCurrentCar());
 		}

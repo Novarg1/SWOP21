@@ -1,7 +1,7 @@
 package controllers;
 
-import car.OrderSpecification;
-import car.Order;
+import vehicle.order.Order;
+import vehicle.order.OrderSpecification;
 
 public class OrderController
 {

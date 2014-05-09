@@ -2,9 +2,9 @@ package view;
 
 import util.LineReader;
 import util.TimeStamp;
-import car.CustomSeatsSpec;
-import car.OrderSpecification;
-import car.PaintJobSpec;
+import vehicle.order.CustomSeatsSpec;
+import vehicle.order.OrderSpecification;
+import vehicle.order.PaintJobSpec;
 import controllers.SystemController;
 
 public class ViewCustomShop extends ViewOrderForm

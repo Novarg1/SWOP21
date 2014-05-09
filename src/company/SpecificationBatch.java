@@ -9,8 +9,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import util.TimeStamp;
-import car.Order;
-import car.parts.CarpartsSet;
+import vehicle.order.Order;
+import vehicle.parts.CarpartsSet;
 
 public class SpecificationBatch extends SchedulingAlgorithm {
 

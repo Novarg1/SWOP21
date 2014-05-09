@@ -7,12 +7,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import user.User;
-
-import car.ModelASpec;
-import car.Order;
-import car.OrderSpecification;
-import car.parts.Carpart;
-
+import vehicle.order.ModelASpec;
+import vehicle.order.Order;
+import vehicle.order.OrderSpecification;
+import vehicle.parts.Carpart;
 import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;

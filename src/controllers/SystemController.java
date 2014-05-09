@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import user.User;
-import car.Order;
+import vehicle.order.Order;
 import company.AssemblyLine;
 import company.CMCSystem;
 import company.Schedule;

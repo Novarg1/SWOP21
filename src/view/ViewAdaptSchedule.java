@@ -1,15 +1,15 @@
 package view;
 
-import car.ModelASpec;
-import car.ModelBSpec;
-import car.ModelCSpec;
-import car.Order;
-import car.OrderSpecification;
 import company.FIFO;
 import company.SchedulingAlgorithm;
 import company.SpecificationBatch;
 import user.User;
 import util.LineReader;
+import vehicle.order.ModelASpec;
+import vehicle.order.ModelBSpec;
+import vehicle.order.ModelCSpec;
+import vehicle.order.Order;
+import vehicle.order.OrderSpecification;
 import controllers.SystemController;
 import controllers.ScheduleController;
 

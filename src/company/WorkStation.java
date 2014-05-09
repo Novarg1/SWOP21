@@ -3,9 +3,9 @@ package company;
 import java.util.Map;
 import java.util.Observable;
 
-import car.Car;
-import car.parts.Carpart;
-import car.parts.CarpartsSet;
+import vehicle.Vehicle;
+import vehicle.parts.Carpart;
+import vehicle.parts.CarpartsSet;
 
 /**
  * Represents any workstation in this company. A workstation can contain a car
@@ -15,7 +15,7 @@ import car.parts.CarpartsSet;
 public abstract class WorkStation extends Observable {
 
 	private final int id;
-	private Car current = null;
+	private Vehicle current = null;
 	private Map<Carpart, Integer> log;
 
 	protected WorkStation(int id) {
@@ -25,7 +25,7 @@ public abstract class WorkStation extends Observable {
 	/**
 	 * Sets the current Car in this workstation to the given car.
 	 */
-	public void setCurrentCar(Car current) {
+	public void setCurrentCar(Vehicle current) {
 		this.current = current;
 		log.clear();
 	}
@@ -33,7 +33,7 @@ public abstract class WorkStation extends Observable {
 	/**
 	 * @return the current job of this workstation
 	 */
-	public Car getCurrentCar() {
+	public Vehicle getCurrentCar() {
 		return current;
 	}
 

@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import util.TimeStamp;
-import car.Order;
+import vehicle.order.Order;
 
 public abstract class SchedulingAlgorithm {
 

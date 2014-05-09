@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.LineReader;
-import car.OrderSpecification;
-import car.parts.Airco;
-import car.parts.Body;
-import car.parts.Carpart;
-import car.parts.Color;
-import car.parts.Engine;
-import car.parts.Gearbox;
-import car.parts.Seats;
-import car.parts.Spoiler;
-import car.parts.Wheels;
+import vehicle.order.OrderSpecification;
+import vehicle.parts.Airco;
+import vehicle.parts.Body;
+import vehicle.parts.Carpart;
+import vehicle.parts.Color;
+import vehicle.parts.Engine;
+import vehicle.parts.Gearbox;
+import vehicle.parts.Seats;
+import vehicle.parts.Spoiler;
+import vehicle.parts.Wheels;
 import controllers.OrderController;
 import controllers.SystemController;
 

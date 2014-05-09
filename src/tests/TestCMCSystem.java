@@ -7,13 +7,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import car.ModelASpec;
-import car.Order;
-import car.OrderSpecification;
-import car.parts.Carpart;
-
 import user.User;
-
+import vehicle.order.ModelASpec;
+import vehicle.order.Order;
+import vehicle.order.OrderSpecification;
+import vehicle.parts.Carpart;
 import company.CMCSystem;
 
 

@@ -2,17 +2,17 @@ package tests;
 
 import org.junit.Test;
 
-import car.ModelASpec;
-import car.OrderSpecification;
-import car.parts.Airco;
-import car.parts.Body;
-import car.parts.Carpart;
-import car.parts.Color;
-import car.parts.Engine;
-import car.parts.Gearbox;
-import car.parts.Seats;
-import car.parts.Spoiler;
-import car.parts.Wheels;
+import vehicle.order.ModelASpec;
+import vehicle.order.OrderSpecification;
+import vehicle.parts.Airco;
+import vehicle.parts.Body;
+import vehicle.parts.Carpart;
+import vehicle.parts.Color;
+import vehicle.parts.Engine;
+import vehicle.parts.Gearbox;
+import vehicle.parts.Seats;
+import vehicle.parts.Spoiler;
+import vehicle.parts.Wheels;
 
 public class TestCarSpecification 
 {
@@ -45,7 +45,7 @@ public class TestCarSpecification
 		spec.add((Carpart) spec.getViableOptions(Color.class).toArray()[0]);
 		assert(!spec.isValid());
 		
-		spec.add(Engine.PERFORMANCE);
+		spec.add(Engine.PERFORMANCE_25DL_V6);
 		assert(!spec.isValid());
 
 		spec.add((Carpart) spec.getViableOptions(Gearbox.class).toArray()[0]);

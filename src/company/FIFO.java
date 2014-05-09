@@ -6,7 +6,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import util.TimeStamp;
-import car.Order;
+import vehicle.order.Order;
 
 public class FIFO extends SchedulingAlgorithm {
 
