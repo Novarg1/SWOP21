@@ -37,6 +37,6 @@ public class ModelBSpec extends ModelSpec {
 
 	@Override
 	public String toString() {
-		return "Model B";
+		return "Car Model B";
 	}
 }

@@ -34,6 +34,6 @@ public class ModelXSpec extends ModelSpec {
 
 	@Override
 	public String toString() {
-		return "Model X";
+		return "Truck Model X";
 	}
 }

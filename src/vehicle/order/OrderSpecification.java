@@ -18,7 +18,7 @@ import vehicle.restrictions.SupportedPartsRestriction;
 public abstract class OrderSpecification {
 
 	private static final int DEFAULT_BUILDING_TIME = 60;
-	protected Restriction restriction;
+	protected Restriction restriction = Restriction.TRIVIAL_RESTRICTION;
 	private CarpartsSet parts;
 
 	protected OrderSpecification() {
