@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import user.User;
 import vehicle.*;
-import vehicle.order.ModelASpec;
+import vehicle.order.ModelABuilder;
 import vehicle.order.Order;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Carpart;
 import vehicle.parts.CarpartsSet;
 
@@ -39,8 +39,8 @@ public class TestCar {
 	 * 
 	 * @return A valid OrderSpecification, with arbitrary car parts specified
 	 */
-	public OrderSpecification makeOrderSpec(){
-		OrderSpecification os = new ModelASpec();
+	public OrderBuilder makeOrderSpec(){
+		OrderBuilder os = new ModelABuilder();
 		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
 			for(Carpart part : os.getViableOptions(type)) {
 				os.add(part);
@@ -62,7 +62,7 @@ public class TestCar {
 				return "GarageHolder";
 			}
 		};
-		OrderSpecification spec = makeOrderSpec();
+		OrderBuilder spec = makeOrderSpec();
 		Order order = new Order(spec, user);
 		return order;
 	}
@@ -74,7 +74,7 @@ public class TestCar {
 	@Test
 	public void installTest(){
 		testCar = new Vehicle(testOrder);
-		CarpartsSet cpSet = testOrder.getParts();
+		CarpartsSet cpSet = testOrder.getTasks();
 		for (Carpart cp : cpSet){
 			testCar.install(cp);
 		}
@@ -88,7 +88,7 @@ public class TestCar {
 	@Test
 	public void installTwiceTest(){
 		testCar = new Vehicle(testOrder);
-		CarpartsSet cpSet = testOrder.getParts();
+		CarpartsSet cpSet = testOrder.getTasks();
 		for (Carpart cp : cpSet){
 			testCar.install(cp);
 		}
@@ -98,7 +98,7 @@ public class TestCar {
 			installedSuccessfully = testCar.install(cp);
 			assertFalse(installedSuccessfully);
 		}
-		assertTrue(testCar.getParts().equals(testCar.getOrder().getParts()));
+		assertTrue(testCar.getParts().equals(testCar.getOrder().getTasks()));
 		assertTrue(testCar.matchesOrder());
 	}
 	

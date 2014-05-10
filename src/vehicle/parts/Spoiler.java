@@ -1,18 +1,14 @@
 package vehicle.parts;
 
+import company.workstations.AccessoiresPost;
+import company.workstations.Workstation;
+
 public enum Spoiler implements Carpart {
 
 	HIGH, LOW;
 
-	private static final int workStationID = 2;
-	
 	@Override
-	public int getWorkStationID() {
-		return workStationID;
-	}
-
-	@Override
-	public String getAssemblyInstructions() {
-		return "install "+this+" spoiler.";
+	public Class<? extends Workstation> getResponsibleWorkstation() {
+		return AccessoiresPost.class;
 	}
 }

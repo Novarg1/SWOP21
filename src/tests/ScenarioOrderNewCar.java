@@ -8,9 +8,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import user.User;
-import vehicle.order.ModelASpec;
+import vehicle.order.ModelABuilder;
 import vehicle.order.Order;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Carpart;
 import vehicle.parts.CarpartsSet;
 import company.CMCSystem;
@@ -43,8 +43,8 @@ public class ScenarioOrderNewCar {
 
 	}
 	
-	public OrderSpecification makeOrderSpec(){
-		OrderSpecification os = new ModelASpec();
+	public OrderBuilder makeOrderSpec(){
+		OrderBuilder os = new ModelABuilder();
 		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
 			for(Carpart part : os.getViableOptions(type)) {
 				os.add(part);
@@ -62,7 +62,7 @@ public class ScenarioOrderNewCar {
 				return "GarageHolder";
 			}
 		};
-		OrderSpecification spec = makeOrderSpec();
+		OrderBuilder spec = makeOrderSpec();
 		Order order = new Order(spec, user);
 		return order;
 	}
@@ -80,7 +80,7 @@ public class ScenarioOrderNewCar {
 		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(currentUser);
 		assertTrue(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
-		OrderSpecification orderSpec = makeOrderSpec();
+		OrderBuilder orderSpec = makeOrderSpec();
 		Order order = new Order(orderSpec,currentUser);
 		cmcSystem.getSchedule().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);

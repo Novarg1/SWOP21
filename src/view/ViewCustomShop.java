@@ -2,9 +2,9 @@ package view;
 
 import util.LineReader;
 import util.TimeStamp;
-import vehicle.order.CustomSeatsSpec;
-import vehicle.order.OrderSpecification;
-import vehicle.order.PaintJobSpec;
+import vehicle.order.CustomSeatsBuilder;
+import vehicle.order.OrderBuilder;
+import vehicle.order.PaintJobBuilder;
 import controllers.SystemController;
 
 public class ViewCustomShop extends ViewOrderForm
@@ -32,7 +32,7 @@ public class ViewCustomShop extends ViewOrderForm
 	
 	private void orderPaintJob()
 	{
-		OrderSpecification spec = new PaintJobSpec();
+		OrderBuilder spec = new PaintJobBuilder();
 		
 		setColor(spec);
 		setDeadLine(spec);
@@ -42,7 +42,7 @@ public class ViewCustomShop extends ViewOrderForm
 	
 	private void orderSeatsJob()
 	{
-		OrderSpecification spec = new CustomSeatsSpec();
+		OrderBuilder spec = new CustomSeatsBuilder();
 		
 		setSeats(spec);
 		setDeadLine(spec);
@@ -50,7 +50,7 @@ public class ViewCustomShop extends ViewOrderForm
 		orderController.placeOrder(spec);
 	}
 	
-	private void setDeadLine(OrderSpecification spec)
+	private void setDeadLine(OrderBuilder spec)
 	{
 		System.out.println("What deadline do you have in mind?");
 		

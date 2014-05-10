@@ -1,33 +1,23 @@
 package vehicle;
 
-import vehicle.order.Order;
 import vehicle.parts.Carpart;
 import vehicle.parts.CarpartsSet;
 
 /**
- * Represents a vehicle. A vehicle has a set of installed vehicleparts and an associated
+ * Represents a vehicle. A vehicle has a set of installed vehicleparts
  * order.
  */
 public class Vehicle {
 
-	private Order order;
 	private CarpartsSet parts;
 
 	/**
-	 * Creates a new vehicle, associated with the given order.
+	 * Creates a new vehicle without any parts or specification.
 	 * 
 	 * @param order
 	 */
-	public Vehicle(Order order) {
-		this.order = order;
+	public Vehicle() {
 		parts = new CarpartsSet();
-	}
-
-	/**
-	 * @return The order associated with this vehicle.
-	 */
-	public Order getOrder() {
-		return order;
 	}
 
 	/**
@@ -50,13 +40,5 @@ public class Vehicle {
 		}
 		parts.add(part);
 		return true;
-	}
-
-	/**
-	 * @return true if all parts specified on the order are installed on this
-	 *         vehicle, and all parts installed are specified on the order.
-	 */
-	public boolean matchesOrder() {
-		return parts.equals(order.getParts());
 	}
 }

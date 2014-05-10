@@ -4,32 +4,68 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
+import company.schedule.Schedule;
+import company.workstations.Workstation;
 import vehicle.Vehicle;
+import vehicle.order.Order;
+
+/*
+ * TODO
+ * Idee: schedule observeert assemblyline maar niet andersom --> minder koppeling
+ * 
+ */
 
 /**
  * An assemblyline has a list of workstations and can be advanced.
  */
-public class AssemblyLine implements Observer {
+public class AssemblyLine extends Observable implements Observer {
 
 	private Schedule schedule;
-	private WorkStation[] workstations;
+	private Workstation[] workstations;
+	private Status status = Status.OPERATIONAL;
+
+	public enum Status {
+		OPERATIONAL, MAINTENANCE, BROKEN;
+	}
 
 	/**
 	 * Creates a new assemblyLine with the given list of workstations
 	 * 
 	 * @param workstations
 	 */
-	public AssemblyLine(Schedule schedule) {
-		if (schedule == null) {
-			throw new IllegalArgumentException("invalid schedule");
+	public AssemblyLine(Schedule schedule, Workstation[] workstations) {
+		if (schedule == null || workstations == null) {
+			throw new IllegalArgumentException();
 		}
 		this.schedule = schedule;
-		workstations = new WorkStation[] { new CarBodyPost(),
-				new DriveTrainPost(), new AccessoiresPost() };
-		schedule.addObserver(this);
-		for (WorkStation ws : workstations) {
+		this.workstations = workstations;
+		schedule.addAssemblyLine(this);
+		for (Workstation ws : workstations) {
 			ws.addObserver(this);
 		}
+		this.addObserver(schedule);
+	}
+
+	/**
+	 * Returns the schedule that is responsible for scheduling the orders for
+	 * this assembly line.
+	 */
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	/**
+	 * Returns the current status of this assembly line.
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		if (status == null) {
+			throw new IllegalArgumentException();
+		}
+		this.status = status; // TODO
 	}
 
 	/**
@@ -52,11 +88,11 @@ public class AssemblyLine implements Observer {
 		if (!isReadyToAdvance()) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
-		Vehicle next = new Vehicle(schedule.getNextOrder(getHighestWorkTime()));
+		Order next = schedule.getNextOrder(getHighestWorkTime());
 		for (int i = workstations.length - 1; i > 0; i--) {
-			workstations[i].setCurrentCar(workstations[i - 1].getCurrentCar());
+			workstations[i].setOrder(workstations[i - 1].getOrder());
 		}
-		workstations[0].setCurrentCar(next);
+		workstations[0].setOrder(next);
 	}
 
 	/**
@@ -65,7 +101,7 @@ public class AssemblyLine implements Observer {
 	 * @return true if all workstations on this line are ready
 	 */
 	public boolean isReadyToAdvance() {
-		for (WorkStation workstation : workstations) {
+		for (Workstation workstation : workstations) {
 			if (!workstation.isReady()) {
 				return false;
 			}
@@ -76,7 +112,7 @@ public class AssemblyLine implements Observer {
 	/**
 	 * @return The list of workstations this assemblyLine contains
 	 */
-	public WorkStation[] getWorkstations() {
+	public Workstation[] getWorkstations() {
 		return Arrays.copyOf(workstations, workstations.length);
 	}
 
@@ -86,8 +122,8 @@ public class AssemblyLine implements Observer {
 	 * @return true if no workstation on this assemblyline has a car.
 	 */
 	public boolean isEmpty() {
-		for (WorkStation w : workstations)
-			if (w.getCurrentCar() != null)
+		for (Workstation w : workstations)
+			if (w.getOrder() != null)
 				return false;
 		return true;
 	}
@@ -101,7 +137,7 @@ public class AssemblyLine implements Observer {
 	 */
 	private int getHighestWorkTime() {
 		int highest = 0;
-		for (WorkStation ws : workstations) {
+		for (Workstation ws : workstations) {
 			int worktime = ws.getWorktime();
 			if (worktime > highest) {
 				highest = worktime;

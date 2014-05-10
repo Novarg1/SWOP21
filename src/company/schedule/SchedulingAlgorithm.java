@@ -1,4 +1,4 @@
-package company;
+package company.schedule;
 
 import java.util.Collections;
 import java.util.Comparator;

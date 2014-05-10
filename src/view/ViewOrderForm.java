@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.LineReader;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Airco;
 import vehicle.parts.Body;
 import vehicle.parts.Carpart;
@@ -28,7 +28,7 @@ public abstract class ViewOrderForm extends View
 		orderController = new OrderController(systemController);
 	}
 	
-	protected void setOption(OrderSpecification spec, Class<? extends Carpart> type, boolean mandatory) throws Exception
+	protected void setOption(OrderBuilder spec, Class<? extends Carpart> type, boolean mandatory) throws Exception
 	{
 		if(mandatory ==  false)
 		{
@@ -69,7 +69,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setBody(OrderSpecification spec) {
+	protected void setBody(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Body.class, true);
 		} catch (Exception e) {
@@ -78,7 +78,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setColor(OrderSpecification spec) {
+	protected void setColor(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Color.class, true);
 		} catch (Exception e) {
@@ -87,7 +87,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setEngine(OrderSpecification spec) {
+	protected void setEngine(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Engine.class, true);
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setGearbox(OrderSpecification spec) {
+	protected void setGearbox(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Gearbox.class, true);
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setSeats(OrderSpecification spec) {
+	protected void setSeats(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Seats.class, true);
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setAirco(OrderSpecification spec) {
+	protected void setAirco(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Airco.class, false);
 		} catch (Exception e) {
@@ -123,7 +123,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setWheels(OrderSpecification spec) {
+	protected void setWheels(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Wheels.class, true);
 		} catch (Exception e) {
@@ -132,7 +132,7 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
-	protected void setSpoiler(OrderSpecification spec) {
+	protected void setSpoiler(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Spoiler.class, false);
 		} catch (Exception e) {

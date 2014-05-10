@@ -1,7 +1,7 @@
 package controllers;
 
 import vehicle.order.Order;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 
 public class OrderController
 {
@@ -22,7 +22,7 @@ public class OrderController
 	 * @param specification
 	 * @return
 	 */
-	public int placeOrder(OrderSpecification specification)
+	public int placeOrder(OrderBuilder specification)
 	{
 		Order order = new Order(specification,
 								systemController.getLoggedInUser());

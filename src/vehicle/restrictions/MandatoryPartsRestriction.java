@@ -2,7 +2,7 @@ package vehicle.restrictions;
 
 import java.util.Set;
 
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Airco;
 import vehicle.parts.Carpart;
 import vehicle.parts.CarpartsSet;
@@ -15,7 +15,7 @@ public class MandatoryPartsRestriction extends PartialRestriction {
 
 	private Set<Class<? extends Carpart>> mandatoryParts;
 	
-	public MandatoryPartsRestriction(OrderSpecification spec) {
+	public MandatoryPartsRestriction(OrderBuilder spec) {
 		mandatoryParts = spec.getSupportedTypes();
 		mandatoryParts.remove(Airco.class);
 		mandatoryParts.remove(Spoiler.class);

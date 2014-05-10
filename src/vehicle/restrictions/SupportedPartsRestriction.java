@@ -2,7 +2,7 @@ package vehicle.restrictions;
 
 import java.util.Set;
 
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Carpart;
 import vehicle.parts.CarpartsSet;
 
@@ -13,7 +13,7 @@ public class SupportedPartsRestriction extends StrictRestriction {
 
 	private Set<Carpart> supportedParts;
 	
-	public SupportedPartsRestriction(OrderSpecification spec) {
+	public SupportedPartsRestriction(OrderBuilder spec) {
 		supportedParts = spec.getSupportedCarparts();
 	}
 	

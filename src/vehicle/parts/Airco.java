@@ -1,18 +1,14 @@
 package vehicle.parts;
 
+import company.workstations.AccessoiresPost;
+import company.workstations.Workstation;
+
 public enum Airco implements Carpart {
 
 	MANUAL, AUTOMATIC;
-	
-	private static final int workStationID = 2;
 
 	@Override
-	public String getAssemblyInstructions() {
-		return "install " + this + " airco";
-	}
-
-	@Override
-	public int getWorkStationID() {
-		return workStationID;
+	public Class<? extends Workstation> getResponsibleWorkstation() {
+		return AccessoiresPost.class;
 	}
 }

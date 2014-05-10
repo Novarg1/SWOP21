@@ -13,17 +13,16 @@ import vehicle.parts.Gearbox;
 import vehicle.parts.Seats;
 import vehicle.parts.Wheels;
 
-public class ModelASpec extends ModelSpec {
+public class ModelYBuilder extends TruckOrderBuilder {
 
-	private static final int BUILDING_TIME = 50;
 	private static final Carpart[] supportedParts = new Carpart[] {
-		Body.SEDAN, Body.BREAK,
-		Color.RED, Color.BLUE, Color.BLACK, Color.WHITE,
-		Engine.PERFORMANCE_25DL_V6, Engine.STANDARD_2L_V4,
-		Gearbox.AUTOMATIC_5, Gearbox.MANUAL_5, Gearbox.MANUAL_6,
-		Seats.LEATHER_BLACK, Seats.LEATHER_WHITE, Seats.VINYL_GREY,
+		Body.PLATFORM,
+		Color.BLACK, Color.WHITE,
+		Engine.STANDARD, Engine.HYBRID,
+		Gearbox.MANUAL_8, Gearbox.AUTOMATIC,
+		Seats.VINYL_BLACK, Seats.VINYL_GREY,
 		Airco.MANUAL, Airco.AUTOMATIC,
-		Wheels.COMFORT, Wheels.SPORTS, Wheels.WINTER
+		Wheels.STANDARD, Wheels.HEAVY_DUTY
 	};
 
 	@Override
@@ -32,12 +31,7 @@ public class ModelASpec extends ModelSpec {
 	}
 
 	@Override
-	public int getBuildingTimePerWorkstation() {
-		return BUILDING_TIME;
-	}
-	
-	@Override
 	public String toString() {
-		return "Car Model A";
+		return "Truck Model Y";
 	}
 }

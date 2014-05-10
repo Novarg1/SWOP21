@@ -3,6 +3,8 @@ package company;
 import java.util.LinkedList;
 import java.util.List;
 
+import company.schedule.Schedule;
+
 import user.User;
 import user.UserManager;
 import vehicle.order.Order;
@@ -28,7 +30,7 @@ public class CMCSystem
 	 */
 	public CMCSystem() {
 		schedule = new Schedule();
-		assemblyLine = new AssemblyLine(schedule);
+		assemblyLine = new AssemblyLine(schedule, null); //TODO workstations
 		finishedOrders = new LinkedList<Order>();
 		userManager = new UserManager();
 	}

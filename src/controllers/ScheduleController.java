@@ -1,7 +1,7 @@
 package controllers;
 
-import company.Schedule;
-import company.SchedulingAlgorithm;
+import company.schedule.Schedule;
+import company.schedule.SchedulingAlgorithm;
 
 public class ScheduleController {
 	private Schedule schedule;

@@ -11,18 +11,23 @@ import vehicle.parts.Color;
 import vehicle.parts.Engine;
 import vehicle.parts.Gearbox;
 import vehicle.parts.Seats;
+import vehicle.parts.Spoiler;
 import vehicle.parts.Wheels;
 
-public class ModelYSpec extends ModelSpec {
+/**
+ * Represents model B
+ */
+public class ModelBBuilder extends CarModelBuilder {
 
 	private static final Carpart[] supportedParts = new Carpart[] {
-		Body.PLATFORM,
-		Color.BLACK, Color.WHITE,
-		Engine.STANDARD, Engine.HYBRID,
-		Gearbox.MANUAL_8, Gearbox.AUTOMATIC,
-		Seats.VINYL_BLACK, Seats.VINYL_GREY,
+		Body.SEDAN, Body.BREAK, Body.SPORT,
+		Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW,
+		Engine.PERFORMANCE_25DL_V6, Engine.STANDARD_2L_V4, Engine.ULTRA_3L_V8,
+		Gearbox.AUTOMATIC_5, Gearbox.MANUAL_6,
+		Seats.LEATHER_BLACK, Seats.LEATHER_WHITE, Seats.VINYL_GREY,
 		Airco.MANUAL, Airco.AUTOMATIC,
-		Wheels.STANDARD, Wheels.HEAVY_DUTY
+		Wheels.COMFORT, Wheels.SPORTS, Wheels.WINTER,
+		Spoiler.LOW
 	};
 
 	@Override
@@ -32,6 +37,6 @@ public class ModelYSpec extends ModelSpec {
 
 	@Override
 	public String toString() {
-		return "Truck Model Y";
+		return "Car Model B";
 	}
 }

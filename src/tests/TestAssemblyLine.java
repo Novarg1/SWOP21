@@ -7,14 +7,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import user.User;
-import vehicle.order.ModelASpec;
+import vehicle.order.ModelABuilder;
 import vehicle.order.Order;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Carpart;
 import company.AssemblyLine;
 import company.CMCSystem;
-import company.Schedule;
-import company.WorkStation;
+import company.schedule.Schedule;
+import company.workstations.Workstation;
 
 /**
  * This is a class that collects unit tests for the AssemblyLine class
@@ -62,8 +62,8 @@ public class TestAssemblyLine {
 		
 	}
 	
-	public OrderSpecification makeOrderSpec(){
-		OrderSpecification os = new ModelASpec();
+	public OrderBuilder makeOrderSpec(){
+		OrderBuilder os = new ModelABuilder();
 		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
 			for(Carpart part : os.getViableOptions(type)) {
 				os.add(part);
@@ -81,7 +81,7 @@ public class TestAssemblyLine {
 				return "GarageHolder";
 			}
 		};
-		OrderSpecification spec = makeOrderSpec();
+		OrderBuilder spec = makeOrderSpec();
 		Order order = new Order(spec, user);
 		return order;
 	}
@@ -91,7 +91,7 @@ public class TestAssemblyLine {
 	 */
 	@Test
 	public void emptyAssemblyLineTest() {
-		for(WorkStation ws : assemblyLine.getWorkstations() ) {
+		for(Workstation ws : assemblyLine.getWorkstations() ) {
 			assertTrue(ws.isReady());
 		}
 		assertTrue(assemblyLine.isReadyToAdvance());

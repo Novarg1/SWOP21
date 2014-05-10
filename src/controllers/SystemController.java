@@ -7,8 +7,8 @@ import user.User;
 import vehicle.order.Order;
 import company.AssemblyLine;
 import company.CMCSystem;
-import company.Schedule;
-import company.WorkStation;
+import company.schedule.Schedule;
+import company.workstations.Workstation;
 
 /** System Controller
  * 
@@ -76,7 +76,7 @@ public class SystemController
 	 */
 	public boolean isWorkPostFinished(int id)
 	{
-		for(WorkStation w : cmcSytem.getAssemblyLine().getWorkstations())
+		for(Workstation w : cmcSytem.getAssemblyLine().getWorkstations())
 		{
 			if(w.getId() == id)
 				return w.isReady();
@@ -95,10 +95,10 @@ public class SystemController
 	/**
 	 * @return all workstations in a list
 	 */
-	public List<WorkStation> getWorkstations()
+	public List<Workstation> getWorkstations()
 	{
-		List<WorkStation> list = new ArrayList<WorkStation>();
-		for(WorkStation w : this.cmcSytem.getAssemblyLine().getWorkstations())
+		List<Workstation> list = new ArrayList<Workstation>();
+		for(Workstation w : this.cmcSytem.getAssemblyLine().getWorkstations())
 		{
 			list.add(w);
 		}
@@ -109,9 +109,9 @@ public class SystemController
 	 * @param id
 	 * @return the workstation with ID id
 	 */
-	public WorkStation getWorkstation(int id)
+	public Workstation getWorkstation(int id)
 	{
-		for(WorkStation w : this.cmcSytem.getAssemblyLine().getWorkstations())
+		for(Workstation w : this.cmcSytem.getAssemblyLine().getWorkstations())
 			if(w.getId() == id)
 				return w;
 		return null;

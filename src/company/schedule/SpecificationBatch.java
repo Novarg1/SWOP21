@@ -1,4 +1,4 @@
-package company;
+package company.schedule;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -83,7 +83,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	private LinkedList<Order> getMatchingOrders(List<Order> orders) {
 		LinkedList<Order> result = new LinkedList<>();
 		for (Order order : orders) {
-			if (order.getParts().equals(spec)) {
+			if (order.getTasks().equals(spec)) {
 				result.add(order);
 				orders.remove(order);
 			}
@@ -98,7 +98,7 @@ public class SpecificationBatch extends SchedulingAlgorithm {
 	public static Set<CarpartsSet> getAcceptableSets(List<Order> orders) {
 		Map<CarpartsSet, Integer> map = new HashMap<>();
 		for (Order order : orders) {
-			CarpartsSet key = order.getParts();
+			CarpartsSet key = order.getTasks();
 			if (map.containsKey(key)) {
 				map.put(key, map.get(key) + 1);
 			} else {

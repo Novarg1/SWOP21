@@ -1,15 +1,15 @@
 package view;
 
-import company.FIFO;
-import company.SchedulingAlgorithm;
-import company.SpecificationBatch;
+import company.schedule.FIFO;
+import company.schedule.SchedulingAlgorithm;
+import company.schedule.SpecificationBatch;
 import user.User;
 import util.LineReader;
-import vehicle.order.ModelASpec;
-import vehicle.order.ModelBSpec;
-import vehicle.order.ModelCSpec;
+import vehicle.order.ModelABuilder;
+import vehicle.order.ModelBBuilder;
+import vehicle.order.ModelCBuilder;
 import vehicle.order.Order;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import controllers.SystemController;
 import controllers.ScheduleController;
 
@@ -54,7 +54,7 @@ public class ViewAdaptSchedule extends ViewOrderForm
 		System.out.println("For which model type?:\n(1) A\n(2) B\n(3) C");
 		int choice = LineReader.readInt();
 		
-		OrderSpecification spec = getSpecification(choice);
+		OrderBuilder spec = getSpecification(choice);
 		
 		setBody(spec);
 		setColor(spec);
@@ -67,16 +67,16 @@ public class ViewAdaptSchedule extends ViewOrderForm
 		
 		Order order = new Order(spec, user);
 		
-		return new SpecificationBatch(order.getParts());
+		return new SpecificationBatch(order.getTasks());
 	}
 
-	private OrderSpecification getSpecification(int n) {
-		OrderSpecification spec = null;
+	private OrderBuilder getSpecification(int n) {
+		OrderBuilder spec = null;
 		switch(n)
 		{
-		case 1: spec = new ModelASpec();break;
-		case 2: spec = new ModelBSpec();break;
-		case 3: spec = new ModelCSpec();break;
+		case 1: spec = new ModelABuilder();break;
+		case 2: spec = new ModelBBuilder();break;
+		case 3: spec = new ModelCBuilder();break;
 		default: throw new IllegalArgumentException("model type does not exist");
 		}
 		return spec;

@@ -2,8 +2,8 @@ package tests;
 
 import org.junit.Test;
 
-import vehicle.order.ModelASpec;
-import vehicle.order.OrderSpecification;
+import vehicle.order.ModelABuilder;
+import vehicle.order.OrderBuilder;
 import vehicle.parts.Airco;
 import vehicle.parts.Body;
 import vehicle.parts.Carpart;
@@ -19,7 +19,7 @@ public class TestCarSpecification
 	@Test
 	public void TestSpecificationA()
 	{
-		OrderSpecification spec = new ModelASpec();
+		OrderBuilder spec = new ModelABuilder();
 		
 		assert(spec.getViableOptions(Body.class).size() == 2);
 		assert(spec.getViableOptions(Color.class).size() == 4);

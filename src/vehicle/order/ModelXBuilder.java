@@ -11,23 +11,20 @@ import vehicle.parts.Color;
 import vehicle.parts.Engine;
 import vehicle.parts.Gearbox;
 import vehicle.parts.Seats;
-import vehicle.parts.Spoiler;
 import vehicle.parts.Wheels;
 
-/**
- * Represents model B
- */
-public class ModelBSpec extends ModelSpec {
+//TODO override getBuildingtime
+
+public class ModelXBuilder extends TruckOrderBuilder {
 
 	private static final Carpart[] supportedParts = new Carpart[] {
-		Body.SEDAN, Body.BREAK, Body.SPORT,
-		Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW,
-		Engine.PERFORMANCE_25DL_V6, Engine.STANDARD_2L_V4, Engine.ULTRA_3L_V8,
-		Gearbox.AUTOMATIC_5, Gearbox.MANUAL_6,
-		Seats.LEATHER_BLACK, Seats.LEATHER_WHITE, Seats.VINYL_GREY,
+		Body.PLATFORM, Body.CLOSED,
+		Color.GREEN, Color.WHITE,
+		Engine.STANDARD, Engine.HYBRID,
+		Gearbox.MANUAL_8, Gearbox.AUTOMATIC,
+		Seats.VINYL_BLACK, Seats.VINYL_GREY,
 		Airco.MANUAL, Airco.AUTOMATIC,
-		Wheels.COMFORT, Wheels.SPORTS, Wheels.WINTER,
-		Spoiler.LOW
+		Wheels.STANDARD, Wheels.HEAVY_DUTY
 	};
 
 	@Override
@@ -37,6 +34,6 @@ public class ModelBSpec extends ModelSpec {
 
 	@Override
 	public String toString() {
-		return "Car Model B";
+		return "Truck Model X";
 	}
 }

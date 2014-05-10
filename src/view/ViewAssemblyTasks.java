@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 
-import company.WorkStation;
+import company.workstations.Workstation;
 import util.LineReader;
 import vehicle.parts.Carpart;
 import controllers.SystemController;
@@ -16,7 +16,7 @@ public class ViewAssemblyTasks extends View
 		super(c);
 		// TODO Auto-generated constructor stub
 		int workstationId = selectWorkstation();
-		WorkStation w = systemController.getWorkstation(workstationId);
+		Workstation w = systemController.getWorkstation(workstationId);
 		assemblyController = new AssemblyController(w);
 	}
 	

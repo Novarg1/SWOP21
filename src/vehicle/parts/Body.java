@@ -1,18 +1,14 @@
 package vehicle.parts;
 
+import company.workstations.CarBodyPost;
+import company.workstations.Workstation;
+
 public enum Body implements Carpart {
 
 	SEDAN, BREAK, SPORT, PLATFORM, CLOSED;
-	
-	private static final int workStationID = 0;
-	
-	@Override
-	public int getWorkStationID() {
-		return workStationID;
-	}
 
 	@Override
-	public String getAssemblyInstructions() {
-		return "install "+this+" body";
+	public Class<? extends Workstation> getResponsibleWorkstation() {
+		return CarBodyPost.class;
 	}
 }

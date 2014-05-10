@@ -5,6 +5,9 @@ import java.util.Set;
 
 import user.User;
 import util.TimeStamp;
+import vehicle.Vehicle;
+import vehicle.assemblytasks.InstallPart;
+import vehicle.assemblytasks.Task;
 import vehicle.parts.Carpart;
 import vehicle.parts.CarpartsSet;
 import vehicle.restrictions.MandatoryPartsRestriction;
@@ -15,13 +18,15 @@ import vehicle.restrictions.SportEngineRestriction;
 import vehicle.restrictions.SportSpoilerRestriction;
 import vehicle.restrictions.SupportedPartsRestriction;
 
-public abstract class OrderSpecification {
+public abstract class OrderBuilder {
 
 	private static final int DEFAULT_BUILDING_TIME = 60;
 	protected Restriction restriction = Restriction.TRIVIAL_RESTRICTION;
 	private CarpartsSet parts;
+	private User client;
+	private Vehicle vehicle = new Vehicle();
 
-	protected OrderSpecification() {
+	protected OrderBuilder() {
 		parts = new CarpartsSet();
 		setDefaultRestrictions();
 	}
@@ -39,14 +44,32 @@ public abstract class OrderSpecification {
 	}
 
 	/**
+	 * Returns the user that built this orderspecification.
+	 * @return
+	 */
+	public User getClient() {
+		return client;
+	}
+
+	/**
+	 * Sets the user building this orderspecification to the given user.
+	 */
+	public void setClient(User client) {
+		this.client = client;
+	}
+	
+	/**
+	 * Returns the vehicle associated with the order being built.
+	 * @return
+	 */
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+	
+	/**
 	 * @return The deadline for the order this class specifies.
 	 */
 	public abstract TimeStamp getDeadline();
-
-	/**
-	 * sets the deadline of this orderspecification to the given time.
-	 */
-	public abstract void setDeadline(TimeStamp deadline);
 
 	/**
 	 * @return time in minutes that is spent in each workstation in normal
@@ -127,6 +150,22 @@ public abstract class OrderSpecification {
 	}
 
 	/**
+	 * The set of assembly tasks that the order in construction has.
+	 */
+	public Set<Task> getTasks() {
+		Set<Task> tasks = new HashSet<>(getModelSpecificTasks());
+		for (Carpart part : getParts()) {
+			tasks.add(new InstallPart(part, vehicle));
+		}
+		return tasks;
+	}
+	
+	/**
+	 * returns the tasks that are specific to this type of orderspecification.
+	 */
+	protected abstract Set<Task> getModelSpecificTasks();
+	
+	/**
 	 * Checks wheter all restrictions pass for the given set but does not take
 	 * parts into account that have not (yet) been selected.
 	 */
@@ -158,9 +197,9 @@ public abstract class OrderSpecification {
 	 * @throws IllegalStateException
 	 *             if this specification is not valid.
 	 */
-	public Order extractOrder(User client) {
+	public Order extractOrder() {
 		try {
-			return new Order(this, client);
+			return new Order(this);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalStateException(
 					"must be valid before order can be extracted");

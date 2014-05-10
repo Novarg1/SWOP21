@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import vehicle.parts.Carpart;
-import company.WorkStation;
+import company.workstations.Workstation;
 /**
  * assembly controller allows manipulation of 1 workstation
  * 
@@ -14,13 +14,13 @@ import company.WorkStation;
  */
 public class AssemblyController
 {
-	private WorkStation workstation;
+	private Workstation workstation;
 	
 	/**
 	 * constructor takes a workstation and  sets its member to the passed station
 	 * @param w
 	 */
-	public AssemblyController(WorkStation w)
+	public AssemblyController(Workstation w)
 	{
 		workstation = w;
 	}

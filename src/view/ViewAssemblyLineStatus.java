@@ -2,8 +2,7 @@ package view;
 
 import java.util.List;
 
-import company.WorkStation;
-
+import company.workstations.Workstation;
 import controllers.SystemController;
 
 public class ViewAssemblyLineStatus extends View
@@ -18,8 +17,8 @@ public class ViewAssemblyLineStatus extends View
 	public boolean show() 
 	{
 		System.out.println("The current status of the assembly line is:");
-		List<WorkStation> list = systemController.getWorkstations();
-		for(WorkStation w : list)
+		List<Workstation> list = systemController.getWorkstations();
+		for(Workstation w : list)
 		{
 			System.out.println("> Workstation " + w.getId() + " status:");
 			System.out.println(w.getPendingTasks());

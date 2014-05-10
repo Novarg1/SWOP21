@@ -4,22 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import vehicle.parts.Carpart;
-import vehicle.parts.Seats;
+import vehicle.parts.Color;
 
-public class CustomSeatsSpec extends CustomSpec {
+public class PaintJobBuilder extends CustomOrderBuilder {
 
 	@Override
 	public Set<Carpart> getSupportedCarparts() {
 		Set<Carpart> result = new HashSet<>();
-		for (Seats seats : Seats.values()) {
-			result.add(seats);
+		for (Color	color : Color.values()) {
+			result.add(color);
 		}
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "Custom Seats";
+		return "Spray-paint job";
 	}
-
 }

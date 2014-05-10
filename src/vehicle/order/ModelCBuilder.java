@@ -17,7 +17,7 @@ import vehicle.parts.Wheels;
 /**
  * Represents model C
  */
-public class ModelCSpec extends ModelSpec {
+public class ModelCBuilder extends CarModelBuilder {
 
 	private static final int BUILDING_TIME = 70;
 	private static final Carpart[] supportedParts = new Carpart[] {

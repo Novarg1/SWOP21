@@ -1,4 +1,4 @@
-package company;
+package company.schedule;
 
 import java.util.LinkedList;
 import java.util.List;

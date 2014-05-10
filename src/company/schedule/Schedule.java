@@ -1,11 +1,15 @@
-package company;
+package company.schedule;
 
 import java.util.Arrays;
 import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import company.AssemblyLine;
 
 import util.TimeStamp;
 import vehicle.order.Order;
@@ -14,11 +18,10 @@ import vehicle.order.Order;
  * Represents the schedule of the company. Contains a list of pending orders,
  * the current time and algorithms for scheduling the pending orders.
  */
-public class Schedule extends Observable {
+public class Schedule extends Observable implements Observer {
 
-	private static final int NB_WORKPOSTS = 3; // TODO nieuw plan: houd
-												// reference
-												// naar assemblyline bij
+	private static final int NB_WORKPOSTS = 3;
+	private Set<AssemblyLine> assemblyLines;
 	private LinkedList<Order> finished;
 	private LinkedList<Order> pending;
 	private Order[] inAssembly;
@@ -38,6 +41,11 @@ public class Schedule extends Observable {
 		this.algorithm = new FIFO();
 	}
 
+	@Override
+	public void update(Observable obs, Object obj) {
+		//TODO
+	}
+	
 	/**
 	 * @return the current time
 	 */
@@ -46,22 +54,40 @@ public class Schedule extends Observable {
 	}
 
 	/**
+	 * @return true if all assemblylines for which this schedule schedules
+	 *         orders are empty.
+	 */
+	private boolean assemblyLinesAreEmpty() {
+		for (AssemblyLine line : assemblyLines) {
+			if (!line.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Sets current time to beginning of next day.
 	 */
 	private void startNewDay() {
-		if (!assemblyLineIsEmpty()) {
+		if (!assemblyLinesAreEmpty()) {
 			throw new IllegalStateException("assemblyline must be empty");
 		}
 		currentTime = currentTime.getNextDay();
 	}
 
-	private boolean assemblyLineIsEmpty() {
-		for (Order order : inAssembly) {
-			if (order != null) {
-				return false;
-			}
+	/**
+	 * Adds the given assembly line to the list of assembly lines for which this
+	 * schedule schedules vehicle orders. This method does nothing if the given
+	 * assemblyline does not reference to this schedule.
+	 */
+	public void addAssemblyLine(AssemblyLine ass) {
+		if (ass == null || !ass.getSchedule().equals(this)) {
+			return;
 		}
-		return true;
+		assemblyLines.add(ass);
+		addObserver(ass);
+		// TODO
 	}
 
 	/**
@@ -91,7 +117,7 @@ public class Schedule extends Observable {
 		TimeStamp prev = currentTime;
 		currentTime = currentTime.increaseTime(time);
 		if (nextIsTomorrow()) {
-			if (assemblyLineIsEmpty()) {
+			if (assemblyLinesAreEmpty()) {
 				currentTime = prev;
 				startNewDay();
 			} else {

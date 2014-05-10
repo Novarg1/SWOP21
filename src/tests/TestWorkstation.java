@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import company.AssemblyLine;
-import company.Schedule;
-import company.WorkStation;
+import company.schedule.Schedule;
+import company.workstations.Workstation;
 
 /**
  * This class collects unit tests for the Workstation class
@@ -15,9 +15,9 @@ import company.WorkStation;
 public class TestWorkstation {
 
 	private AssemblyLine assemblyLine;
-	private WorkStation workStation1;
-	private WorkStation workStation2;
-	private WorkStation workStation3;
+	private Workstation workStation1;
+	private Workstation workStation2;
+	private Workstation workStation3;
 	private Schedule schedule;
 	
 	@Before

@@ -4,11 +4,11 @@ import java.util.List;
 
 import user.User;
 import util.LineReader;
-import vehicle.order.ModelASpec;
-import vehicle.order.ModelBSpec;
-import vehicle.order.ModelCSpec;
+import vehicle.order.ModelABuilder;
+import vehicle.order.ModelBBuilder;
+import vehicle.order.ModelCBuilder;
 import vehicle.order.Order;
-import vehicle.order.OrderSpecification;
+import vehicle.order.OrderBuilder;
 import controllers.SystemController;
 
 public class ViewGarageHolder extends ViewOrderForm
@@ -71,7 +71,7 @@ public class ViewGarageHolder extends ViewOrderForm
 
 		int choice = Integer.parseInt(LineReader.readLine());
 
-		OrderSpecification spec = this.getSpecification(choice);
+		OrderBuilder spec = this.getSpecification(choice);
 
 		setBody(spec);
 		setColor(spec);
@@ -98,13 +98,13 @@ public class ViewGarageHolder extends ViewOrderForm
 		upcomingOrders = systemController.getScheduledOrdersFor(user);
 	}
 
-	private OrderSpecification getSpecification(int n) {
-		OrderSpecification spec = null;
+	private OrderBuilder getSpecification(int n) {
+		OrderBuilder spec = null;
 		switch(n)
 		{
-		case 1: spec = new ModelASpec();break;
-		case 2: spec = new ModelBSpec();break;
-		case 3: spec = new ModelCSpec();break;
+		case 1: spec = new ModelABuilder();break;
+		case 2: spec = new ModelBBuilder();break;
+		case 3: spec = new ModelCBuilder();break;
 		default: throw new IllegalArgumentException("model type does not exist");
 		}
 		return spec;
