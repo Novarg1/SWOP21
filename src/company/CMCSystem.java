@@ -12,6 +12,7 @@ import company.workstations.CargoPost;
 import company.workstations.CertificationPost;
 import company.workstations.DriveTrainPost;
 import company.workstations.Workstation;
+import dao.OrderDAO;
 import user.User;
 import user.UserManager;
 import vehicle.order.Order;
@@ -21,41 +22,36 @@ import vehicle.order.Order;
  * usermanager, the scheduler and the assembly line
  */
 public class CMCSystem {
-	
+
 	private Scheduler scheduler;
 	private UserManager userManager;
 
 	/**
 	 * default constructor
 	 */
-	public CMCSystem() {
-		Set<AssemblyLine> assemblyLines = initializeAssemblyLines();
-		scheduler = new Scheduler(assemblyLines);
+	public CMCSystem(OrderDAO dao) {
 		userManager = new UserManager();
+		Set<AssemblyLine> assemblylines = initializeAssemblyLines();
+		if (dao == null) {
+			scheduler = new Scheduler(assemblylines);
+		} else {
+			scheduler = new Scheduler(assemblylines, dao.getAllPendingOrders(),
+					dao.getAllFinishedOrders(), 1);
+		}
 	}
 
 	private Set<AssemblyLine> initializeAssemblyLines() {
 		Set<AssemblyLine> result = new HashSet<>();
-		result.add(new AssemblyLine(new Workstation[] {
-				new BodyPost(),
-				new DriveTrainPost(),
-				new AccessoiresPost()
-		}));
-		result.add(new AssemblyLine(new Workstation[] {
-				new BodyPost(),
-				new DriveTrainPost(),
-				new AccessoiresPost()				
-		}));
-		result.add(new AssemblyLine(new Workstation[] {
-				new BodyPost(),
-				new CargoPost(),
-				new DriveTrainPost(),
-				new AccessoiresPost(),
-				new CertificationPost()
-		}));
+		result.add(new AssemblyLine(new Workstation[] { new BodyPost(),
+				new DriveTrainPost(), new AccessoiresPost() }));
+		result.add(new AssemblyLine(new Workstation[] { new BodyPost(),
+				new DriveTrainPost(), new AccessoiresPost() }));
+		result.add(new AssemblyLine(new Workstation[] { new BodyPost(),
+				new CargoPost(), new DriveTrainPost(), new AccessoiresPost(),
+				new CertificationPost() }));
 		return result;
 	}
-	
+
 	/**
 	 * returns all the upcoming orders for a given user
 	 * 
