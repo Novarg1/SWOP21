@@ -3,7 +3,7 @@ package vehicle.parts;
 import company.workstations.AccessoiresPost;
 import company.workstations.Workstation;
 
-public enum Spoiler implements Carpart {
+public enum Spoiler implements Part {
 
 	HIGH, LOW;
 

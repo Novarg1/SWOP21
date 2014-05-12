@@ -1,49 +1,37 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
-import vehicle.parts.Carpart;
+import vehicle.assemblytasks.Task;
 import company.workstations.Workstation;
+
 /**
  * assembly controller allows manipulation of 1 workstation
- * 
- * @author jonathanlangens
- *
  */
-public class AssemblyController
-{
+public class AssemblyController {
+
 	private Workstation workstation;
-	
+
 	/**
-	 * constructor takes a workstation and  sets its member to the passed station
+	 * constructor takes a workstation and sets its member to the passed station
+	 * 
 	 * @param w
 	 */
-	public AssemblyController(Workstation w)
-	{
+	public AssemblyController(Workstation w) {
 		workstation = w;
 	}
-	
+
 	/**
 	 * @return all unfinished tasks for this workstation
 	 */
-	public List<Carpart> getTasksForWorkstation()
-	{
-		List<Carpart> l = new ArrayList<Carpart>();
-		Iterator<Carpart> it = workstation.getPendingTasks().iterator();
-		while(it.hasNext())
-			l.add(it.next());
-		return l;
+	public Set<Task> getTasksForWorkstation() {
+		return workstation.getPendingTasks();
 	}
-	
+
 	/**
-	 * installs the passed carpart with t as the install time
-	 * @param p
-	 * @param t
+	 * performs the given task in the given time.
 	 */
-	public void installPart(Carpart p, int t)
-	{
-		workstation.install(p, t);
+	public void perform(Task task, int time) {
+		workstation.perform(task, time);
 	}
 }

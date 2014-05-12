@@ -4,7 +4,7 @@ import java.util.List;
 
 import company.workstations.Workstation;
 import util.LineReader;
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import controllers.SystemController;
 import controllers.AssemblyController;
 
@@ -27,7 +27,7 @@ public class ViewAssemblyTasks extends View
 		
 		while(running)
 		{
-			List<Carpart> pendingTasks = assemblyController.getTasksForWorkstation();
+			List<Part> pendingTasks = assemblyController.getTasksForWorkstation();
 			if(pendingTasks.size()==0)
 			{
 				System.out.println("no pending tasks for this workstation \n press any key to return");
@@ -50,17 +50,17 @@ public class ViewAssemblyTasks extends View
 		return true;
 	}
 	
-	private void displayTasks(List<Carpart> list)
+	private void displayTasks(List<Part> list)
 	{
 		System.out.println("Tasks for this workstation:");
 		int index = 1;
-		for(Carpart p : list)
+		for(Part p : list)
 		{
 			System.out.println("(" + (index++) + ") install " + p);
 		}
 	}
 	
-	private void performTask(List<Carpart> list)
+	private void performTask(List<Part> list)
 	{
 		System.out.println("Which tasks do you want to perform?");
 		int index = LineReader.readInt();
@@ -70,7 +70,7 @@ public class ViewAssemblyTasks extends View
 							list.get(index).getAssemblyInstructions() + 
 							"\nHow long the the installation of this part take?");
 			int t = LineReader.readInt();
-			assemblyController.installPart(list.get(index-1), t);
+			assemblyController.perform(list.get(index-1), t);
 		}
 	}
 	

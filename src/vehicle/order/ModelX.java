@@ -4,20 +4,21 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import company.workstations.BodyPost;
+import company.workstations.CertificationPost;
+import company.workstations.Workstation;
 import vehicle.parts.Airco;
 import vehicle.parts.Body;
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import vehicle.parts.Color;
 import vehicle.parts.Engine;
 import vehicle.parts.Gearbox;
 import vehicle.parts.Seats;
 import vehicle.parts.Wheels;
 
-//TODO override getBuildingtime
+public class ModelX extends TruckOrderBuilder {
 
-public class ModelXBuilder extends TruckOrderBuilder {
-
-	private static final Carpart[] supportedParts = new Carpart[] {
+	private static final Part[] supportedParts = new Part[] {
 		Body.PLATFORM, Body.CLOSED,
 		Color.GREEN, Color.WHITE,
 		Engine.STANDARD, Engine.HYBRID,
@@ -28,10 +29,21 @@ public class ModelXBuilder extends TruckOrderBuilder {
 	};
 
 	@Override
-	public Set<Carpart> getSupportedCarparts() {
+	public Set<Part> getSupportedCarparts() {
 		return new HashSet<>(Arrays.asList(supportedParts));
 	}
 
+	@Override
+	protected int getBuildTimeFor(Class<? extends Workstation> ws) {
+		if(ws.equals(BodyPost.class)) {
+			return 90;
+		}
+		if(ws.equals(CertificationPost.class)) {
+			return 30;
+		}
+		return super.getBuildTimeFor(ws);
+	}
+	
 	@Override
 	public String toString() {
 		return "Truck Model X";

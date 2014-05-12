@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import company.AssemblyLine;
-import company.schedule.Schedule;
+import company.schedule.Scheduler;
 import company.workstations.Workstation;
 
 /**
@@ -18,11 +18,11 @@ public class TestWorkstation {
 	private Workstation workStation1;
 	private Workstation workStation2;
 	private Workstation workStation3;
-	private Schedule schedule;
+	private Scheduler schedule;
 	
 	@Before
 	public void initialize(){
-		schedule = new Schedule();
+		schedule = new Scheduler();
 		assemblyLine = new AssemblyLine(schedule);
 		workStation1 = assemblyLine.getWorkstations()[0];
 		workStation2 = assemblyLine.getWorkstations()[1];

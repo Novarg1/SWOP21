@@ -1,7 +1,7 @@
 package vehicle.restrictions;
 
 import vehicle.parts.Airco;
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.PartsSet;
 import vehicle.parts.Engine;
 
 /**
@@ -10,9 +10,9 @@ import vehicle.parts.Engine;
 public class EngineAircoRestriction extends StrictRestriction {
 
 	@Override
-	protected boolean isFulfilled(CarpartsSet set) {
+	protected boolean isFulfilled(PartsSet set) {
 		return !set.contains(Engine.ULTRA_3L_V8)
-				|| !set.containsType(Airco.class)
+				|| !set.contains(Airco.class)
 				|| set.contains(Airco.MANUAL);
 	}
 }

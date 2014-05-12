@@ -3,14 +3,14 @@ package vehicle.order;
 import java.util.HashSet;
 import java.util.Set;
 
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import vehicle.parts.Color;
 
-public class PaintJobBuilder extends CustomOrderBuilder {
+public class PaintJob extends CustomOrderBuilder {
 
 	@Override
-	public Set<Carpart> getSupportedCarparts() {
-		Set<Carpart> result = new HashSet<>();
+	public Set<Part> getSupportedCarparts() {
+		Set<Part> result = new HashSet<>();
 		for (Color	color : Color.values()) {
 			result.add(color);
 		}

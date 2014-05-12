@@ -7,13 +7,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import user.User;
-import vehicle.order.ModelABuilder;
+import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import company.AssemblyLine;
 import company.CMCSystem;
-import company.schedule.Schedule;
+import company.schedule.Scheduler;
 import company.workstations.Workstation;
 
 /**
@@ -28,7 +28,7 @@ public class TestAssemblyLine {
 	 * Instance variables that may
 	 * change during individual tests.
 	 */
-	private Schedule schedule;
+	private Scheduler schedule;
 	private AssemblyLine assemblyLine;	
 	private CMCSystem cmcSystem;
 
@@ -47,7 +47,7 @@ public class TestAssemblyLine {
 	@Before
 	public void setUpMutableFixture() {
 		cmcSystem = new CMCSystem();
-		schedule = cmcSystem.getSchedule();
+		schedule = cmcSystem.getScheduler();
 		assemblyLine = cmcSystem.getAssemblyLine();
 
 	}
@@ -63,9 +63,9 @@ public class TestAssemblyLine {
 	}
 	
 	public OrderBuilder makeOrderSpec(){
-		OrderBuilder os = new ModelABuilder();
-		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
-			for(Carpart part : os.getViableOptions(type)) {
+		OrderBuilder os = new ModelA();
+		for (Class<? extends Part> type : os.getSupportedTypes()) {
+			for(Part part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}

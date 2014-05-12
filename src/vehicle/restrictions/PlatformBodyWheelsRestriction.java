@@ -1,7 +1,7 @@
 package vehicle.restrictions;
 
 import vehicle.parts.Body;
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.PartsSet;
 import vehicle.parts.Wheels;
 
 /**
@@ -11,7 +11,7 @@ import vehicle.parts.Wheels;
 public class PlatformBodyWheelsRestriction extends StrictRestriction {
 
 	@Override
-	protected boolean isFulfilled(CarpartsSet set) {
+	protected boolean isFulfilled(PartsSet set) {
 		return !set.contains(Body.PLATFORM)
 				|| set.contains(Wheels.HEAVY_DUTY);
 	}

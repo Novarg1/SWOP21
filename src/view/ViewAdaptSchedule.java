@@ -5,9 +5,9 @@ import company.schedule.SchedulingAlgorithm;
 import company.schedule.SpecificationBatch;
 import user.User;
 import util.LineReader;
-import vehicle.order.ModelABuilder;
-import vehicle.order.ModelBBuilder;
-import vehicle.order.ModelCBuilder;
+import vehicle.order.ModelA;
+import vehicle.order.ModelB;
+import vehicle.order.ModelC;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 import controllers.SystemController;
@@ -19,7 +19,7 @@ public class ViewAdaptSchedule extends ViewOrderForm
 	
 	public ViewAdaptSchedule(SystemController c) {
 		super(c);
-		scheduleController = new ScheduleController(systemController.getSchedule());
+		scheduleController = new ScheduleController(systemController.getScheduler());
 	}
 
 	@Override
@@ -74,9 +74,9 @@ public class ViewAdaptSchedule extends ViewOrderForm
 		OrderBuilder spec = null;
 		switch(n)
 		{
-		case 1: spec = new ModelABuilder();break;
-		case 2: spec = new ModelBBuilder();break;
-		case 3: spec = new ModelCBuilder();break;
+		case 1: spec = new ModelA();break;
+		case 2: spec = new ModelB();break;
+		case 3: spec = new ModelC();break;
 		default: throw new IllegalArgumentException("model type does not exist");
 		}
 		return spec;

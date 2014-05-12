@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import user.User;
-import vehicle.order.ModelABuilder;
+import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import company.CMCSystem;
 
 
@@ -39,9 +39,9 @@ public class TestCMCSystem {
 	 * @return An arbitrary OrderSpecification object
 	 */
 	public OrderBuilder makeOrderSpec(){
-		OrderBuilder os = new ModelABuilder();
-		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
-			for(Carpart part : os.getViableOptions(type)) {
+		OrderBuilder os = new ModelA();
+		for (Class<? extends Part> type : os.getSupportedTypes()) {
+			for(Part part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}
@@ -107,7 +107,7 @@ public class TestCMCSystem {
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
 		Order order = new Order(orderSpec,garageholder);
-		cmcSystem.getSchedule().placeOrder(order);
+		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		assertFalse(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
@@ -128,7 +128,7 @@ public class TestCMCSystem {
 	@Test
 	public void testGetters(){
 		assertNotNull(cmcSystem.getAssemblyLine());
-		assertNotNull(cmcSystem.getSchedule());
+		assertNotNull(cmcSystem.getScheduler());
 
 	}
 	
@@ -145,7 +145,7 @@ public class TestCMCSystem {
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
 		Order order = new Order(orderSpec,garageholder);
-		cmcSystem.getSchedule().placeOrder(order);
+		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		assertFalse(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());

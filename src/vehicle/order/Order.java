@@ -1,21 +1,22 @@
 package vehicle.order;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import company.workstations.Workstation;
 import user.User;
-import util.TimeStamp;
+import util.Timestamp;
 import vehicle.assemblytasks.Task;
 
 public class Order {
 
 	private final User client;
 	private final Set<Task> tasks;
-	private final int buildingtime;
-	private final TimeStamp deadline;
-	private TimeStamp completionTime = null;
-//	private Vehicle vehicle;
+	private final Timestamp deadline;
+	private final Map<Class<? extends Workstation>, Integer> buildtimes;
+	private final Class<? extends OrderBuilder> type;
+	private Timestamp completionTime = null;
 
 	/**
 	 * Makes a new order based on the given specification.
@@ -23,15 +24,15 @@ public class Order {
 	 * @throws IllegalArgumentException
 	 *             if the given orderspecification is not valid.
 	 */
-	public Order(OrderBuilder spec) {
-		if (spec == null || !spec.isValid()) {
+	public Order(OrderBuilder builder) {
+		if (builder == null || !builder.isValid()) {
 			throw new IllegalArgumentException("invalid specification");
 		}
-		this.client = spec.getClient();
-		this.tasks = spec.getTasks();
-		this.buildingtime = spec.getBuildingTimePerWorkstation();
-		this.deadline = spec.getDeadline();
-//		this.vehicle = spec.getVehicle();
+		this.client = builder.getClient();
+		this.tasks = builder.getTasks();
+		this.buildtimes = builder.getBuildTimePerWorkstation();
+		this.deadline = builder.getDeadline();
+		this.type = builder.getClass();
 	}
 
 	/**
@@ -48,7 +49,7 @@ public class Order {
 	 * @throws IllegalStateException
 	 *             if this order is already finished
 	 */
-	public void setFinished(TimeStamp time) {
+	public void setFinished(Timestamp time) {
 		if (isFinished()) {
 			throw new IllegalStateException("this order is already finished");
 		}
@@ -58,17 +59,24 @@ public class Order {
 	/**
 	 * @return completion time, or null time if this order is not yet finished
 	 */
-	public TimeStamp getCompletionTime() {
+	public Timestamp getCompletionTime() {
 		return completionTime;
 	}
 
 	/**
 	 * @return deadline of this order or null if this order has no deadline.
 	 */
-	public TimeStamp getDeadline() {
+	public Timestamp getDeadline() {
 		return deadline;
 	}
 
+	/**
+	 * Returns the type of this order (e.g. ModelA)
+	 */
+	public Class<? extends OrderBuilder> getType() {
+		return type;
+	}
+	
 	/**
 	 * @return true if this order has been finished
 	 */
@@ -93,20 +101,21 @@ public class Order {
 	}
 
 	/**
-	 * @return time in minutes that is spent in each workstation in normal
+	 * @return time in minutes that is spent in the given workstation in normal
 	 *         circumstances.
 	 */
-	public int getBuildingTimePerWorkstation() {
-		return buildingtime;
+	public int getBuildingTimeFor(Class<? extends Workstation> ws) {
+		Integer result = buildtimes.get(ws);
+		return (result == null || result < 0) ? 0 : result;
 	}
 
 	/**
-	 * @return a set containing the id's of all workstations in which parts
-	 *         should be installed for the this order.
+	 * @return a set containing the workstation types in which parts should be
+	 *         installed for the this order.
 	 */
 	public Set<Class<? extends Workstation>> getNeededWorkstations() {
 		Set<Class<? extends Workstation>> result = new HashSet<>();
-		for (Task task : this.getTasks()) {
+		for (Task task : this.tasks) {
 			result.add(task.getResponsibleWorkstation());
 		}
 		return result;

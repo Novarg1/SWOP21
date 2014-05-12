@@ -3,15 +3,15 @@ package vehicle.order;
 import java.util.Collections;
 import java.util.Set;
 
-import util.TimeStamp;
+import util.Timestamp;
 import vehicle.assemblytasks.Task;
 
 public abstract class CustomOrderBuilder extends OrderBuilder {
 
-	private TimeStamp deadline = null;
+	private Timestamp deadline = null;
 
 	@Override
-	public TimeStamp getDeadline() {
+	public Timestamp getDeadline() {
 		return deadline;
 	}
 
@@ -23,7 +23,7 @@ public abstract class CustomOrderBuilder extends OrderBuilder {
 	/**
 	 * Sets the deadline for this custom order to the given timestamp.
 	 */
-	public void setDeadline(TimeStamp deadline) {
+	public void setDeadline(Timestamp deadline) {
 		this.deadline = deadline;
 	}
 }

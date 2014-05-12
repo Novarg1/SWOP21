@@ -4,8 +4,8 @@ import java.util.Set;
 
 import vehicle.order.OrderBuilder;
 import vehicle.parts.Airco;
-import vehicle.parts.Carpart;
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.Part;
+import vehicle.parts.PartsSet;
 import vehicle.parts.Spoiler;
 
 /**
@@ -13,7 +13,7 @@ import vehicle.parts.Spoiler;
  */
 public class MandatoryPartsRestriction extends PartialRestriction {
 
-	private Set<Class<? extends Carpart>> mandatoryParts;
+	private Set<Class<? extends Part>> mandatoryParts;
 	
 	public MandatoryPartsRestriction(OrderBuilder spec) {
 		mandatoryParts = spec.getSupportedTypes();
@@ -22,9 +22,9 @@ public class MandatoryPartsRestriction extends PartialRestriction {
 	}
 	
 	@Override
-	protected boolean isFulfilled(CarpartsSet set) {
-		for (Class<? extends Carpart> type : mandatoryParts) {
-			if(!set.containsType(type)) {
+	protected boolean isFulfilled(PartsSet set) {
+		for (Class<? extends Part> type : mandatoryParts) {
+			if(!set.contains(type)) {
 				return false;
 			}
 		}

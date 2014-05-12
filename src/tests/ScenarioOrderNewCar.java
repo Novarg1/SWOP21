@@ -8,11 +8,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import user.User;
-import vehicle.order.ModelABuilder;
+import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
-import vehicle.parts.Carpart;
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.Part;
+import vehicle.parts.PartsSet;
 import company.CMCSystem;
 
 
@@ -44,9 +44,9 @@ public class ScenarioOrderNewCar {
 	}
 	
 	public OrderBuilder makeOrderSpec(){
-		OrderBuilder os = new ModelABuilder();
-		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
-			for(Carpart part : os.getViableOptions(type)) {
+		OrderBuilder os = new ModelA();
+		for (Class<? extends Part> type : os.getSupportedTypes()) {
+			for(Part part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}
@@ -82,7 +82,7 @@ public class ScenarioOrderNewCar {
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
 		Order order = new Order(orderSpec,currentUser);
-		cmcSystem.getSchedule().placeOrder(order);
+		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
 		assertFalse(unfinishedOrders.isEmpty());
 	}
@@ -90,8 +90,8 @@ public class ScenarioOrderNewCar {
 	@Test
 	public void advanceAssemblyLine() {
 		orderNewCar_MainSuccesScenario();
-		CarpartsSet cpSet = cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
-		for (Carpart cp : cpSet){
+		PartsSet cpSet = cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
+		for (Part cp : cpSet){
 			cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
 		}
 		assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());

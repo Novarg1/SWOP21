@@ -3,14 +3,14 @@ package vehicle.order;
 import java.util.HashSet;
 import java.util.Set;
 
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import vehicle.parts.Seats;
 
-public class CustomSeatsBuilder extends CustomOrderBuilder {
+public class CustomSeats extends CustomOrderBuilder {
 
 	@Override
-	public Set<Carpart> getSupportedCarparts() {
-		Set<Carpart> result = new HashSet<>();
+	public Set<Part> getSupportedCarparts() {
+		Set<Part> result = new HashSet<>();
 		for (Seats seats : Seats.values()) {
 			result.add(seats);
 		}

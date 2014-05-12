@@ -1,17 +1,17 @@
 package controllers;
 
-import company.schedule.Schedule;
+import company.schedule.Scheduler;
 import company.schedule.SchedulingAlgorithm;
 
 public class ScheduleController {
-	private Schedule schedule;
+	private Scheduler schedule;
 
 	/**
 	 * constructor takes a schedule as parameter, this controller will
 	 * only work over that schedule
 	 * @param s
 	 */
-	public ScheduleController(Schedule s) {
+	public ScheduleController(Scheduler s) {
 		this.schedule = s;
 	}
 

@@ -12,8 +12,8 @@ public abstract class TruckOrderBuilder extends VehicleOrderBuilder {
 	@Override
 	protected Set<Task> getModelSpecificTasks() {
 		Set<Task> tasks = new HashSet<>();
-		tasks.add(new AddCargoProtection(super.getVehicle()));
-		tasks.add(new InstallToolStorage(super.getVehicle()));
+		tasks.add(new AddCargoProtection());
+		tasks.add(new InstallToolStorage());
 		return tasks;
 	}
 }

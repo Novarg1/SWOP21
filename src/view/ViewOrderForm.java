@@ -7,7 +7,7 @@ import util.LineReader;
 import vehicle.order.OrderBuilder;
 import vehicle.parts.Airco;
 import vehicle.parts.Body;
-import vehicle.parts.Carpart;
+import vehicle.parts.Part;
 import vehicle.parts.Color;
 import vehicle.parts.Engine;
 import vehicle.parts.Gearbox;
@@ -28,7 +28,7 @@ public abstract class ViewOrderForm extends View
 		orderController = new OrderController(systemController);
 	}
 	
-	protected void setOption(OrderBuilder spec, Class<? extends Carpart> type, boolean mandatory) throws Exception
+	protected void setOption(OrderBuilder spec, Class<? extends Part> type, boolean mandatory) throws Exception
 	{
 		if(mandatory ==  false)
 		{
@@ -48,7 +48,7 @@ public abstract class ViewOrderForm extends View
 			}
 			if(spec.getViableOptions(type).size() == 1)
 			{
-				List<Carpart> l = new ArrayList<>(spec.getViableOptions(type));
+				List<Part> l = new ArrayList<>(spec.getViableOptions(type));
 				System.out.println("Added " + l.get(0));
 				spec.add(l.get(0));
 			}
@@ -56,10 +56,10 @@ public abstract class ViewOrderForm extends View
 		while(!spec.containsPart(type))
 		{
 			System.out.println("What " + type.toString() + " would you like?");
-			List<Carpart> options = new ArrayList<>(spec.getViableOptions(type));
+			List<Part> options = new ArrayList<>(spec.getViableOptions(type));
 			
 			int index = 1;
-			for(Carpart p : options)
+			for(Part p : options)
 				System.out.println("(" + (index++) + ") " + p);
 			
 			int choice = LineReader.readInt();

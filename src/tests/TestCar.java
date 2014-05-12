@@ -10,11 +10,11 @@ import org.junit.Test;
 
 import user.User;
 import vehicle.*;
-import vehicle.order.ModelABuilder;
+import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
-import vehicle.parts.Carpart;
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.Part;
+import vehicle.parts.PartsSet;
 
 /**
  * This is a class that collects unit tests for the Car class
@@ -40,9 +40,9 @@ public class TestCar {
 	 * @return A valid OrderSpecification, with arbitrary car parts specified
 	 */
 	public OrderBuilder makeOrderSpec(){
-		OrderBuilder os = new ModelABuilder();
-		for (Class<? extends Carpart> type : os.getSupportedTypes()) {
-			for(Carpart part : os.getViableOptions(type)) {
+		OrderBuilder os = new ModelA();
+		for (Class<? extends Part> type : os.getSupportedTypes()) {
+			for(Part part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}
@@ -74,8 +74,8 @@ public class TestCar {
 	@Test
 	public void installTest(){
 		testCar = new Vehicle(testOrder);
-		CarpartsSet cpSet = testOrder.getTasks();
-		for (Carpart cp : cpSet){
+		PartsSet cpSet = testOrder.getTasks();
+		for (Part cp : cpSet){
 			testCar.install(cp);
 		}
 		assertTrue(testCar.matchesOrder());
@@ -88,13 +88,13 @@ public class TestCar {
 	@Test
 	public void installTwiceTest(){
 		testCar = new Vehicle(testOrder);
-		CarpartsSet cpSet = testOrder.getTasks();
-		for (Carpart cp : cpSet){
+		PartsSet cpSet = testOrder.getTasks();
+		for (Part cp : cpSet){
 			testCar.install(cp);
 		}
 		//Try to install for the second time
 		boolean installedSuccessfully;
-		for (Carpart cp : cpSet){
+		for (Part cp : cpSet){
 			installedSuccessfully = testCar.install(cp);
 			assertFalse(installedSuccessfully);
 		}

@@ -1,6 +1,6 @@
 package vehicle.restrictions;
 
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.PartsSet;
 
 /**
  * A strict restriction is partially fulfilled for a given specification if and
@@ -9,7 +9,7 @@ import vehicle.parts.CarpartsSet;
 public abstract class StrictRestriction extends Restriction {
 
 	@Override
-	public boolean isPartiallyFulfilled(CarpartsSet	set) {
+	public boolean isPartiallyFulfilled(PartsSet	set) {
 		return this.isFulfilled(set);
 	}
 }

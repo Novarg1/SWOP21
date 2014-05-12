@@ -1,6 +1,6 @@
 package vehicle.restrictions;
 
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.PartsSet;
 
 /**
  * A partialrestriction is always 'partially fulfilled'.
@@ -8,7 +8,7 @@ import vehicle.parts.CarpartsSet;
 public abstract class PartialRestriction extends Restriction {
 
 	@Override
-	protected boolean isPartiallyFulfilled(CarpartsSet set) {
+	protected boolean isPartiallyFulfilled(PartsSet set) {
 		return true;
 	}
 }

@@ -1,7 +1,7 @@
 package vehicle.restrictions;
 
 import vehicle.parts.Body;
-import vehicle.parts.CarpartsSet;
+import vehicle.parts.PartsSet;
 import vehicle.parts.Spoiler;
 
 /**
@@ -10,7 +10,7 @@ import vehicle.parts.Spoiler;
 public class SportSpoilerRestriction extends PartialRestriction {
 
 	@Override
-	protected boolean isFulfilled(CarpartsSet spec) {
-		return !spec.contains(Body.SPORT) || spec.containsType(Spoiler.class);
+	protected boolean isFulfilled(PartsSet spec) {
+		return !spec.contains(Body.SPORT) || spec.contains(Spoiler.class);
 	}
 }

@@ -1,140 +1,126 @@
 package company;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
-import company.schedule.Schedule;
-
+import company.schedule.Scheduler;
+import company.workstations.AccessoiresPost;
+import company.workstations.BodyPost;
+import company.workstations.CargoPost;
+import company.workstations.CertificationPost;
+import company.workstations.DriveTrainPost;
+import company.workstations.Workstation;
 import user.User;
 import user.UserManager;
 import vehicle.order.Order;
 
 /**
- * this class represents the domains top level class
- * it contains the usermanager, the scheduler and the
- * assembly line
- * 
- * @author jonathanlangens
- * @author Wonne Joosen
- *
+ * this class represents the domains top level class it contains the
+ * usermanager, the scheduler and the assembly line
  */
-public class CMCSystem 
-{
-	private Schedule schedule;
-	private AssemblyLine assemblyLine;
-	private UserManager userManager;
-	private List<Order> finishedOrders;
+public class CMCSystem {
 	
+	private Scheduler scheduler;
+	private UserManager userManager;
+
 	/**
 	 * default constructor
 	 */
 	public CMCSystem() {
-		schedule = new Schedule();
-		assemblyLine = new AssemblyLine(schedule, null); //TODO workstations
-		finishedOrders = new LinkedList<Order>();
+		Set<AssemblyLine> assemblyLines = initializeAssemblyLines();
+		scheduler = new Scheduler(assemblyLines);
 		userManager = new UserManager();
+	}
+
+	private Set<AssemblyLine> initializeAssemblyLines() {
+		Set<AssemblyLine> result = new HashSet<>();
+		result.add(new AssemblyLine(new Workstation[] {
+				new BodyPost(),
+				new DriveTrainPost(),
+				new AccessoiresPost()
+		}));
+		result.add(new AssemblyLine(new Workstation[] {
+				new BodyPost(),
+				new DriveTrainPost(),
+				new AccessoiresPost()				
+		}));
+		result.add(new AssemblyLine(new Workstation[] {
+				new BodyPost(),
+				new CargoPost(),
+				new DriveTrainPost(),
+				new AccessoiresPost(),
+				new CertificationPost()
+		}));
+		return result;
 	}
 	
 	/**
 	 * returns all the upcoming orders for a given user
 	 * 
 	 * @param user
-	 * @return List<Order> l : all elements of l are ordered by this user and not finished
+	 * @return List<Order> l : all elements of l are ordered by this user and
+	 *         not finished
 	 */
 	public List<Order> getScheduledOrdersForUser(User user) {
-		List<Order> list = schedule.getPendingOrders();
-		for(Order o : list)
-			if(o.getClient() != user)
+		List<Order> list = scheduler.getPendingOrders();
+		for (Order o : list)
+			if (o.getClient() != user)
 				list.remove(o);
 		return list;
 	}
-	
+
 	/**
 	 * returns all the finished orders for a given user
 	 * 
 	 * @param user
-	 * @return List<Order> l : all elemenets of l are ordered by this user and finished
+	 * @return List<Order> l : all elemenets of l are ordered by this user and
+	 *         finished
 	 */
 	public List<Order> getFinishedOrdersForUser(User user) {
 		List<Order> list = new LinkedList<Order>();
-		for(Order o : finishedOrders)
-			if(o.getClient() == user)
+		for (Order o : scheduler.getFinishedOrders())
+			if (o.getClient() == user)
 				list.add(o);
 		return list;
 	}
-	
+
 	/**
-	 * inspector for the assembly line
-	 * @return this.assemblyLine
+	 * inspector for the scheduler
+	 * 
+	 * @return this.scheduler
 	 */
-	public AssemblyLine getAssemblyLine()
-	{
-		return this.assemblyLine;
+	public Scheduler getScheduler() {
+		return this.scheduler;
 	}
-	
-//	public void advance(int time) {
-//		if(!this.assemblyLine.isReadyToAdvance()) {
-//			throw new IllegalStateException("assemblyLine is not ready to advance");
-//		}
-//		
-//		if(time <= 0) {
-//			throw new IllegalArgumentException("cannot advance to same or previous time");
-//		}
-//		
-// there are 2 basic scenarios:
-// scenario 1: the next order can be pushed on the assembly line today
-// scenario 2: the next order is for tomorrow however the time has to be
-//             increased and the assembly line pushed
-//		Order orderToPush = null;
-//		if(this.schedule.canNextOrderBeBuildToday()) {
-//			orderToPush = this.schedule.prepareNextOrder();
-//		}
-//		
-//		assemblyLine.advance(orderToPush);
-//		
-//		this.schedule.increaseDayTime(time);
-//		
-//		if(schedule.getCurrentTime().shouldBeFinished() &&
-//				assemblyLine.isEmpty())
-//		{
-//			schedule.startNewDay();
-//		}
-//	}
-	
+
 	/**
-	 * inspector for the schedule
-	 * @return this.schedule
+	 * this function logs user n in where n is that users position in the
+	 * usermanager's list
+	 * 
+	 * @param n
+	 *            - 1. Manager 2. GarageHolder 3. Mechanic 4. CustomShopOwner
 	 */
-	public Schedule getSchedule()
-	{
-		return this.schedule;
-	}
-	
-	/**
-	 * this function logs user n in where n is that users position
-	 * in the usermanager's list
-	 * @param n - 1. Manager 2. GarageHolder 3. Mechanic 4. CustomShopOwner
-	 */
-	public void logInUser(int n)
-	{
+	public void logInUser(int n) {
 		this.userManager.logInUser(n);
 	}
-	
+
 	/**
 	 * returns the user that is currently logged in
+	 * 
 	 * @return the user that is now logged in
 	 */
-	public User getLoggedInUser()
-	{
+	public User getLoggedInUser() {
 		return this.userManager.getLoggedInUser();
 	}
-	
+
 	/**
 	 * inspector for finishedOrders
+	 * 
 	 * @return this.finishedOrders
 	 */
-	public List<Order> getAllFinishedOrders()
-	{
-		return finishedOrders;
+	public List<Order> getAllFinishedOrders() {
+		return scheduler.getFinishedOrders();
 	}
 }

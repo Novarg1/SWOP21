@@ -4,15 +4,12 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
-import company.schedule.Schedule;
 import company.workstations.Workstation;
-import vehicle.Vehicle;
 import vehicle.order.Order;
 
 /*
  * TODO
- * Idee: schedule observeert assemblyline maar niet andersom --> minder koppeling
- * 
+ * assemblylines should support specified set of models --> inheritance?
  */
 
 /**
@@ -20,7 +17,6 @@ import vehicle.order.Order;
  */
 public class AssemblyLine extends Observable implements Observer {
 
-	private Schedule schedule;
 	private Workstation[] workstations;
 	private Status status = Status.OPERATIONAL;
 
@@ -33,25 +29,14 @@ public class AssemblyLine extends Observable implements Observer {
 	 * 
 	 * @param workstations
 	 */
-	public AssemblyLine(Schedule schedule, Workstation[] workstations) {
-		if (schedule == null || workstations == null) {
+	public AssemblyLine(Workstation[] workstations) {
+		if (workstations == null) {
 			throw new IllegalArgumentException();
 		}
-		this.schedule = schedule;
 		this.workstations = workstations;
-		schedule.addAssemblyLine(this);
 		for (Workstation ws : workstations) {
 			ws.addObserver(this);
 		}
-		this.addObserver(schedule);
-	}
-
-	/**
-	 * Returns the schedule that is responsible for scheduling the orders for
-	 * this assembly line.
-	 */
-	public Schedule getSchedule() {
-		return schedule;
 	}
 
 	/**
@@ -70,29 +55,50 @@ public class AssemblyLine extends Observable implements Observer {
 
 	/**
 	 * This method is called whenever a carpart is installed in one of the
-	 * workstations on this assemblyLine, and whenever schedule receives a new
-	 * order.
+	 * workstations on this assemblyLine. The assemblyline will check if it's
+	 * ready to advance and, if so, notify the schedule.
+	 * 
+	 * @param ws
+	 *            the workstation that notified this assemblyline. For now,
+	 *            however, this parameter will be ignored.
+	 * @param obj
+	 *            this parameter will be ignored.
 	 */
 	@Override
 	public void update(Observable ws, Object obj) {
-		while (isReadyToAdvance() && !schedule.isOutOfOrders()) {
-			advance();
+		if (isReadyToAdvance()) {
+			notifyObservers(getHighestWorkTime());
 		}
 	}
 
 	/**
-	 * advances the assembly line. The assemblyLine calls its schedule for
-	 * getting the next order.
+	 * advances the assembly line. Putting the given order on the first
+	 * workstation and returning the order on the last workstation.
+	 * 
+	 * @param order
+	 *            The order that will be put in the first workstation. May be
+	 *            null if no new order should be started this cycle.
+	 * 
+	 * @throws IllegalStateException
+	 *             if not all workstations on this line are ready yet.
+	 * 
+	 * @return The order that was on the last workstation and is now finished,
+	 *         or null if no order was being assembled on the last workstation.
 	 */
-	private void advance() {
+	public synchronized Order advance(Order next) {
 		if (!isReadyToAdvance()) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
-		Order next = schedule.getNextOrder(getHighestWorkTime());
+		Order result = workstations[workstations.length - 1].getOrder();
 		for (int i = workstations.length - 1; i > 0; i--) {
 			workstations[i].setOrder(workstations[i - 1].getOrder());
 		}
 		workstations[0].setOrder(next);
+
+		if (isReadyToAdvance()) {
+			notifyObservers(0);
+		}
+		return result;
 	}
 
 	/**
