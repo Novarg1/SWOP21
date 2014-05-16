@@ -211,6 +211,16 @@ public abstract class OrderBuilder {
 					"must be valid before order can be extracted");
 		}
 	}
+	
+	/**
+	 * @param type
+	 * @return true if this orders carparts set already contains an item
+	 * of the passed type
+	 */
+	public boolean containsPart(Class<? extends Part> type)
+	{
+		return this.parts.contains(type);
+	}
 
 	@Override
 	public abstract String toString();
