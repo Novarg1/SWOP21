@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+import util.LineReader;
 import company.workstations.Workstation;
 import controllers.SystemController;
 
@@ -16,11 +17,13 @@ public class ViewAssemblyLineStatus extends View
 	@Override
 	public boolean show() 
 	{
+		System.out.println("For what assembly line do you want to check the status?");
+		int choice = LineReader.readInt();
 		System.out.println("The current status of the assembly line is:");
-		List<Workstation> list = systemController.getWorkstations();
+		List<Workstation> list = systemController.getWorkstationsForAssemblyLine(choice);
 		for(Workstation w : list)
 		{
-			System.out.println("> Workstation " + w.getId() + " status:");
+			System.out.println("> Workstation " + w.toString() + " status:");
 			System.out.println(w.getPendingTasks());
 		}
 		return true;
