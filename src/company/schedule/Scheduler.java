@@ -225,4 +225,14 @@ public class Scheduler implements Observer {
 		throw new IllegalStateException(
 				"A scheduler should have at least one assemblyline");
 	}
+	
+	/**
+	 * @param n
+	 * @return the assembly line that sits at position n in the list
+	 */
+	
+	public AssemblyLine getAssmeblyLine(int n)
+	{
+		return (AssemblyLine) (this.assemblyLines.entrySet().toArray())[n];
+	}
 }

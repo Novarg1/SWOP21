@@ -1,11 +1,13 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import user.User;
 import vehicle.order.Order;
 import company.CMCSystem;
 import company.schedule.Scheduler;
+import company.workstations.Workstation;
 
 /**
  * System Controller
@@ -80,17 +82,28 @@ public class SystemController {
 	public Scheduler getScheduler() {
 		return cmcSytem.getScheduler();
 	}
-
-//	/**
-//	 * @return all workstations in a list
-//	 */
-//	public List<Workstation> getWorkstations() {
-//		List<Workstation> list = new ArrayList<Workstation>();
-//		for (Workstation w : this.cmcSytem.getAssemblyLine().getWorkstations()) {
-//			list.add(w);
-//		}
-//		return list;
-//	}
+	
+	/**
+	 * @param n
+	 * @return all workstations on assembly line n in a list
+	 */
+	
+	public List<Workstation> getWorkstationsForAssemblyLine(int n)
+	{
+		List<Workstation> list = new ArrayList<Workstation>();
+		
+		for(Workstation w : this.cmcSytem.getAssemblyLine(n).getWorkstations())
+		{
+			list.add(w);
+		}
+		
+		return list;
+	}
+	
+	public Workstation selectWorkstationWithId(int assemblyLine, int id)
+	{
+		return (this.getWorkstationsForAssemblyLine(assemblyLine)).get(id);
+	}
 
 	/**
 	 * @return all orders that were finished by this companys

@@ -1,10 +1,10 @@
 package view;
 
-import java.util.List;
+import java.util.Set;
 
 import company.workstations.Workstation;
 import util.LineReader;
-import vehicle.parts.Part;
+import vehicle.assemblytasks.Task;
 import controllers.SystemController;
 import controllers.AssemblyController;
 
@@ -15,9 +15,7 @@ public class ViewAssemblyTasks extends View
 	public ViewAssemblyTasks(SystemController c) {
 		super(c);
 		// TODO Auto-generated constructor stub
-		int workstationId = selectWorkstation();
-		Workstation w = systemController.getWorkstation(workstationId);
-		assemblyController = new AssemblyController(w);
+		assemblyController = new AssemblyController(selectWorkstation());
 	}
 	
 	@Override
@@ -27,7 +25,7 @@ public class ViewAssemblyTasks extends View
 		
 		while(running)
 		{
-			List<Part> pendingTasks = assemblyController.getTasksForWorkstation();
+			Set<Task> pendingTasks = assemblyController.getTasksForWorkstation();
 			if(pendingTasks.size()==0)
 			{
 				System.out.println("no pending tasks for this workstation \n press any key to return");
@@ -50,33 +48,37 @@ public class ViewAssemblyTasks extends View
 		return true;
 	}
 	
-	private void displayTasks(List<Part> list)
+	private void displayTasks(Set<Task> pendingTasks)
 	{
 		System.out.println("Tasks for this workstation:");
 		int index = 1;
-		for(Part p : list)
+		for(Task p : pendingTasks)
 		{
 			System.out.println("(" + (index++) + ") install " + p);
 		}
 	}
 	
-	private void performTask(List<Part> list)
+	private void performTask(Set<Task> pTasks)
 	{
+		Task[] pendingTasks = (Task[]) pTasks.toArray();
 		System.out.println("Which tasks do you want to perform?");
 		int index = LineReader.readInt();
-		if(index > 0 && index <= list.size())
+		if(index > 0 && index <= pendingTasks.length)
 		{
 			System.out.println("Assembly instructions:\n" +
-							list.get(index).getAssemblyInstructions() + 
+							//pendingTasks[index].getAssemblyInstructions() + 
 							"\nHow long the the installation of this part take?");
 			int t = LineReader.readInt();
-			assemblyController.perform(list.get(index-1), t);
+			assemblyController.perform(pendingTasks[index-1], t);
 		}
 	}
 	
-	private int selectWorkstation()
+	private Workstation selectWorkstation()
 	{
+		System.out.println("At which assembly line would you want to perform work?");
+		int choice = LineReader.readInt();
 		System.out.println("At which workstation do you want to work?");
-		return LineReader.readInt();
+		int wsChoice = LineReader.readInt();
+		return systemController.selectWorkstationWithId(choice, wsChoice);
 	}
 }
