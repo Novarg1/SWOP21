@@ -8,7 +8,7 @@ import company.workstations.Workstation;
 /**
  * assembly controller allows manipulation of 1 workstation
  */
-public class AssemblyController {
+public class WorkstationController {
 
 	private Workstation workstation;
 
@@ -17,7 +17,7 @@ public class AssemblyController {
 	 * 
 	 * @param w
 	 */
-	public AssemblyController(Workstation w) {
+	public WorkstationController(Workstation w) {
 		workstation = w;
 	}
 

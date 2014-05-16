@@ -5,6 +5,7 @@ import java.util.List;
 
 import user.User;
 import vehicle.order.Order;
+import company.AssemblyLine;
 import company.CMCSystem;
 import company.schedule.Scheduler;
 import company.workstations.Workstation;
@@ -103,6 +104,11 @@ public class SystemController {
 	public Workstation selectWorkstationWithId(int assemblyLine, int id)
 	{
 		return (this.getWorkstationsForAssemblyLine(assemblyLine)).get(id);
+	}
+	
+	public AssemblyLine getAssemblyLine(int n)
+	{
+		return cmcSytem.getAssemblyLine(n);
 	}
 
 	/**

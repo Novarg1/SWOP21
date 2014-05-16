@@ -6,16 +6,16 @@ import company.workstations.Workstation;
 import util.LineReader;
 import vehicle.assemblytasks.Task;
 import controllers.SystemController;
-import controllers.AssemblyController;
+import controllers.WorkstationController;
 
 public class ViewAssemblyTasks extends View
 {
-	private AssemblyController assemblyController;
+	private WorkstationController assemblyController;
 	
 	public ViewAssemblyTasks(SystemController c) {
 		super(c);
 		// TODO Auto-generated constructor stub
-		assemblyController = new AssemblyController(selectWorkstation());
+		assemblyController = new WorkstationController(selectWorkstation());
 	}
 	
 	@Override
