@@ -1,12 +1,12 @@
 package controllers;
 
-import company.AssemblyLine;
-import company.AssemblyLine.Status;
+import company.assemblylines.Assemblyline;
+import company.assemblylines.Assemblyline.Status;
 
 public class AssemblyLineController {
-	private AssemblyLine assemblyLine;
+	private Assemblyline assemblyLine;
 	
-	public AssemblyLineController(AssemblyLine a)
+	public AssemblyLineController(Assemblyline a)
 	{
 		this.assemblyLine = a;
 	}

@@ -6,13 +6,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 import user.User;
 import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 import vehicle.parts.Part;
-import company.AssemblyLine;
 import company.CMCSystem;
+import company.assemblylines.Assemblyline;
 import company.schedule.Scheduler;
 import company.workstations.Workstation;
 
@@ -29,7 +30,7 @@ public class TestAssemblyLine {
 	 * change during individual tests.
 	 */
 	private Scheduler schedule;
-	private AssemblyLine assemblyLine;	
+	private Assemblyline assemblyLine;	
 	private CMCSystem cmcSystem;
 
 	/**

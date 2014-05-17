@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+
+import company.assemblylines.Assemblyline;
 import company.schedule.Scheduler;
 import company.workstations.AccessoiresPost;
 import company.workstations.BodyPost;
@@ -31,7 +33,7 @@ public class CMCSystem {
 	 */
 	public CMCSystem(OrderDAO dao) {
 		userManager = new UserManager();
-		Set<AssemblyLine> assemblylines = initializeAssemblyLines();
+		Set<Assemblyline> assemblylines = initializeAssemblyLines();
 		if (dao == null) {
 			scheduler = new Scheduler(assemblylines);
 		} else {
@@ -40,13 +42,13 @@ public class CMCSystem {
 		}
 	}
 
-	private Set<AssemblyLine> initializeAssemblyLines() {
-		Set<AssemblyLine> result = new HashSet<>();
-		result.add(new AssemblyLine(new Workstation[] { new BodyPost(),
+	private Set<Assemblyline> initializeAssemblyLines() {
+		Set<Assemblyline> result = new HashSet<>();
+		result.add(new Assemblyline(new Workstation[] { new BodyPost(),
 				new DriveTrainPost(), new AccessoiresPost() }));
-		result.add(new AssemblyLine(new Workstation[] { new BodyPost(),
+		result.add(new Assemblyline(new Workstation[] { new BodyPost(),
 				new DriveTrainPost(), new AccessoiresPost() }));
-		result.add(new AssemblyLine(new Workstation[] { new BodyPost(),
+		result.add(new Assemblyline(new Workstation[] { new BodyPost(),
 				new CargoPost(), new DriveTrainPost(), new AccessoiresPost(),
 				new CertificationPost() }));
 		return result;
@@ -124,7 +126,7 @@ public class CMCSystem {
 	 * @param n
 	 * @return the assembly line at position n
 	 */
-	public AssemblyLine getAssemblyLine(int  n)
+	public Assemblyline getAssemblyLine(int  n)
 	{
 		return scheduler.getAssmeblyLine(n);
 	}

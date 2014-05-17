@@ -3,10 +3,11 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import user.User;
 import vehicle.order.Order;
-import company.AssemblyLine;
 import company.CMCSystem;
+import company.assemblylines.Assemblyline;
 import company.schedule.Scheduler;
 import company.workstations.Workstation;
 
@@ -106,7 +107,7 @@ public class SystemController {
 		return (this.getWorkstationsForAssemblyLine(assemblyLine)).get(id);
 	}
 	
-	public AssemblyLine getAssemblyLine(int n)
+	public Assemblyline getAssemblyLine(int n)
 	{
 		return cmcSytem.getAssemblyLine(n);
 	}

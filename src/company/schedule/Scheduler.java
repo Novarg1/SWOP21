@@ -9,7 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import company.AssemblyLine;
+
+import company.assemblylines.Assemblyline;
 import company.workstations.Workstation;
 import util.Timestamp;
 import vehicle.order.Order;
@@ -22,7 +23,7 @@ public class Scheduler implements Observer {
 
 	private LinkedList<Order> finished;
 	private LinkedList<Order> pending;
-	private Map<AssemblyLine, Timestamp> assemblyLines;
+	private Map<Assemblyline, Timestamp> assemblyLines;
 	private SchedulingAlgorithm algorithm;
 
 	/**
@@ -30,7 +31,7 @@ public class Scheduler implements Observer {
 	 * of pending and finished orders. The schedule starts at the beginning of
 	 * day 0. The schedule uses the FIFO scheduling algorithm.
 	 */
-	public Scheduler(Set<AssemblyLine> assemblylines) {
+	public Scheduler(Set<Assemblyline> assemblylines) {
 		this(assemblylines, Collections.<Order> emptyList(), Collections
 				.<Order> emptyList(), 0);
 	}
@@ -49,7 +50,7 @@ public class Scheduler implements Observer {
 	 * @param day
 	 *            The day at which this schedule will start.
 	 */
-	public Scheduler(Set<AssemblyLine> assemblylines, List<Order> pending,
+	public Scheduler(Set<Assemblyline> assemblylines, List<Order> pending,
 			List<Order> finished, int day) {
 		if (assemblylines == null || assemblylines.isEmpty()) {
 			throw new IllegalArgumentException("invalid set of assemblylines");
@@ -60,7 +61,7 @@ public class Scheduler implements Observer {
 
 		Timestamp startTime = Timestamp.beginningOfDay(day);
 		this.assemblyLines = new HashMap<>();
-		for (AssemblyLine ass : assemblylines) {
+		for (Assemblyline ass : assemblylines) {
 			this.assemblyLines.put(ass, startTime);
 		}
 	}
@@ -87,7 +88,7 @@ public class Scheduler implements Observer {
 	 *         orders are empty.
 	 */
 	private boolean assemblyLinesAreEmpty() {
-		for (AssemblyLine line : assemblyLines.keySet()) {
+		for (Assemblyline line : assemblyLines.keySet()) {
 			if (!line.isEmpty()) {
 				return false;
 			}
@@ -102,7 +103,7 @@ public class Scheduler implements Observer {
 		if (!assemblyLinesAreEmpty()) {
 			throw new IllegalStateException("assemblylines must be empty");
 		}
-		for (AssemblyLine ass : assemblyLines.keySet()) {
+		for (Assemblyline ass : assemblyLines.keySet()) {
 			assemblyLines.put(ass, assemblyLines.get(ass).getNextDay());
 		}
 	}
@@ -155,7 +156,7 @@ public class Scheduler implements Observer {
 	 */
 	public List<Order> getPendingOrders() {
 		LinkedList<Order> result = new LinkedList<>(pending);
-		for (AssemblyLine ass : assemblyLines.keySet()) {
+		for (Assemblyline ass : assemblyLines.keySet()) {
 			for (Workstation ws : ass.getWorkstations()) {
 				if (ws.getOrder() != null) {
 					result.addFirst(ws.getOrder());
@@ -231,8 +232,8 @@ public class Scheduler implements Observer {
 	 * @return the assembly line that sits at position n in the list
 	 */
 	
-	public AssemblyLine getAssmeblyLine(int n)
+	public Assemblyline getAssmeblyLine(int n)
 	{
-		return (AssemblyLine) (this.assemblyLines.entrySet().toArray())[n];
+		return (Assemblyline) (this.assemblyLines.entrySet().toArray())[n];
 	}
 }

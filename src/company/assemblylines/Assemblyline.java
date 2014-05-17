@@ -1,24 +1,23 @@
-package company;
+package company.assemblylines;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import company.workstations.Workstation;
 import vehicle.order.Order;
-
-/*
- * TODO
- * assemblylines should support specified set of models --> inheritance?
- */
+import vehicle.order.OrderBuilder;
 
 /**
  * An assemblyline has a list of workstations and can be advanced.
  */
-public class AssemblyLine extends Observable implements Observer {
+public abstract class Assemblyline extends Observable implements Observer {
 
 	private Workstation[] workstations;
 	private Status status = Status.OPERATIONAL;
+	private Set<Class<? extends OrderBuilder>> ignored;
 
 	public enum Status {
 		OPERATIONAL, MAINTENANCE, BROKEN;
@@ -29,7 +28,7 @@ public class AssemblyLine extends Observable implements Observer {
 	 * 
 	 * @param workstations
 	 */
-	public AssemblyLine(Workstation[] workstations) {
+	protected Assemblyline(Workstation[] workstations) {
 		if (workstations == null) {
 			throw new IllegalArgumentException();
 		}
@@ -37,6 +36,7 @@ public class AssemblyLine extends Observable implements Observer {
 		for (Workstation ws : workstations) {
 			ws.addObserver(this);
 		}
+		ignored = new HashSet<>();
 	}
 
 	/**
@@ -51,6 +51,39 @@ public class AssemblyLine extends Observable implements Observer {
 			throw new IllegalArgumentException();
 		}
 		this.status = status; // TODO
+	}
+
+	/**
+	 * makes this assemblyline remember not to accept orders of the given type.
+	 */
+	protected void ignore(Class<? extends OrderBuilder> ordertype) {
+		ignored.add(ordertype);
+	}
+
+	public boolean accepts(Order order) {
+		for (Class<? extends Workstation> req : order.getNeededWorkstations()) {
+			if (!hasWorkstation(req)) {
+				return false;
+			}
+		}
+		return !ignored.contains(order.getClass());
+	}
+
+	/**
+	 * Checks whether this assemblyline accepts the given order or not.
+	 * 
+	 * @return false if this assemblyline does not contain the needed
+	 *         workstations for assembly of the given order or if the type of
+	 *         the given order appears in the ignore-list of this assemblyline.
+	 *         Otherwise returns true.
+	 */
+	private boolean hasWorkstation(Class<? extends Workstation> arg) {
+		for (Workstation ws : this.workstations) {
+			if (ws.getClass().equals(arg)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
