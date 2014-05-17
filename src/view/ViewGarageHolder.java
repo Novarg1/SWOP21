@@ -7,6 +7,8 @@ import util.LineReader;
 import vehicle.order.ModelA;
 import vehicle.order.ModelB;
 import vehicle.order.ModelC;
+import vehicle.order.ModelX;
+import vehicle.order.ModelY;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 import controllers.SystemController;
@@ -66,8 +68,25 @@ public class ViewGarageHolder extends ViewOrderForm
 	}
 
 	private void orderCar() {
-		System.out.println("What type of car do you want to order?");
-		System.out.println("(1) Model A\n(2) Model B\n(3) Model C");
+		
+		int isTruck = 0;
+		
+		System.out.println("Do you wish to order a \n(1) Car\n(2) Truck");
+		
+		isTruck = LineReader.readInt();
+		
+		if(isTruck==1)
+		{
+			isTruck = 0;
+			System.out.println("What type of car do you want to order?");
+			System.out.println("(1) Model A\n(2) Model B\n(3) Model C");
+		}
+		else
+		{
+			isTruck = 3;
+			System.out.println("What type of truck do you want to order?");
+			System.out.println("(1) Model X\n(2) Model Y");
+		}
 
 		int choice = Integer.parseInt(LineReader.readLine());
 
@@ -105,6 +124,8 @@ public class ViewGarageHolder extends ViewOrderForm
 		case 1: spec = new ModelA();break;
 		case 2: spec = new ModelB();break;
 		case 3: spec = new ModelC();break;
+		case 4: spec = new ModelX();break;
+		case 5: spec = new ModelY();break;
 		default: throw new IllegalArgumentException("model type does not exist");
 		}
 		return spec;

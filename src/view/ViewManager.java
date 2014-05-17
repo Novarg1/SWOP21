@@ -28,7 +28,8 @@ public class ViewManager extends View
 	private void showMenu()
 	{
 		System.out.println("What do you want to do?\n(1) check statistics\n"
-				+ "(2) adapt scheduling algorithm");
+				+ "(2) adapt scheduling algorithm"
+				+ "(3) change the assembly lines operational status");
 		switch(LineReader.readInt())
 		{
 		case 1:new ViewStatistics(systemController).show();break;

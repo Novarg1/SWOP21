@@ -119,4 +119,13 @@ public class CMCSystem {
 	public List<Order> getAllFinishedOrders() {
 		return scheduler.getFinishedOrders();
 	}
+	
+	/**
+	 * @param n
+	 * @return the assembly line at position n
+	 */
+	public AssemblyLine getAssemblyLine(int  n)
+	{
+		return scheduler.getAssmeblyLine(n);
+	}
 }
