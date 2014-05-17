@@ -25,6 +25,7 @@ public class Scheduler implements Observer {
 	private LinkedList<Order> pending;
 	private Map<Assemblyline, Timestamp> assemblyLines;
 	private SchedulingAlgorithm algorithm;
+	private static final SchedulingAlgorithm DEFAULT_ALGORITHM = new FIFO();
 
 	/**
 	 * creates new schedule with the given set of assemblylines and empty lists
@@ -57,7 +58,7 @@ public class Scheduler implements Observer {
 		}
 		this.pending = new LinkedList<>(pending);
 		this.finished = new LinkedList<>(finished);
-		this.algorithm = new FIFO();
+		this.algorithm = DEFAULT_ALGORITHM;
 
 		Timestamp startTime = Timestamp.beginningOfDay(day);
 		this.assemblyLines = new HashMap<>();

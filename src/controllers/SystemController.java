@@ -10,6 +10,7 @@ import company.CMCSystem;
 import company.assemblylines.Assemblyline;
 import company.schedule.Scheduler;
 import company.workstations.Workstation;
+import dao.OrderDAOImpl;
 
 /**
  * System Controller
@@ -23,7 +24,7 @@ public class SystemController {
 	 * constructor initializes the system
 	 */
 	public SystemController() {
-		this.cmcSytem = new CMCSystem();
+		this.cmcSytem = new CMCSystem(new OrderDAOImpl());
 	}
 
 	/**

@@ -1,28 +1,18 @@
-//package company.schedule;
-//
-//import java.util.HashMap;
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Set;
-//import java.util.SortedMap;
-//import java.util.TreeMap;
-//
-//import util.TimeStamp;
-//import vehicle.order.Order;
-//import vehicle.parts.CarpartsSet;
-//
-//public class SpecificationBatch extends SchedulingAlgorithm {
-//
-//	private CarpartsSet spec;
-//
-//	public SpecificationBatch(CarpartsSet specification) {
-//		if (specification == null) {
-//			throw new IllegalArgumentException("invalid specification");
-//		}
-//		spec = specification.clone();
-//	}
-//
+package company.schedule;
+
+import vehicle.order.Order;
+
+public class SpecificationBatch extends SchedulingAlgorithm {
+
+	private Order batchSample;
+
+	public SpecificationBatch(Order batchSample) {
+		if (batchSample == null) {
+			throw new IllegalArgumentException("invalid batch sample");
+		}
+		this.batchSample = batchSample;
+	}
+
 //	/**
 //	 * @return null when there are no orders with the specification of this
 //	 *         specification batch algorithm in the given list of orders.
@@ -113,4 +103,4 @@
 //		}
 //		return result;
 //	}
-//}
+}
