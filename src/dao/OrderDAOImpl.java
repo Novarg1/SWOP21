@@ -34,7 +34,7 @@ public class OrderDAOImpl implements OrderDAO {
 		UserManager users = new UserManager();
 
 		// first add some finished orders for the garageholder
-		User user = users.logInUser(2);
+		User user = users.logInUser(1);
 
 		OrderBuilder spec = new ModelA();
 		spec.add(Body.SEDAN);
@@ -153,9 +153,9 @@ public class OrderDAOImpl implements OrderDAO {
 		UserManager users = new UserManager();
 		
 		// the first three should be custom shop orders
-		users.logInUser(4);
+		users.logInUser(3);
 		OrderBuilder spec = new PaintJob();
-		spec.add(Color.BLUE);
+	/*	spec.add(Color.BLUE);
 		orders.add(new Order(spec));
 		
 		spec = new PaintJob();
@@ -165,9 +165,9 @@ public class OrderDAOImpl implements OrderDAO {
 		spec = new CustomSeats();
 		spec.add(Seats.VINYL_GREY);
 		orders.add(new Order(spec));
-
+*/
 		// then 3 different batch orders
-		users.logInUser(2);
+		users.logInUser(1);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
