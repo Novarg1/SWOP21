@@ -155,17 +155,17 @@ public class OrderDAOImpl implements OrderDAO {
 		// the first three should be custom shop orders
 		users.logInUser(3);
 		OrderBuilder spec = new PaintJob();
-	/*	spec.add(Color.BLUE);
-		orders.add(new Order(spec));
+		spec.add(Color.BLUE);
+		//orders.add(new Order(spec));
 		
 		spec = new PaintJob();
 		spec.add(Color.GREEN);
-		orders.add(new Order(spec));
+		//orders.add(new Order(spec));
 		
 		spec = new CustomSeats();
 		spec.add(Seats.VINYL_GREY);
-		orders.add(new Order(spec));
-*/
+		//orders.add(new Order(spec));
+
 		// then 3 different batch orders
 		users.logInUser(1);
 
