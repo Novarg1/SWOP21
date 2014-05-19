@@ -71,9 +71,9 @@ public class Scheduler implements Observer {
 	@Override
 	public void update(Observable obs, Object obj) {
 		try {
-		Assemblyline ass = (Assemblyline) obs;
+			Assemblyline ass = (Assemblyline) obs;
 		} catch (ClassCastException e) {
-			
+
 		}
 		// TODO
 	}
@@ -117,38 +117,6 @@ public class Scheduler implements Observer {
 		}
 		this.pending.addLast(order);
 	}
-
-	// /**
-	// * Returns the next order that is scheduled to start assembly and removes
-	// it
-	// * from the pending orders. This method should therefore only be called
-	// when
-	// * the assemblyLine advances.
-	// *
-	// * @param time
-	// * The time the previous cycle on the assemblyLine took.
-	// *
-	// * @return the next order to be assembled, or null if there are no more
-	// * orders planned for today or if there are no more pending orders.
-	// */
-	// public Order getNextOrder(int time) {
-	// Timestamp prev = currentTime;
-	// currentTime = currentTime.increaseTime(time);
-	// if (nextIsTomorrow()) {
-	// if (assemblyLinesAreEmpty()) {
-	// currentTime = prev;
-	// startNewDay();
-	// } else {
-	// advanceAssemblyLine(null);
-	// return null; // wait until assemblyLine is empty
-	// }
-	// }
-	// SortedMap<Timestamp, Order> schedule = getSchedule();
-	// Order next = schedule.get(schedule.firstKey());
-	// pending.remove(next);
-	// advanceAssemblyLine(next);
-	// return next;
-	// }
 
 	/**
 	 * @return All pending orders, in the order they were placed.
@@ -196,15 +164,19 @@ public class Scheduler implements Observer {
 	 *         schedule.
 	 */
 	public Timestamp getETA(Order order) {
-		throw new IllegalStateException("not implemented");
+		throw new IllegalStateException("not implemented"); // TODO
 	}
 
 	/**
-	 * @return true if the next scheduled order is scheduled for tomorrow. If
-	 *         there are no orders left, returns false.
+	 * checks whether the next scheduled order for the given assemblyline is
+	 * scheduled for tomorrow.
+	 * 
+	 * @return true if the next scheduled order for the given assemblyline is
+	 *         scheduled for tomorrow. If there are no orders left, returns
+	 *         false.
 	 */
 	public boolean nextIsTomorrow() {
-		throw new IllegalStateException("not implemented");
+		throw new IllegalStateException("not implemented"); // TODO
 	}
 
 	/**
@@ -215,23 +187,14 @@ public class Scheduler implements Observer {
 	}
 
 	/**
-	 * @return the number of days that have passed since the system was
-	 *         initiated
+	 * @return the current day
 	 */
 	public int getDay() {
-		// for (Timestamp time : assemblyLines) { TODO
-		// return time.getDay();
-		// }
+		for (Assemblyline ass : assemblyLines) {
+			return ass.getCurrentTime().getDay();
+		}
 		// should be unreachable
 		throw new IllegalStateException(
 				"A scheduler should have at least one assemblyline");
-	}
-
-	/**
-	 * @param n
-	 * @return the assembly line that sits at position n in the list
-	 */
-	public Assemblyline getAssemblyLine(int n) {
-		return (Assemblyline) (this.assemblyLines.toArray())[n];
 	}
 }

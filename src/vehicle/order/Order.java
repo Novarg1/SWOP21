@@ -9,7 +9,7 @@ import user.User;
 import util.Timestamp;
 import vehicle.assemblytasks.Task;
 
-public class Order {
+public class Order implements Cloneable {
 
 	private final User client;
 	private final Set<Task> tasks;
@@ -34,6 +34,14 @@ public class Order {
 		this.deadline = builder.getDeadline();
 		this.type = builder.getClass();
 	}
+
+//	/**
+//	 * creates a clone of the given order.
+//	 */
+//	private Order(Order other) {
+//		this.client = other.client;
+//		//TODO
+//	}
 
 	/**
 	 * @return the client associated with this order.
@@ -76,7 +84,7 @@ public class Order {
 	public Class<? extends OrderBuilder> getType() {
 		return type;
 	}
-	
+
 	/**
 	 * @return true if this order has been finished
 	 */
