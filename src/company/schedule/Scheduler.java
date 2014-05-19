@@ -1,14 +1,12 @@
 package company.schedule;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 
 import company.assemblylines.Assemblyline;
 import company.workstations.Workstation;
@@ -16,25 +14,26 @@ import util.Timestamp;
 import vehicle.order.Order;
 
 /**
- * Represents the schedule of the company. Contains a list of pending orders,
- * the current time and algorithms for scheduling the pending orders.
+ * Represents the schedule of the company. Contains a list of pending and
+ * finished orders, a set of assemlylines and the algorithms for scheduling the
+ * pending orders.
  */
 public class Scheduler implements Observer {
 
 	private LinkedList<Order> finished;
 	private LinkedList<Order> pending;
-	private Map<Assemblyline, Timestamp> assemblyLines;
+	private Set<Assemblyline> assemblyLines;
 	private SchedulingAlgorithm algorithm;
 	private static final SchedulingAlgorithm DEFAULT_ALGORITHM = new FIFO();
 
 	/**
 	 * creates new schedule with the given set of assemblylines and empty lists
-	 * of pending and finished orders. The schedule starts at the beginning of
-	 * day 0. The schedule uses the FIFO scheduling algorithm.
+	 * of pending and finished orders. The schedule uses the FIFO scheduling
+	 * algorithm.
 	 */
 	public Scheduler(Set<Assemblyline> assemblylines) {
 		this(assemblylines, Collections.<Order> emptyList(), Collections
-				.<Order> emptyList(), 0);
+				.<Order> emptyList());
 	}
 
 	/**
@@ -48,11 +47,9 @@ public class Scheduler implements Observer {
 	 *            will be kept.
 	 * @param finished
 	 *            The initial list of finished orders.
-	 * @param day
-	 *            The day at which this schedule will start.
 	 */
 	public Scheduler(Set<Assemblyline> assemblylines, List<Order> pending,
-			List<Order> finished, int day) {
+			List<Order> finished) {
 		if (assemblylines == null || assemblylines.isEmpty()) {
 			throw new IllegalArgumentException("invalid set of assemblylines");
 		}
@@ -60,28 +57,19 @@ public class Scheduler implements Observer {
 		this.finished = new LinkedList<>(finished);
 		this.algorithm = DEFAULT_ALGORITHM;
 
-		Timestamp startTime = Timestamp.beginningOfDay(day);
-		this.assemblyLines = new HashMap<>();
+		this.assemblyLines = new HashSet<>();
 		for (Assemblyline ass : assemblylines) {
-			this.assemblyLines.put(ass, startTime);
+			this.assemblyLines.add(ass);
+			ass.addObserver(this);
 		}
 	}
 
 	/**
-	 * This method is called whenever an assemblyline is ready to advance. Does
-	 * nothing if this schedule does not contain the given assemblyline.
-	 * 
-	 * @param obs
-	 *            The assemblyline that is ready to advance.
-	 * @param obj
-	 *            The time it took the given assemblyline to get ready to
-	 *            advance. If this parameter is null, not an integer, or less
-	 *            than or equal to zero, the schedule will assume the
-	 *            assemblyline took zero minutes.
+	 * TODO comment
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
-		throw new IllegalStateException("not implemented"); // TODO
+		
 	}
 
 	/**
@@ -89,7 +77,7 @@ public class Scheduler implements Observer {
 	 *         orders are empty.
 	 */
 	private boolean assemblyLinesAreEmpty() {
-		for (Assemblyline line : assemblyLines.keySet()) {
+		for (Assemblyline line : assemblyLines) {
 			if (!line.isEmpty()) {
 				return false;
 			}
@@ -101,12 +89,13 @@ public class Scheduler implements Observer {
 	 * Sets the time to the beginning of the next day.
 	 */
 	private void startNewDay() {
-		if (!assemblyLinesAreEmpty()) {
-			throw new IllegalStateException("assemblylines must be empty");
-		}
-		for (Assemblyline ass : assemblyLines.keySet()) {
-			assemblyLines.put(ass, assemblyLines.get(ass).getNextDay());
-		}
+		// if (!assemblyLinesAreEmpty()) {
+		// throw new IllegalStateException("assemblylines must be empty");
+		// //TODO
+		// }
+		// for (Assemblyline ass : assemblyLines.keySet()) {
+		// assemblyLines.put(ass, assemblyLines.get(ass).getNextDay());
+		// }
 	}
 
 	/**
@@ -157,7 +146,7 @@ public class Scheduler implements Observer {
 	 */
 	public List<Order> getPendingOrders() {
 		LinkedList<Order> result = new LinkedList<>(pending);
-		for (Assemblyline ass : assemblyLines.keySet()) {
+		for (Assemblyline ass : assemblyLines) {
 			for (Workstation ws : ass.getWorkstations()) {
 				if (ws.getOrder() != null) {
 					result.addFirst(ws.getOrder());
@@ -221,20 +210,19 @@ public class Scheduler implements Observer {
 	 *         initiated
 	 */
 	public int getDay() {
-		for (Timestamp time : assemblyLines.values()) {
-			return time.getDay();
-		}
+		// for (Timestamp time : assemblyLines) { TODO
+		// return time.getDay();
+		// }
+		// should be unreachable
 		throw new IllegalStateException(
 				"A scheduler should have at least one assemblyline");
 	}
-	
+
 	/**
 	 * @param n
 	 * @return the assembly line that sits at position n in the list
 	 */
-	
-	public Assemblyline getAssmeblyLine(int n)
-	{
-		return (Assemblyline) (this.assemblyLines.entrySet().toArray())[n];
+	public Assemblyline getAssemblyLine(int n) {
+		return (Assemblyline) (this.assemblyLines.toArray())[n];
 	}
 }

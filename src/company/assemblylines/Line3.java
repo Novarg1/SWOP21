@@ -9,13 +9,13 @@ import company.workstations.Workstation;
 
 public class Line3 extends Assemblyline {
 
-	public Line3() {
+	public Line3(int day) {
 		super(new Workstation[]{
 				new BodyPost(),
 				new DriveTrainPost(),
 				new CargoPost(),
 				new AccessoiresPost(),
 				new CertificationPost()
-		});
+		}, day);
 	}
 }

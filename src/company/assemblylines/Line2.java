@@ -7,11 +7,11 @@ import company.workstations.Workstation;
 
 public class Line2 extends Assemblyline {
 
-	public Line2() {
+	public Line2(int day) {
 		super(new Workstation[] {
 				new BodyPost(), 
 				new DriveTrainPost(),
 				new AccessoiresPost() 
-		});
+		}, day);
 	}
 }
