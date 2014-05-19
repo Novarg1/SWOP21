@@ -4,6 +4,11 @@ import util.LineReader;
 import controllers.AssemblyLineController;
 import controllers.SystemController;
 
+/**
+ * Provides a UI to manage the status of different assembly lines
+ * @author jonathanlangens
+ *
+ */
 public class ViewOperationalStatus extends View
 {
 	private AssemblyLineController assemblyController;

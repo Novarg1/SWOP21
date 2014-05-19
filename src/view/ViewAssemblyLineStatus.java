@@ -6,6 +6,11 @@ import util.LineReader;
 import company.workstations.Workstation;
 import controllers.SystemController;
 
+/**
+ * Provide a UI for manipulating and consulting the assembly lines status
+ * @author jonathanlangens
+ *
+ */
 public class ViewAssemblyLineStatus extends View
 {
 

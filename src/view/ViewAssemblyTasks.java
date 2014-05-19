@@ -8,6 +8,11 @@ import vehicle.assemblytasks.Task;
 import controllers.SystemController;
 import controllers.WorkstationController;
 
+/**
+ * Provides a UI to display and perform tasks on a workstation
+ * @author jonathanlangens
+ *
+ */
 public class ViewAssemblyTasks extends View
 {
 	private WorkstationController assemblyController;

@@ -13,6 +13,11 @@ import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 import controllers.SystemController;
 
+/**
+ * Provides a UI to let a garage holder manage placed orders and to place orders
+ * @author jonathanlangens
+ *
+ */
 public class ViewGarageHolder extends ViewOrderForm
 {	
 	protected ViewGarageHolder(SystemController c) {

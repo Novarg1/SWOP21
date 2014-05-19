@@ -3,6 +3,11 @@ package view;
 import util.LineReader;
 import controllers.SystemController;
 
+/**
+ * displays the mechanics view
+ * @author jonathanlangens
+ *
+ */
 public class ViewMechanic extends View
 {
 
