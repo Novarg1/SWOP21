@@ -15,6 +15,11 @@ import vehicle.order.OrderBuilder;
 import controllers.SystemController;
 import controllers.ScheduleController;
 
+/**
+ * Provides a UI for the manager - adapt schedule use case
+ * @author jonathanlangens
+ *
+ */
 public class ViewAdaptSchedule extends ViewOrderForm {
 	ScheduleController scheduleController;
 

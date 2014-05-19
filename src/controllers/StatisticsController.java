@@ -4,6 +4,11 @@ import java.util.List;
 
 import vehicle.order.Order;
 
+/**
+ * Statistics Controller provides some statistics functions around the system
+ * @author jonathanlangens
+ *
+ */
 public class StatisticsController {
 	private SystemController systemController;
 

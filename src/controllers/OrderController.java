@@ -3,6 +3,11 @@ package controllers;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 
+/**
+ * OrderController bundles all order related functionality
+ * @author jonathanlangens
+ *
+ */
 public class OrderController {
 	private SystemController systemController;
 

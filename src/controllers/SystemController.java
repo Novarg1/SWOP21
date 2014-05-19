@@ -13,7 +13,7 @@ import company.workstations.Workstation;
 import dao.OrderDAOImpl;
 
 /**
- * System Controller
+ * System Controller - provides all basic functionalities
  * 
  */
 
@@ -42,15 +42,7 @@ public class SystemController {
 	public void logInUser(int n) {
 		cmcSytem.logInUser(n);
 	}
-
-//	/**
-//	 * @return true if the assembly line can advance
-//	 */
-//	public boolean canAdvance() {
-//		AssemblyLine a = cmcSytem.getAssemblyLine();
-//		return a.isReadyToAdvance();
-//	}
-
+	
 	/**
 	 * @param user
 	 * @return the unfinished orders for the passed user
@@ -66,19 +58,7 @@ public class SystemController {
 	public List<Order> getFinishedOrdersFor(User user) {
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
-
-//	/**
-//	 * @param id
-//	 * @return true if workstation with ID id has no pending tasks left
-//	 */
-//	public boolean isWorkPostFinished(int id) {
-//		for (Workstation w : cmcSytem.getAssemblyLine().getWorkstations()) {
-//			if (w.getId() == id)
-//				return w.isReady();
-//		}
-//		return false;
-//	}
-
+	
 	/**
 	 * @return the schedule
 	 */
@@ -103,11 +83,20 @@ public class SystemController {
 		return list;
 	}
 	
+	/**
+	 * @param assemblyLine
+	 * @param id
+	 * @return the workstation with id 'id' on assembly line 'assemblyLine'
+	 */
 	public Workstation selectWorkstationWithId(int assemblyLine, int id)
 	{
 		return (this.getWorkstationsForAssemblyLine(assemblyLine)).get(id);
 	}
 	
+	/**
+	 * @param n
+	 * @return the nth assembly line
+	 */
 	public Assemblyline getAssemblyLine(int n)
 	{
 		return cmcSytem.getAssemblyLine(n);

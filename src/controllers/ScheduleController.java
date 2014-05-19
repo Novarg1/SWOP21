@@ -3,6 +3,11 @@ package controllers;
 import company.schedule.Scheduler;
 import company.schedule.SchedulingAlgorithm;
 
+/**
+ * ScheduleController bundles all scheduler related functionality
+ * @author jonathanlangens
+ *
+ */
 public class ScheduleController {
 	private Scheduler schedule;
 
