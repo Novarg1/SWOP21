@@ -21,24 +21,10 @@ public abstract class Assemblyline extends Observable implements Observer {
 	private Timestamp currentTime;
 	private Set<Class<? extends OrderBuilder>> ignored;
 
+	private static final int MAINTENANCE_TIME = 4 * 60;
+
 	public enum Status {
 		OPERATIONAL, MAINTENANCE, BROKEN;
-
-		/**
-		 * TODO comments
-		 */
-		private void check(Assemblyline ass) {
-			switch (this) {
-			case MAINTENANCE:
-				if (ass.isEmpty()) {
-					ass.currentTime = ass.currentTime.increaseTime(4 * 60);
-					ass.setStatus(OPERATIONAL, -1);
-				}
-				break;
-			default:
-				break;
-			}
-		}
 	}
 
 	/**
@@ -59,10 +45,25 @@ public abstract class Assemblyline extends Observable implements Observer {
 	}
 
 	/**
-	 * Returns the current time of this assemblyline.
+	 * Returns the current time of this assembly line.
 	 */
 	public Timestamp getCurrentTime() {
 		return currentTime;
+	}
+
+	/**
+	 * Sets the current time of this assemblyline to the beginning of the next
+	 * day.
+	 * 
+	 * @throws IllegalStateException
+	 *             if this assemblyline is not empty.
+	 */
+	public void startNextDay() {
+		if (!this.isEmpty()) {
+			throw new IllegalStateException(
+					"cannot start new day when assemblyline is not empty");
+		}
+		currentTime = currentTime.getNextDay();
 	}
 
 	/**
@@ -91,21 +92,32 @@ public abstract class Assemblyline extends Observable implements Observer {
 			currentTime.increaseTime(time);
 		}
 		this.status = status;
-		status.check(this);
+		checkMaintenance();
 		notifyObservers();
 	}
 
 	/**
-	 * makes this assemblyline remember not to accept orders of the given type.
+	 * If this assembly lines status is maintenance and its workstations are all
+	 * empty, increases current time with the maintenance time.
+	 */
+	private void checkMaintenance() {
+		if (status == Status.MAINTENANCE && this.isEmpty()) {
+			currentTime = currentTime.increaseTime(MAINTENANCE_TIME);
+			setStatus(Status.OPERATIONAL, -1);
+		}
+	}
+
+	/**
+	 * makes this assembly line remember not to accept orders of the given type.
 	 */
 	protected void ignore(Class<? extends OrderBuilder> ordertype) {
 		ignored.add(ordertype);
 	}
 
 	/**
-	 * Checks whether this assemblyline accepts the given order or not.
+	 * Checks whether this assembly line accepts the given order or not.
 	 * 
-	 * @return false if this assemblyline does not contain the needed
+	 * @return false if this assembly line does not contain the needed
 	 *         workstations for assembly of the given order or if the type of
 	 *         the given order appears in the ignore-list of this assemblyline.
 	 *         Otherwise returns true.
@@ -120,13 +132,13 @@ public abstract class Assemblyline extends Observable implements Observer {
 	}
 
 	/**
-	 * Checks whether this assemblyline has a workstation of the given type.
+	 * Checks whether this assembly line has a workstation of the given type.
 	 * 
-	 * @return true if this assemblyline has a workstation of the given type.
+	 * @return true if this assembly line has a workstation of the given type.
 	 */
-	private boolean hasWorkstation(Class<? extends Workstation> arg) {
+	private boolean hasWorkstation(Class<? extends Workstation> type) {
 		for (Workstation ws : this.workstations) {
-			if (ws.getClass().equals(arg)) {
+			if (ws.getClass().equals(type)) {
 				return true;
 			}
 		}
@@ -157,7 +169,8 @@ public abstract class Assemblyline extends Observable implements Observer {
 	 *            null if no new order should be started this cycle.
 	 * 
 	 * @throws IllegalStateException
-	 *             if not all workstations on this line are ready yet.
+	 *             if not all workstations on this line are ready yet or if this
+	 *             assemblyline is currently broken.
 	 * 
 	 * @return The order that was on the last workstation and is now finished,
 	 *         or null if no order was being assembled on the last workstation.
@@ -166,17 +179,20 @@ public abstract class Assemblyline extends Observable implements Observer {
 		if (!isReadyToAdvance() || this.status == Status.BROKEN) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
+		currentTime = currentTime.increaseTime(this.getHighestWorkTime());
+
 		Order result = workstations[workstations.length - 1].getOrder();
 		for (int i = workstations.length - 1; i > 0; i--) {
 			workstations[i].setOrder(workstations[i - 1].getOrder());
 		}
 		workstations[0].setOrder(next);
+		checkMaintenance();
 		notifyObservers();
 		return result;
 	}
 
 	/**
-	 * Method to check whether the assemblyline can be advanced
+	 * Method to check whether the assembly line can be advanced
 	 * 
 	 * @return true if all workstations on this line are ready
 	 */

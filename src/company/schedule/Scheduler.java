@@ -65,11 +65,17 @@ public class Scheduler implements Observer {
 	}
 
 	/**
-	 * TODO comment
+	 * notifies this scheduler that one of his assemblylines has changed. This
+	 * method handles the changes.
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
-		
+		try {
+		Assemblyline ass = (Assemblyline) obs;
+		} catch (ClassCastException e) {
+			
+		}
+		// TODO
 	}
 
 	/**
@@ -86,16 +92,19 @@ public class Scheduler implements Observer {
 	}
 
 	/**
-	 * Sets the time to the beginning of the next day.
+	 * Makes all its assemblylines set their current time to the beginning of
+	 * the next day.
+	 * 
+	 * @throws IllegalStateException
+	 *             if one or more assemblylines are not empty.
 	 */
 	private void startNewDay() {
-		// if (!assemblyLinesAreEmpty()) {
-		// throw new IllegalStateException("assemblylines must be empty");
-		// //TODO
-		// }
-		// for (Assemblyline ass : assemblyLines.keySet()) {
-		// assemblyLines.put(ass, assemblyLines.get(ass).getNextDay());
-		// }
+		if (!assemblyLinesAreEmpty()) {
+			throw new IllegalStateException("assemblylines must be empty");
+		}
+		for (Assemblyline ass : assemblyLines) {
+			ass.startNextDay();
+		}
 	}
 
 	/**
