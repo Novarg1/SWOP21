@@ -13,7 +13,8 @@ import vehicle.order.OrderBuilder;
 /**
  * An assemblyline has a list of workstations and can be advanced.
  */
-public abstract class Assemblyline extends Observable implements Observer {
+public abstract class Assemblyline extends Observable implements Observer,
+		Cloneable {
 
 	private Workstation[] workstations;
 	private Status status = Status.OPERATIONAL;
@@ -183,5 +184,26 @@ public abstract class Assemblyline extends Observable implements Observer {
 			}
 		}
 		return highest;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public Assemblyline clone() {
+		try {
+			Assemblyline clone = (Assemblyline) super.clone();
+			clone.ignored = new HashSet<>(this.ignored);
+			clone.workstations = new Workstation[this.workstations.length];
+			for(int i = 0; i < this.workstations.length; i++) {
+				clone.workstations[i] = this.workstations[i].clone();
+			}
+			return clone;
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace(); //unreachable
+			return null;
+		}
 	}
 }

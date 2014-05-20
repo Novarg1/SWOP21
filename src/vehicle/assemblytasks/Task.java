@@ -5,7 +5,7 @@ import company.workstations.Workstation;
 /**
  * Represents an assembly task that can be performed on a vehicle.
  */
-public abstract class Task {
+public abstract class Task implements Cloneable {
 	
 	private boolean isPerformed = false;
 	
@@ -36,4 +36,14 @@ public abstract class Task {
 	 * Returns this assembly task instructions in string format.
 	 */
 	public abstract String toString();
+
+	@Override
+	public Task clone() {
+		try {
+			return (Task) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace(); //unreachable
+			return null;
+		}
+	}
 }

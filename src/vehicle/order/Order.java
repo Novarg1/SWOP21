@@ -9,7 +9,7 @@ import user.User;
 import util.Timestamp;
 import vehicle.assemblytasks.Task;
 
-public class Order {
+public class Order implements Cloneable {
 
 	private final User client;
 	private final Set<Task> tasks;
@@ -124,5 +124,15 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order"; // TODO
+	}
+
+	@Override
+	public Order clone() {
+		try {
+			return (Order) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace(); //unreachable
+			return null;
+		}
 	}
 }
