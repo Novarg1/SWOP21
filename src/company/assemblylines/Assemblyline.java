@@ -7,6 +7,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import company.workstations.Workstation;
+import util.Timestamp;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 
@@ -18,7 +19,10 @@ public abstract class Assemblyline extends Observable implements Observer,
 
 	private Workstation[] workstations;
 	private Status status = Status.OPERATIONAL;
+	private Timestamp currentTime;
 	private Set<Class<? extends OrderBuilder>> ignored;
+
+	private static final int MAINTENANCE_TIME = 4 * 60;
 
 	public enum Status {
 		OPERATIONAL, MAINTENANCE, BROKEN;
@@ -29,7 +33,7 @@ public abstract class Assemblyline extends Observable implements Observer,
 	 * 
 	 * @param workstations
 	 */
-	protected Assemblyline(Workstation[] workstations) {
+	protected Assemblyline(Workstation[] workstations, int day) {
 		if (workstations == null) {
 			throw new IllegalArgumentException();
 		}
@@ -38,6 +42,29 @@ public abstract class Assemblyline extends Observable implements Observer,
 			ws.addObserver(this);
 		}
 		ignored = new HashSet<>();
+		currentTime = Timestamp.beginningOfDay(day);
+	}
+
+	/**
+	 * Returns the current time of this assembly line.
+	 */
+	public Timestamp getCurrentTime() {
+		return currentTime;
+	}
+
+	/**
+	 * Sets the current time of this assemblyline to the beginning of the next
+	 * day.
+	 * 
+	 * @throws IllegalStateException
+	 *             if this assemblyline is not empty.
+	 */
+	public void startNextDay() {
+		if (!this.isEmpty()) {
+			throw new IllegalStateException(
+					"cannot start new day when assemblyline is not empty");
+		}
+		currentTime = currentTime.getNextDay();
 	}
 
 	/**
@@ -47,21 +74,56 @@ public abstract class Assemblyline extends Observable implements Observer,
 		return status;
 	}
 
-	public void setStatus(Status status) {
-		if (status == null) {
+	/**
+	 * Changes the status of this assemblyline to the given status.
+	 * 
+	 * @param status
+	 *            the new status of the assemblyline.
+	 * @param time
+	 *            if the current status of this assemblyline is broken, this
+	 *            parameter represents the time (in minutes) that this
+	 *            assemblyline was broken. Otherwise this parameter will be
+	 *            ignored.
+	 */
+	public void setStatus(Status status, int time) {
+		if (status == null || (this.status == Status.BROKEN && time < 0)) {
 			throw new IllegalArgumentException();
 		}
-		this.status = status; // TODO
+		if (this.status == Status.BROKEN) {
+			currentTime.increaseTime(time);
+		}
+		this.status = status;
+		checkMaintenance();
+		notifyObservers();
 	}
 
 	/**
-	 * makes this assemblyline remember not to accept orders of the given type.
+	 * If this assembly lines status is maintenance and its workstations are all
+	 * empty, increases current time with the maintenance time.
+	 */
+	private void checkMaintenance() {
+		if (status == Status.MAINTENANCE && this.isEmpty()) {
+			currentTime = currentTime.increaseTime(MAINTENANCE_TIME);
+			setStatus(Status.OPERATIONAL, -1);
+		}
+	}
+
+	/**
+	 * makes this assembly line remember not to accept orders of the given type.
 	 */
 	protected void ignore(Class<? extends OrderBuilder> ordertype) {
 		ignored.add(ordertype);
 	}
 
-	public boolean accepts(Order order) {
+	/**
+	 * Checks whether this assembly line accepts the given order or not.
+	 * 
+	 * @return false if this assembly line does not contain the needed
+	 *         workstations for assembly of the given order or if the type of
+	 *         the given order appears in the ignore-list of this assemblyline.
+	 *         Otherwise returns true.
+	 */
+	public boolean supports(Order order) {
 		for (Class<? extends Workstation> req : order.getNeededWorkstations()) {
 			if (!hasWorkstation(req)) {
 				return false;
@@ -71,16 +133,13 @@ public abstract class Assemblyline extends Observable implements Observer,
 	}
 
 	/**
-	 * Checks whether this assemblyline accepts the given order or not.
+	 * Checks whether this assembly line has a workstation of the given type.
 	 * 
-	 * @return false if this assemblyline does not contain the needed
-	 *         workstations for assembly of the given order or if the type of
-	 *         the given order appears in the ignore-list of this assemblyline.
-	 *         Otherwise returns true.
+	 * @return true if this assembly line has a workstation of the given type.
 	 */
-	private boolean hasWorkstation(Class<? extends Workstation> arg) {
+	private boolean hasWorkstation(Class<? extends Workstation> type) {
 		for (Workstation ws : this.workstations) {
-			if (ws.getClass().equals(arg)) {
+			if (ws.getClass().equals(type)) {
 				return true;
 			}
 		}
@@ -89,20 +148,17 @@ public abstract class Assemblyline extends Observable implements Observer,
 
 	/**
 	 * This method is called whenever a carpart is installed in one of the
-	 * workstations on this assemblyLine. The assemblyline will check if it's
-	 * ready to advance and, if so, notify the schedule.
+	 * workstations on this assemblyLine. The assemblyline will notify the
+	 * schedule.
 	 * 
 	 * @param ws
-	 *            the workstation that notified this assemblyline. For now,
-	 *            however, this parameter will be ignored.
+	 *            this parameter will be ignored.
 	 * @param obj
 	 *            this parameter will be ignored.
 	 */
 	@Override
 	public void update(Observable ws, Object obj) {
-		if (isReadyToAdvance()) {
-			notifyObservers(getHighestWorkTime());
-		}
+		notifyObservers();
 	}
 
 	/**
@@ -114,29 +170,30 @@ public abstract class Assemblyline extends Observable implements Observer,
 	 *            null if no new order should be started this cycle.
 	 * 
 	 * @throws IllegalStateException
-	 *             if not all workstations on this line are ready yet.
+	 *             if not all workstations on this line are ready yet or if this
+	 *             assemblyline is currently broken.
 	 * 
 	 * @return The order that was on the last workstation and is now finished,
 	 *         or null if no order was being assembled on the last workstation.
 	 */
 	public synchronized Order advance(Order next) {
-		if (!isReadyToAdvance()) {
+		if (!isReadyToAdvance() || this.status == Status.BROKEN) {
 			throw new IllegalStateException("Cannot advance assembly line");
 		}
+		currentTime = currentTime.increaseTime(this.getHighestWorkTime());
+
 		Order result = workstations[workstations.length - 1].getOrder();
 		for (int i = workstations.length - 1; i > 0; i--) {
 			workstations[i].setOrder(workstations[i - 1].getOrder());
 		}
 		workstations[0].setOrder(next);
-
-		if (isReadyToAdvance()) {
-			notifyObservers(0);
-		}
+		checkMaintenance();
+		notifyObservers();
 		return result;
 	}
 
 	/**
-	 * Method to check whether the assemblyline can be advanced
+	 * Method to check whether the assembly line can be advanced
 	 * 
 	 * @return true if all workstations on this line are ready
 	 */
@@ -157,9 +214,11 @@ public abstract class Assemblyline extends Observable implements Observer,
 	}
 
 	/**
-	 * Method to check whether no workstation of the assembly line has a car
+	 * Method to check whether no workstation on the assembly line currently has
+	 * an order
 	 * 
-	 * @return true if no workstation on this assemblyline has a car.
+	 * @return true if no workstation on this assemblyline currently has an
+	 *         order.
 	 */
 	public boolean isEmpty() {
 		for (Workstation w : workstations)
@@ -172,7 +231,7 @@ public abstract class Assemblyline extends Observable implements Observer,
 	 * Helper method to find out how long it takes to be able to advance the
 	 * assembly line
 	 * 
-	 * @return the highest of all worktimes of workstations on this
+	 * @return the highest of all total worktimes of workstations on this
 	 *         assemblyline.
 	 */
 	private int getHighestWorkTime() {

@@ -1,13 +1,5 @@
 package company.schedule;
 
-//import java.util.LinkedList;
-//import java.util.List;
-//import java.util.SortedMap;
-//import java.util.TreeMap;
-//
-//import util.Timestamp;
-//import vehicle.order.Order;
-
 public class FIFO extends SchedulingAlgorithm {
 
 //	@Override

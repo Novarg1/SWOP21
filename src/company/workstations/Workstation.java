@@ -19,8 +19,8 @@ import vehicle.order.Order;
 public abstract class Workstation extends Observable implements Cloneable {
 
 	private Order current = null;
-	private Map<Task, Integer> log;
-
+	private Map<Task, Integer> log = new HashMap<>();
+	
 	/**
 	 * Sets the current order in this workstation to the given order.
 	 */
@@ -37,7 +37,18 @@ public abstract class Workstation extends Observable implements Cloneable {
 	}
 
 	/**
-	 * performs the given task in the given time.
+	 * performs the given task.
+	 * 
+	 * @param task
+	 *            the task that was performed.
+	 * @param time
+	 *            the time it took to perform the given task.
+	 * @throws IllegalArgumentException
+	 *             if the given task cannot be performed in this workstation or
+	 *             if the given time is negative.
+	 * @throws IllegalStateException
+	 *             if there is currently no order being assembled in this
+	 *             workstation.
 	 */
 	public void perform(Task task, int time) {
 		if (current == null) {
@@ -52,7 +63,6 @@ public abstract class Workstation extends Observable implements Cloneable {
 		task.perform();
 		log.put(task, time);
 		notifyObservers();
-
 	}
 
 	/**

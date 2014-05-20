@@ -114,6 +114,6 @@ public class CMCSystem {
 	 * @return the assembly line at position n
 	 */
 	public Assemblyline getAssemblyLine(int n) {
-		return scheduler.getAssmeblyLine(n);
+		return scheduler.getAssemblyLine(n);
 	}
 }

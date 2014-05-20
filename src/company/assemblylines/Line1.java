@@ -8,12 +8,12 @@ import company.workstations.Workstation;
 
 public class Line1 extends Assemblyline {
 
-	public Line1() {
+	public Line1(int day) {
 		super(new Workstation[] {
 				new BodyPost(), 
 				new DriveTrainPost(),
 				new AccessoiresPost() 
-		});
+		}, day);
 		super.ignore(ModelC.class);
 	}
 }

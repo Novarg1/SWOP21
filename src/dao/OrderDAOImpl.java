@@ -219,4 +219,10 @@ public class OrderDAOImpl implements OrderDAO {
 		return orders;
 	}
 
+	@Override
+	public int getDay() {
+		return 1;
+	}
+
+	
 }

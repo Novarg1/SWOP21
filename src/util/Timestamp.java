@@ -114,7 +114,7 @@ public class Timestamp implements Comparable<Timestamp> {
 	public Timestamp increaseTime(int timeToIncrease) {
 		return new Timestamp(day, time + timeToIncrease, overtime);
 	}
-
+	
 	@Override
 	public int compareTo(Timestamp other) {
 		if (this.day < other.day
