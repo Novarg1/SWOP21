@@ -14,6 +14,7 @@ import vehicle.order.OrderBuilder;
 import vehicle.parts.Part;
 import vehicle.parts.PartsSet;
 import company.CMCSystem;
+import dao.OrderDAOImpl;
 
 
 /**
@@ -33,7 +34,7 @@ public class ScenarioOrderNewCar {
 	 * Class variables that do not change during individual tests
 	 * 
 	 */
-	private CMCSystem cmcSystem = new CMCSystem();
+	private CMCSystem cmcSystem = new CMCSystem(new OrderDAOImpl());
 	
 	/**
 	 * Method for setting up an immutable fixture
@@ -54,16 +55,8 @@ public class ScenarioOrderNewCar {
 	}
 	
 	public Order makeOrder(){
-		User user = new User("dummyGarageHolder") {
-			
-			@Override
-			public String getRole() {
-				// TODO Auto-generated method stub
-				return "GarageHolder";
-			}
-		};
 		OrderBuilder spec = makeOrderSpec();
-		Order order = new Order(spec, user);
+		Order order = new Order(spec);
 		return order;
 	}
 
@@ -78,23 +71,26 @@ public class ScenarioOrderNewCar {
 		User currentUser = cmcSystem.getLoggedInUser();
 		List<Order> unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
 		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(currentUser);
-		assertTrue(unfinishedOrders.isEmpty());
-		assertTrue(finishedOrders.isEmpty());
+		assertFalse(unfinishedOrders.isEmpty());
+		assertFalse(finishedOrders.isEmpty());
+		int nUnfinishedOrders = unfinishedOrders.size();
 		OrderBuilder orderSpec = makeOrderSpec();
-		Order order = new Order(orderSpec,currentUser);
+		Order order = new Order(orderSpec);
 		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
-		assertFalse(unfinishedOrders.isEmpty());
+		assertTrue(unfinishedOrders.size() > nUnfinishedOrders);
 	}
-	
-	@Test
-	public void advanceAssemblyLine() {
-		orderNewCar_MainSuccesScenario();
-		PartsSet cpSet = cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
-		for (Part cp : cpSet){
-			cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
-		}
-		assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
-	}
+
+	// will make different test scenario where all tasks on a assembly line are
+	// performed 
+//	@Test
+//	public void advanceAssemblyLine() {
+//		orderNewCar_MainSuccesScenario();
+//		PartsSet cpSet = cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
+//		for (Part cp : cpSet){
+//			cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
+//		}
+//		assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
+//	}
 
 }
