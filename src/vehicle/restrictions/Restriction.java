@@ -31,9 +31,9 @@ public abstract class Restriction {
 	}
 
 	/**
-	 * Checks whether this restriction and successors pass for given set but does
-	 * not take into account whether all required parts have been selected or
-	 * not.
+	 * Checks whether this restriction and successors pass for given set but
+	 * does not take into account whether all required parts have been selected
+	 * or not.
 	 */
 	public boolean checkPartialValidity(PartsSet set) {
 		return this.isPartiallyFulfilled(set)
@@ -55,16 +55,18 @@ public abstract class Restriction {
 	/**
 	 * A trivial restriction that is always fulfilled.
 	 */
-	public static Restriction TRIVIAL_RESTRICTION = new Restriction() {
+	public static Restriction trivialRestriction() {
+		return new Restriction() {
 
-		@Override
-		protected boolean isFulfilled(PartsSet set) {
-			return true;
-		}
+			@Override
+			protected boolean isFulfilled(PartsSet set) {
+				return true;
+			}
 
-		@Override
-		protected boolean isPartiallyFulfilled(PartsSet set) {
-			return true;
-		}
-	};
+			@Override
+			protected boolean isPartiallyFulfilled(PartsSet set) {
+				return true;
+			}
+		};
+	}
 }

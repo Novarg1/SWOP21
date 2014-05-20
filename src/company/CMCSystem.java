@@ -30,14 +30,14 @@ public class CMCSystem {
 	public CMCSystem(OrderDAO dao) {
 		userManager = new UserManager();
 		Set<Assemblyline> assemblylines = new HashSet<>();
-		assemblylines.add(new Line1());
-		assemblylines.add(new Line2());
-		assemblylines.add(new Line3());
+		assemblylines.add(new Line1((dao == null) ? 0 : dao.getDay()));
+		assemblylines.add(new Line2((dao == null) ? 0 : dao.getDay()));
+		assemblylines.add(new Line3((dao == null) ? 0 : dao.getDay()));
 		if (dao == null) {
 			scheduler = new Scheduler(assemblylines);
 		} else {
 			scheduler = new Scheduler(assemblylines, dao.getAllPendingOrders(),
-					dao.getAllFinishedOrders(), 1);
+					dao.getAllFinishedOrders());
 		}
 	}
 
@@ -109,11 +109,11 @@ public class CMCSystem {
 		return scheduler.getFinishedOrders();
 	}
 
-	/**
-	 * @param n
-	 * @return the assembly line at position n
-	 */
-	public Assemblyline getAssemblyLine(int n) {
-		return scheduler.getAssemblyLine(n);
-	}
+//	/**
+//	 * @param n
+//	 * @return the assembly line at position n
+//	 */
+//	public Assemblyline getAssemblyLine(int n) {
+//		return scheduler.getAssemblyLine(n);
+//	}
 }
