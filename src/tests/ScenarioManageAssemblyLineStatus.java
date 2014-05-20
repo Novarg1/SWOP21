@@ -2,16 +2,15 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import vehicle.order.Order;
 import company.CMCSystem;
+import company.assemblylines.Assemblyline;
+import company.assemblylines.Assemblyline.Status;
 import dao.OrderDAOImpl;
 
-public class ScenarioCheckOrderDetails {
+public class ScenarioManageAssemblyLineStatus {
 
 	/**
 	 * variables that may change during the tests
@@ -27,17 +26,14 @@ public class ScenarioCheckOrderDetails {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		// log in the garage holder
-		system.logInUser(1);
+		system.logInUser(0);
 	}
 
 	@Test
 	public void test() {
-		// assign all the orders for this user to orders
-		List<Order> orders = system.getFinishedOrdersForUser(system.getLoggedInUser());
-		
-		// there are 6 orders for this user in the database
-		assert(orders.size()==6);
+		Assemblyline l = system.getAssemblyLine(0);
+		l.setStatus(Status.MAINTENANCE, 0);
+		assertEquals(Status.MAINTENANCE, l.getStatus());
 	}
 
 }
