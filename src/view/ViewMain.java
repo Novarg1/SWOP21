@@ -4,6 +4,11 @@ import user.User;
 import util.LineReader;
 import controllers.SystemController;
 
+/**
+ * Displays the base view and delegate to relevant views
+ * @author jonathanlangens
+ *
+ */
 public class ViewMain extends View
 {
 	public ViewMain(SystemController c) {

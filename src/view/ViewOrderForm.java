@@ -17,6 +17,14 @@ import vehicle.parts.Wheels;
 import controllers.OrderController;
 import controllers.SystemController;
 
+/**
+ * Another level of abstraction
+ * This view is intended to be the parent of all views that allow the
+ * user to place orders and has functionality to assist with the 
+ * building of correct order specifications
+ * @author jonathanlangens
+ *
+ */
 public abstract class ViewOrderForm extends View
 {
 	protected OrderController orderController;
@@ -28,6 +36,18 @@ public abstract class ViewOrderForm extends View
 		orderController = new OrderController(systemController);
 	}
 	
+	/**
+	 * Provide the user with a UI to select the passed option of type on
+	 * the specification. If the option is not mandatory this field should be set
+	 * to false. In that case the function first asks whether or not this
+	 * option should be presented. If there are no viable options to choose or
+	 * the part is mandatory and there is only 1 option then that option gets
+	 * automatically chosen.
+	 * @param spec
+	 * @param type
+	 * @param mandatory
+	 * @throws Exception
+	 */
 	protected void setOption(OrderBuilder spec, Class<? extends Part> type, boolean mandatory) throws Exception
 	{
 		if(mandatory ==  false)
@@ -69,6 +89,10 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+	/**
+	 * Sets the body option on a specification
+	 * @param spec
+	 */
 	protected void setBody(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Body.class, true);
@@ -78,6 +102,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the color option on a specification
+	 * @param spec
+	 */
 	protected void setColor(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Color.class, true);
@@ -87,6 +116,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the engine option on a specification
+	 * @param spec
+	 */
 	protected void setEngine(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Engine.class, true);
@@ -96,6 +130,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the gearbox option on a specification
+	 * @param spec
+	 */
 	protected void setGearbox(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Gearbox.class, true);
@@ -105,6 +144,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the seats option on a specification
+	 * @param spec
+	 */
 	protected void setSeats(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Seats.class, true);
@@ -114,6 +158,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the airco option on a specification
+	 * @param spec
+	 */
 	protected void setAirco(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Airco.class, false);
@@ -123,6 +172,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the wheels option on a specification
+	 * @param spec
+	 */
 	protected void setWheels(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Wheels.class, true);
@@ -132,6 +186,11 @@ public abstract class ViewOrderForm extends View
 		}
 	}
 
+
+	/**
+	 * Sets the spoiler option on a specification
+	 * @param spec
+	 */
 	protected void setSpoiler(OrderBuilder spec) {
 		try {
 			this.setOption(spec, Spoiler.class, false);

@@ -6,7 +6,12 @@ import vehicle.order.CustomOrderBuilder;
 import vehicle.order.CustomSeats;
 import vehicle.order.PaintJob;
 import controllers.SystemController;
-
+/**
+ * Provides a UI that lets a customshop holder place and manage placed
+ * custom orders
+ * @author jonathanlangens
+ *
+ */
 public class ViewCustomShop extends ViewOrderForm {
 
 	public ViewCustomShop(SystemController c) {

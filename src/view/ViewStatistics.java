@@ -3,6 +3,11 @@ package view;
 import controllers.StatisticsController;
 import controllers.SystemController;
 
+/**
+ * Provides a UI that shows statistics about the domain
+ * @author jonathanlangens
+ *
+ */
 public class ViewStatistics extends View
 {
 	private StatisticsController statisticsController;

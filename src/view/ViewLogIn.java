@@ -3,6 +3,12 @@ package view;
 import controllers.SystemController;
 import util.LineReader;
 
+/**
+ * Provides the user with a UI to log in
+ * 
+ * @author jonathanlangens
+ *
+ */
 public class ViewLogIn extends View
 {
 	public ViewLogIn(SystemController c) {

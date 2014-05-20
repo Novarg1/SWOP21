@@ -3,6 +3,11 @@ package view;
 import util.LineReader;
 import controllers.SystemController;
 
+/**
+ * Display the manager view and delegate to other views
+ * @author jonathanlangens
+ *
+ */
 public class ViewManager extends View
 {
 	public ViewManager(SystemController c) {
