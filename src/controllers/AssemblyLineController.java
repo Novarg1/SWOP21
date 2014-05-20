@@ -34,8 +34,8 @@ public class AssemblyLineController {
 	 * Tries to set the assembly lines status to s
 	 * @param s
 	 */
-	public void setStatus(Status s)
+	public void setStatus(Status s, int time)
 	{
-		this.assemblyLine.setStatus(s);
+		this.assemblyLine.setStatus(s, time);
 	}
 }

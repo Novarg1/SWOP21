@@ -10,6 +10,7 @@ import org.junit.Test;
 import user.User;
 import vehicle.order.Order;
 import company.CMCSystem;
+import controllers.SystemController;
 import dao.OrderDAO;
 import dao.OrderDAOImpl;
 
@@ -23,14 +24,15 @@ public class TestSystemController {
 	 */
 	private OrderDAO dao = new OrderDAOImpl();
 	private CMCSystem system = new CMCSystem(dao);
+	private SystemController controller = new SystemController(system);
 	
 	/**
 	 * a function that resets all mutable variables to a standard configuration
 	 */
 	@Before
 	public void setUp() throws Exception {
-		// log in the garage holder
-		system.logInUser(1);
+		// log in the shop holder
+		controller.logInUser(3);
 	}
 	
 	private boolean checkScheduledOrders(List<Order> orders, User user)
@@ -69,22 +71,19 @@ public class TestSystemController {
 
 	@Test
 	public void test() {
-		// check the log in case
-		system.logInUser(3);
-
-		User user = system.getLoggedInUser();
+		User user = controller.getLoggedInUser();
 		
 		// assert the shop holder was logged in
 		assertEquals("ShopHolder", user.getRole());
 		
 		// check the scheduled orders
-		assert(checkScheduledOrders(system.getScheduledOrdersForUser(user), user));
+		assert(checkScheduledOrders(controller.getScheduledOrdersFor(user), user));
 		
 		// check the finished orders
-		assert(checkFinishedOrders(system.getFinishedOrdersForUser(user), user));
+		assert(checkFinishedOrders(controller.getFinishedOrdersFor(user), user));
 		
 		// check all finished orders
-		assertEquals(dao.getAllFinishedOrders().size(), system.getAllFinishedOrders().size());
+		assertEquals(dao.getAllFinishedOrders().size(), controller.getAllFinishedOrders().size());
 	}
 
 }

@@ -26,6 +26,11 @@ public class SystemController {
 	public SystemController() {
 		this.cmcSytem = new CMCSystem(new OrderDAOImpl());
 	}
+	
+	public SystemController(CMCSystem system)
+	{
+		this.cmcSytem = system;
+	}
 
 	/**
 	 * @return the user that is currently logged in
