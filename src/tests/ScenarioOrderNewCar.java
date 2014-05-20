@@ -41,7 +41,7 @@ public class ScenarioOrderNewCar {
 	 */
 	@BeforeClass
 	public static void setUpImmutableFixture() {
-
+	
 	}
 	
 	public OrderBuilder makeOrderSpec(){
@@ -55,6 +55,7 @@ public class ScenarioOrderNewCar {
 	}
 	
 	public Order makeOrder(){
+		cmcSystem.logInUser(1);
 		OrderBuilder spec = makeOrderSpec();
 		Order order = new Order(spec);
 		return order;
@@ -67,7 +68,7 @@ public class ScenarioOrderNewCar {
 	@Test
 	public void orderNewCar_MainSuccesScenario() {
 		// log in as a garage holder
-		cmcSystem.logInUser(2);
+		cmcSystem.logInUser(1);
 		User currentUser = cmcSystem.getLoggedInUser();
 		List<Order> unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
 		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(currentUser);

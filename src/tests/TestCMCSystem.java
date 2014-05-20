@@ -13,6 +13,7 @@ import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 import vehicle.parts.Part;
 import company.CMCSystem;
+import dao.OrderDAOImpl;
 
 
 /**
@@ -30,7 +31,8 @@ public class TestCMCSystem {
 	
 	@Before
 	public void initialize(){
-		cmcSystem = new CMCSystem();
+		cmcSystem = new CMCSystem(new OrderDAOImpl());
+		cmcSystem.logInUser(1);
 	}
 	
 	/**
@@ -54,16 +56,8 @@ public class TestCMCSystem {
 	 * @return An arbitrary order
 	 */
 	public Order makeOrder(){
-		User user = new User("dummyGarageHolder") {
-			
-			@Override
-			public String getRole() {
-				// TODO Auto-generated method stub
-				return "GarageHolder";
-			}
-		};
 		OrderBuilder spec = makeOrderSpec();
-		Order order = new Order(spec, user);
+		Order order = new Order(spec);
 		return order;
 	}
 	
@@ -106,7 +100,7 @@ public class TestCMCSystem {
 		assertTrue(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
-		Order order = new Order(orderSpec,garageholder);
+		Order order = new Order(orderSpec);
 		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		assertFalse(unfinishedOrders.isEmpty());
@@ -127,7 +121,7 @@ public class TestCMCSystem {
 	 */
 	@Test
 	public void testGetters(){
-		assertNotNull(cmcSystem.getAssemblyLine());
+		assertNotNull(cmcSystem.getAssemblyLine(0));
 		assertNotNull(cmcSystem.getScheduler());
 
 	}
@@ -144,7 +138,7 @@ public class TestCMCSystem {
 		assertTrue(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
-		Order order = new Order(orderSpec,garageholder);
+		Order order = new Order(orderSpec);
 		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		assertFalse(unfinishedOrders.isEmpty());
