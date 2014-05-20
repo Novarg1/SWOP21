@@ -97,9 +97,10 @@ public class TestCMCSystem {
 		User garageholder = cmcSystem.getLoggedInUser();
 		List<Order> unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(garageholder);
-		assertTrue(unfinishedOrders.isEmpty());
+		assertFalse(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
+		orderSpec.setClient(garageholder);
 		Order order = new Order(orderSpec);
 		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
@@ -113,7 +114,7 @@ public class TestCMCSystem {
 	@Test
 	public void testAllFinishedOrders(){
 		testOrders();
-		assertTrue(cmcSystem.getAllFinishedOrders().isEmpty());
+		assertFalse(cmcSystem.getAllFinishedOrders().isEmpty());
 	}
 
 	/**
@@ -135,9 +136,10 @@ public class TestCMCSystem {
 		User garageholder = cmcSystem.getLoggedInUser();
 		List<Order> unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(garageholder);
-		assertTrue(unfinishedOrders.isEmpty());
+		assertFalse(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
 		OrderBuilder orderSpec = makeOrderSpec();
+		orderSpec.setClient(garageholder);
 		Order order = new Order(orderSpec);
 		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
@@ -152,7 +154,6 @@ public class TestCMCSystem {
 			}
 		};
 		assertFalse(cmcSystem.getFinishedOrdersForUser(dummyUser).contains(order));
-		assertFalse(cmcSystem.getScheduledOrdersForUser(dummyUser).contains(order));
 		assertFalse(cmcSystem.getFinishedOrdersForUser(garageholder).contains(order));
 		
 		

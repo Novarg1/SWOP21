@@ -37,6 +37,7 @@ public class ScenarioOrderSingleTask {
 	{
 		OrderBuilder spec = new PaintJob();
 		spec.add(Color.BLUE);
+		spec.setClient(system.getLoggedInUser());
 		return new Order(spec);	
 	}
 	

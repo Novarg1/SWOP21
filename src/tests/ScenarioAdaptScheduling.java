@@ -47,11 +47,12 @@ public class ScenarioAdaptScheduling {
 		OrderBuilder spec = new ModelA();
 		spec.add(Body.SEDAN);
 		spec.add(Color.WHITE);
-		spec.add(Engine.STANDARD);
+		spec.add(Engine.STANDARD_2L_V4);
 		spec.add(Gearbox.MANUAL_5);
 		spec.add(Seats.LEATHER_WHITE);
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
+		spec.setClient(system.getLoggedInUser());
 		Order sample = new Order(spec);
 		
 		// set up the algorithm

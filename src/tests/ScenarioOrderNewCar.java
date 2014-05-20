@@ -73,9 +73,10 @@ public class ScenarioOrderNewCar {
 		List<Order> unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
 		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(currentUser);
 		assertFalse(unfinishedOrders.isEmpty());
-		assertFalse(finishedOrders.isEmpty());
+		assertTrue(finishedOrders.isEmpty());
 		int nUnfinishedOrders = unfinishedOrders.size();
 		OrderBuilder orderSpec = makeOrderSpec();
+		orderSpec.setClient(currentUser);
 		Order order = new Order(orderSpec);
 		cmcSystem.getScheduler().placeOrder(order);
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);

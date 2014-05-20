@@ -198,7 +198,7 @@ public class OrderDAOImpl implements OrderDAO {
 		orders.add(spec.extractOrder());
 
 		// then 3 different batch orders
-		users.logInUser(1);
+		user = users.logInUser(1);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
