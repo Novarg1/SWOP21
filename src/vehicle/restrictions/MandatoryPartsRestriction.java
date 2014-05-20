@@ -11,7 +11,7 @@ import vehicle.parts.Spoiler;
 /**
  * All parts except airco and spoiler are mandatory.
  */
-public class MandatoryPartsRestriction extends PartialRestriction {
+public class MandatoryPartsRestriction extends Restriction {
 
 	private Set<Class<? extends Part>> mandatoryParts;
 	
@@ -28,6 +28,11 @@ public class MandatoryPartsRestriction extends PartialRestriction {
 				return false;
 			}
 		}
+		return true;
+	}
+
+	@Override
+	protected boolean isPartiallyFulfilled(PartsSet set) {
 		return true;
 	}
 }

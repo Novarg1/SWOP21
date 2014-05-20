@@ -12,30 +12,30 @@ import company.assemblylines.Assemblyline.Status;
  */
 public class AssemblyLineController {
 	private Assemblyline assemblyLine;
-	
+
 	/**
 	 * Default constructor
-	 * @param AssemblyLine a
+	 * 
+	 * @param AssemblyLine
+	 *            a
 	 */
-	public AssemblyLineController(Assemblyline a)
-	{
+	public AssemblyLineController(Assemblyline a) {
 		this.assemblyLine = a;
 	}
-	
+
 	/**
 	 * @return the assembly lines current status
 	 */
-	public Status getStatus()
-	{
+	public Status getStatus() {
 		return this.assemblyLine.getStatus();
 	}
 
 	/**
 	 * Tries to set the assembly lines status to s
+	 * 
 	 * @param s
 	 */
-	public void setStatus(Status s, int time)
-	{
-		this.assemblyLine.setStatus(s, time);
+	public void setStatus(Status s) {
+		this.assemblyLine.setStatus(s);
 	}
 }

@@ -9,12 +9,12 @@ import vehicle.parts.PartsSet;
 /**
  * All chosen parts must be supported by the order-type
  */
-public class SupportedPartsRestriction extends StrictRestriction {
+public class SupportedPartsRestriction extends Restriction {
 
 	private Set<Part> supportedParts;
 	
-	public SupportedPartsRestriction(OrderBuilder spec) {
-		supportedParts = spec.getSupportedCarparts();
+	public SupportedPartsRestriction(OrderBuilder builder) {
+		supportedParts = builder.getSupportedCarparts();
 	}
 	
 	@Override
@@ -25,5 +25,10 @@ public class SupportedPartsRestriction extends StrictRestriction {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	protected boolean isPartiallyFulfilled(PartsSet set) {
+		return this.isFulfilled(set);
 	}
 }

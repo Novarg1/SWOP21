@@ -2,6 +2,7 @@ package vehicle.order;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ import vehicle.restrictions.SupportedPartsRestriction;
 public abstract class OrderBuilder {
 
 	private static final int DEFAULT_BUILDTIME = 60;
-	protected Restriction restriction = Restriction.TRIVIAL_RESTRICTION;
+	protected Restriction restriction = Restriction.trivialRestriction();
 	private PartsSet parts;
 	private User client;
 
@@ -33,7 +34,7 @@ public abstract class OrderBuilder {
 	}
 
 	/**
-	 * Initializes the default restrictions for this orderspecification
+	 * Initializes the default restrictions for this orderbuilder
 	 */
 	private void setDefaultRestrictions() {
 		addRestriction(new EngineAircoRestriction());
@@ -45,7 +46,7 @@ public abstract class OrderBuilder {
 	}
 
 	/**
-	 * Returns the user that built this orderspecification.
+	 * Returns the user that built this orderbuilder.
 	 * 
 	 * @return
 	 */
@@ -54,7 +55,7 @@ public abstract class OrderBuilder {
 	}
 
 	/**
-	 * Sets the user building this orderspecification to the given user.
+	 * Sets the user building this orderbuilder to the given user.
 	 */
 	public void setClient(User client) {
 		this.client = client;
@@ -97,7 +98,7 @@ public abstract class OrderBuilder {
 	 * @return all carparts of the given type that are supported by this
 	 *         specification.
 	 */
-	private Set<Part> getSupportedCarparts(Class<? extends Part> type) {
+	public Set<Part> getSupportedCarparts(Class<? extends Part> type) {
 		Set<Part> result = new HashSet<>();
 		for (Part part : getSupportedCarparts()) {
 			if (part.getClass().equals(type)) {
@@ -124,15 +125,30 @@ public abstract class OrderBuilder {
 	 *         invalid.
 	 */
 	public Set<Part> getViableOptions(Class<? extends Part> type) {
-		Part current = parts.get(type);
 		Set<Part> result = getSupportedCarparts(type);
-		for (Part part : result) {
-			parts.add(part);
-			if (!isPartiallyValid()) {
-				result.remove(part);
+		Iterator<Part> it = result.iterator();
+		while (it.hasNext()) {
+			Part next = it.next();
+			if (!isViableOption(next)) {
+				it.remove();
 			}
-			parts.remove(part);
 		}
+		return result;
+	}
+
+	/**
+	 * checks whether adding the given part would render this orderbuilder
+	 * invalid.
+	 * 
+	 * @return true if the given part can be added to this orderbuilder without
+	 *         making it invalid.
+	 */
+	public boolean isViableOption(Part part) {
+		boolean result;
+		Part current = parts.get(part.getClass());
+		parts.add(part);
+		result = this.isPartiallyValid();
+		parts.remove(part);
 		parts.add(current);
 		return result;
 	}
@@ -145,6 +161,7 @@ public abstract class OrderBuilder {
 	 */
 	public void add(Part part) {
 		if (part == null || !getViableOptions(part.getClass()).contains(part)) {
+			System.out.println(getViableOptions(part.getClass()));
 			throw new IllegalArgumentException("invalid carpart");
 		}
 		parts.add(part);
@@ -170,12 +187,12 @@ public abstract class OrderBuilder {
 	}
 
 	/**
-	 * returns the tasks that are specific to this type of orderspecification.
+	 * returns the tasks that are specific to this type of orderbuilder.
 	 */
 	protected abstract Set<Task> getModelSpecificTasks();
 
 	/**
-	 * Checks wheter all restrictions pass for the given set but does not take
+	 * Checks whether all restrictions pass for the given set but does not take
 	 * parts into account that have not (yet) been selected.
 	 */
 	private boolean isPartiallyValid() {
@@ -211,14 +228,13 @@ public abstract class OrderBuilder {
 					"must be valid before order can be extracted");
 		}
 	}
-	
+
 	/**
 	 * @param type
-	 * @return true if this orders carparts set already contains an item
-	 * of the passed type
+	 * @return true if this orders carparts set already contains an item of the
+	 *         passed type
 	 */
-	public boolean containsPart(Class<? extends Part> type)
-	{
+	public boolean containsPart(Class<? extends Part> type) {
 		return this.parts.contains(type);
 	}
 

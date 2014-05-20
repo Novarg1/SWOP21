@@ -3,7 +3,6 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import user.User;
 import vehicle.order.Order;
 import company.CMCSystem;
@@ -16,8 +15,8 @@ import dao.OrderDAOImpl;
  * System Controller - provides all basic functionalities
  * 
  */
-
 public class SystemController {
+	
 	private CMCSystem cmcSytem;
 
 	/**
@@ -47,7 +46,7 @@ public class SystemController {
 	public void logInUser(int n) {
 		cmcSytem.logInUser(n);
 	}
-	
+
 	/**
 	 * @param user
 	 * @return the unfinished orders for the passed user
@@ -63,47 +62,43 @@ public class SystemController {
 	public List<Order> getFinishedOrdersFor(User user) {
 		return cmcSytem.getFinishedOrdersForUser(user);
 	}
-	
+
 	/**
 	 * @return the schedule
 	 */
 	public Scheduler getScheduler() {
 		return cmcSytem.getScheduler();
 	}
-	
+
 	/**
 	 * @param n
 	 * @return all workstations on assembly line n in a list
 	 */
-	
-	public List<Workstation> getWorkstationsForAssemblyLine(int n)
-	{
+
+	public List<Workstation> getWorkstationsForAssemblyLine(int n) {
 		List<Workstation> list = new ArrayList<Workstation>();
-		
-		for(Workstation w : this.cmcSytem.getAssemblyLine(n).getWorkstations())
-		{
+
+		for (Workstation w : this.cmcSytem.getAssemblyLine(n).getWorkstations()) {
 			list.add(w);
 		}
-		
+
 		return list;
 	}
-	
+
 	/**
 	 * @param assemblyLine
 	 * @param id
 	 * @return the workstation with id 'id' on assembly line 'assemblyLine'
 	 */
-	public Workstation selectWorkstationWithId(int assemblyLine, int id)
-	{
+	public Workstation selectWorkstationWithId(int assemblyLine, int id) {
 		return (this.getWorkstationsForAssemblyLine(assemblyLine)).get(id);
 	}
-	
+
 	/**
 	 * @param n
 	 * @return the nth assembly line
 	 */
-	public Assemblyline getAssemblyLine(int n)
-	{
+	public Assemblyline getAssemblyLine(int n) {
 		return cmcSytem.getAssemblyLine(n);
 	}
 
