@@ -197,4 +197,12 @@ public class Scheduler implements Observer {
 		throw new IllegalStateException(
 				"A scheduler should have at least one assemblyline");
 	}
+	
+	/**
+	 * @return the assembly lines
+	 */
+	public Set<Assemblyline> getAssemblyLines()
+	{
+		return assemblyLines;
+	}
 }

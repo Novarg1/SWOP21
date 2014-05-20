@@ -109,11 +109,12 @@ public class CMCSystem {
 		return scheduler.getFinishedOrders();
 	}
 
-//	/**
-//	 * @param n
-//	 * @return the assembly line at position n
-//	 */
-//	public Assemblyline getAssemblyLine(int n) {
-//		return scheduler.getAssemblyLine(n);
-//	}
+	/**
+	 * @param n
+	 * @return the assembly line at position n
+	 */
+	public Assemblyline getAssemblyLine(int n) {
+		
+		return (Assemblyline) scheduler.getAssemblyLines().toArray()[n];
+	}
 }

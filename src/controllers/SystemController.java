@@ -77,7 +77,7 @@ public class SystemController {
 
 	public List<Workstation> getWorkstationsForAssemblyLine(int n) {
 		List<Workstation> list = new ArrayList<Workstation>();
-
+		
 		for (Workstation w : this.cmcSytem.getAssemblyLine(n).getWorkstations()) {
 			list.add(w);
 		}
