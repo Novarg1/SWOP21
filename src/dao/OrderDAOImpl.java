@@ -5,6 +5,7 @@ import java.util.List;
 
 import user.User;
 import user.UserManager;
+import util.Timestamp;
 import vehicle.order.CustomSeats;
 import vehicle.order.ModelA;
 import vehicle.order.ModelB;
@@ -63,8 +64,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		Order o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.BREAK);
@@ -75,8 +78,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
@@ -86,8 +91,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Seats.LEATHER_WHITE);
 		spec.add(Wheels.COMFORT);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
@@ -98,9 +105,11 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
-
+		orders.add(o);
+		
 		spec = new ModelA();
 		spec.add(Body.BREAK);
 		spec.add(Color.WHITE);
@@ -110,8 +119,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.BREAK);
@@ -122,8 +133,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
@@ -134,8 +147,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.WINTER);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
@@ -146,8 +161,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Wheels.COMFORT);
 		spec.add(Airco.MANUAL);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.BREAK);
@@ -157,8 +174,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Seats.LEATHER_WHITE);
 		spec.add(Wheels.COMFORT);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		spec = new ModelA();
 		spec.add(Body.SEDAN);
@@ -168,8 +187,10 @@ public class OrderDAOImpl implements OrderDAO {
 		spec.add(Seats.LEATHER_WHITE);
 		spec.add(Wheels.COMFORT);
 		spec.setClient(user);
+		o = spec.extractOrder();
+		o.setFinished(Timestamp.beginningOfDay(1));
 
-		orders.add(spec.extractOrder());
+		orders.add(o);
 
 		return orders;
 	}
@@ -256,7 +277,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public int getDay() {
-		return 1;
+		return 2;
 	}
 
 }
