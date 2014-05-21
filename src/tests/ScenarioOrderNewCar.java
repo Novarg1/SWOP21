@@ -71,7 +71,7 @@ public class ScenarioOrderNewCar {
 		List<Order> finishedOrders = cmcSystem
 				.getFinishedOrdersForUser(currentUser);
 //		assertFalse(unfinishedOrders.isEmpty()); // kunt ge niet weten op dit moment
-		assertTrue(finishedOrders.isEmpty());
+		assertFalse(finishedOrders.isEmpty());
 		int nUnfinishedOrders = unfinishedOrders.size();
 		OrderBuilder orderSpec = makeOrderSpec();
 		orderSpec.setClient(currentUser);
@@ -80,18 +80,4 @@ public class ScenarioOrderNewCar {
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
 		assertTrue(unfinishedOrders.size() > nUnfinishedOrders);
 	}
-
-	// will make different test scenario where all tasks on a assembly line are
-	// performed
-	// @Test
-	// public void advanceAssemblyLine() {
-	// orderNewCar_MainSuccesScenario();
-	// PartsSet cpSet =
-	// cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
-	// for (Part cp : cpSet){
-	// cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
-	// }
-	// assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
-	// }
-
 }
