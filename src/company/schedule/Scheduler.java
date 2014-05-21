@@ -15,7 +15,7 @@ import vehicle.order.Order;
 
 /**
  * Represents the schedule of the company. Contains a list of pending and
- * finished orders, a set of assemlylines and the algorithms for scheduling the
+ * finished orders, a set of assemblylines and the algorithms for scheduling the
  * pending orders.
  */
 public class Scheduler implements Observer {

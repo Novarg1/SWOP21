@@ -16,8 +16,10 @@ import vehicle.parts.Gearbox;
 import vehicle.parts.Seats;
 import vehicle.parts.Wheels;
 import company.CMCSystem;
+import company.schedule.FIFO;
 import company.schedule.Scheduler;
 import company.schedule.SpecificationBatch;
+import controllers.ScheduleController;
 import dao.OrderDAOImpl;
 
 public class ScenarioAdaptScheduling {
@@ -42,6 +44,7 @@ public class ScenarioAdaptScheduling {
 	@Test
 	public void test() {
 		Scheduler scheduler = system.getScheduler();
+		ScheduleController controller = new ScheduleController(scheduler);
 		
 		// build a sample
 		OrderBuilder spec = new ModelA();
@@ -63,6 +66,14 @@ public class ScenarioAdaptScheduling {
 		
 		// assert the correctness
 		assertEquals(batch, scheduler.getCurrentAlgorithm());
+		
+		// now to normal again
+		FIFO fifo = new FIFO();
+		controller.setAlgorithm(fifo);
+		
+		// asserting
+		assertEquals(fifo, controller.getCurrentAlgorithm());
+		
 	}
 
 }
