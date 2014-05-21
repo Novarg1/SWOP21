@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import vehicle.assemblytasks.Task;
 import vehicle.order.Order;
 
 import company.assemblylines.Assemblyline;
+import company.workstations.Workstation;
 
 /**
  * Represents a scheduling algorithm. Before using scheduling methods, users
@@ -55,6 +57,31 @@ public abstract class SchedulingAlgorithm {
 		return new HashMap<>(schedule);
 	}
 
+	/*
+	 * eigenlijk is deze methode wat redundant, maar is efficiënt indien het
+	 * systeem groot zou worden.
+	 */
+	/**
+	 * Returns the next scheduled order for the given assemblyline.
+	 * 
+	 * @param ass
+	 *            the assemblyline for which the next order will be returned.
+	 * @param pending
+	 *            the list of pending orders out of which the next order will be
+	 *            selected.
+	 * @return the next scheduled order for the given assemblyline or null if no
+	 *         such order.
+	 */
+	public Order getNextFor(Assemblyline ass, List<Order> pending) {
+		this.resetSchedule();
+		this.pending = new LinkedList<>(pending);
+		while (scheduleNext() && schedule.get(ass).isEmpty()) {
+			;
+		}
+		List<Order> list = schedule.get(ass);
+		return list.isEmpty() ? null : list.get(0);
+	}
+
 	/**
 	 * Keeps the assemblylines, but sets all associated lists of orders to new,
 	 * empty lists.
@@ -64,6 +91,17 @@ public abstract class SchedulingAlgorithm {
 		schedule = new HashMap<>();
 		for (Assemblyline key : keys) {
 			schedule.put(key, new LinkedList<Order>());
+		}
+	}
+
+	/**
+	 * Performs all pending tasks of the given workstation.
+	 * 
+	 * @param ws
+	 */
+	private void performTasks(Workstation ws) {
+		for (Task task : ws.getPendingTasks()) {
+			task.perform();
 		}
 	}
 
@@ -109,4 +147,5 @@ public abstract class SchedulingAlgorithm {
 	 * @return true if the schedule was changed by calling this method.
 	 */
 	protected abstract boolean scheduleNext();
+
 }
