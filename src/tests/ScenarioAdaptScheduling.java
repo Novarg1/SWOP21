@@ -59,7 +59,9 @@ public class ScenarioAdaptScheduling {
 		Order sample = new Order(spec);
 		
 		// set up the algorithm
-		SpecificationBatch batch = new SpecificationBatch(sample);
+		SpecificationBatch batch = new SpecificationBatch(controller.getPendingOrders());
+		batch.setSample(sample);
+		batch.recalculate();
 		
 		// set the schedulers algorithm to batch
 		scheduler.setAlgorithm(batch);
@@ -68,7 +70,7 @@ public class ScenarioAdaptScheduling {
 		assertEquals(batch, scheduler.getCurrentAlgorithm());
 		
 		// now to normal again
-		FIFO fifo = new FIFO();
+		FIFO fifo = new FIFO(controller.getPendingOrders());
 		controller.setAlgorithm(fifo);
 		
 		// asserting

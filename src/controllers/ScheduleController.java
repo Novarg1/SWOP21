@@ -1,7 +1,12 @@
 package controllers;
 
+import java.util.List;
+
+import vehicle.order.Order;
+import company.schedule.FIFO;
 import company.schedule.Scheduler;
 import company.schedule.SchedulingAlgorithm;
+import company.schedule.SpecificationBatch;
 
 /**
  * ScheduleController bundles all scheduler related functionality
@@ -33,5 +38,13 @@ public class ScheduleController {
 	 */
 	public SchedulingAlgorithm getCurrentAlgorithm() {
 		return schedule.getCurrentAlgorithm();
+	}
+	
+	/**
+	 * @return the pointer to the list of orders to be build
+	 */
+	public List<Order> getPendingOrders()
+	{
+		return schedule.getPendingOrders();
 	}
 }

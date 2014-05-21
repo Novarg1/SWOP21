@@ -48,7 +48,7 @@ public class ViewAdaptSchedule extends ViewOrderForm {
 	}
 
 	private SchedulingAlgorithm getFIFO() {
-		return new FIFO();
+		return new FIFO(scheduleController.getPendingOrders());
 	}
 
 	private SchedulingAlgorithm getSpecificationBatch() {
@@ -79,7 +79,10 @@ public class ViewAdaptSchedule extends ViewOrderForm {
 		setWheels(builder);
 		setSpoiler(builder);
 		
-		 return new SpecificationBatch(builder.extractOrder());
+		 SpecificationBatch sBatch = new SpecificationBatch(scheduleController.getPendingOrders());
+		 sBatch.setSample(builder.extractOrder());
+		 sBatch.recalculate();
+		 return sBatch;
 	}
 
 	private OrderBuilder getSpecification(int n) {

@@ -165,7 +165,7 @@ public class Scheduler implements Observer {
 	 */
 	public Timestamp getETA(Order order) {
 		//throw new IllegalStateException("not implemented"); // TODO
-		return Timestamp.beginningOfDay(algorithm.getETA(order, getCurrentTime(), 3));
+		return Timestamp.beginningOfDay(getDay() + algorithm.getETA(order, getCurrentTime(), 3));
 	}
 
 	/**
