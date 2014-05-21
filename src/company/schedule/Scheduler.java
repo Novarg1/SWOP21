@@ -24,7 +24,7 @@ public class Scheduler implements Observer {
 	private LinkedList<Order> pending;
 	private Set<Assemblyline> assemblyLines;
 	private SchedulingAlgorithm algorithm;
-	private static final SchedulingAlgorithm DEFAULT_ALGORITHM = new FIFO();
+//	private static final SchedulingAlgorithm DEFAULT_ALGORITHM = new FIFO();
 
 	/**
 	 * creates new schedule with the given set of assemblylines and empty lists
@@ -55,7 +55,7 @@ public class Scheduler implements Observer {
 		}
 		this.pending = new LinkedList<>(pending);
 		this.finished = new LinkedList<>(finished);
-		this.algorithm = DEFAULT_ALGORITHM;
+		this.algorithm = new FIFO(this.pending);
 
 		this.assemblyLines = new HashSet<>();
 		for (Assemblyline ass : assemblylines) {
@@ -114,7 +114,8 @@ public class Scheduler implements Observer {
 		if (order == null) {
 			throw new IllegalArgumentException("invalid order");
 		}
-		this.pending.addLast(order);
+		//this.pending.addLast(order);
+		this.algorithm.addOrder(order);
 	}
 
 	/**
@@ -163,7 +164,8 @@ public class Scheduler implements Observer {
 	 *         schedule.
 	 */
 	public Timestamp getETA(Order order) {
-		throw new IllegalStateException("not implemented"); // TODO
+		//throw new IllegalStateException("not implemented"); // TODO
+		return Timestamp.beginningOfDay(algorithm.getETA(order, getCurrentTime(), 3));
 	}
 
 	/**
@@ -193,6 +195,16 @@ public class Scheduler implements Observer {
 			return ass.getCurrentTime().getDay();
 		}
 		// should be unreachable
+		throw new IllegalStateException(
+				"A scheduler should have at least one assemblyline");
+	}
+	
+	/**
+	 * @return the current time
+	 */
+	public int getCurrentTime() {
+		for(Assemblyline a : assemblyLines)
+			return a.getCurrentTime().getTime();
 		throw new IllegalStateException(
 				"A scheduler should have at least one assemblyline");
 	}
