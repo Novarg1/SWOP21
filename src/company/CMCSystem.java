@@ -1,7 +1,7 @@
 package company;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -50,14 +50,14 @@ public class CMCSystem {
 	 *         not finished
 	 */
 	public List<Order> getScheduledOrdersForUser(User user) {
-		List<Order> list = scheduler.getPendingOrders();
-		if(list.size() == 0)
-			return list;
-		List<Order> toReturn = new ArrayList<Order>();
-		for (Order o : list)
-			if (o.getClient() != user)
-				toReturn.add(o);
-		return toReturn;
+		List<Order> result = scheduler.getPendingOrders();
+		Iterator<Order> it = result.iterator();
+		while(it.hasNext()) {
+			if(!it.next().getClient().equals(user)) {
+				it.remove();
+			}
+		}
+		return result;
 	}
 
 	/**

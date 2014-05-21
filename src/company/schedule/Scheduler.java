@@ -108,8 +108,7 @@ public class Scheduler implements Observer {
 	}
 
 	/**
-	 * adds given order to the list of pending orders and updates the schedule.
-	 * Estimated completion time will be set in order.
+	 * adds given order to the list of pending orders.
 	 */
 	public void placeOrder(Order order) {
 		if (order == null) {
@@ -203,6 +202,6 @@ public class Scheduler implements Observer {
 	 */
 	public Set<Assemblyline> getAssemblyLines()
 	{
-		return assemblyLines;
+		return new HashSet<>(assemblyLines);
 	}
 }

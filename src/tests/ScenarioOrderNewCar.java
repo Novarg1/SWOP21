@@ -12,56 +12,52 @@ import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
 import vehicle.parts.Part;
-import vehicle.parts.PartsSet;
 import company.CMCSystem;
 import dao.OrderDAOImpl;
-
 
 /**
  * A class collecting scenario tests for the OrderNewCar use case
  * 
  * @author Wonne Joosen
- *
+ * 
  */
 public class ScenarioOrderNewCar {
-	
+
 	/**
 	 * Instance variables that may change during individual tests
 	 */
-	
 
 	/**
 	 * Class variables that do not change during individual tests
 	 * 
 	 */
 	private CMCSystem cmcSystem = new CMCSystem(new OrderDAOImpl());
-	
+
 	/**
 	 * Method for setting up an immutable fixture
 	 */
 	@BeforeClass
 	public static void setUpImmutableFixture() {
-	
+
 	}
-	
-	public OrderBuilder makeOrderSpec(){
+
+	public OrderBuilder makeOrderSpec() {
 		OrderBuilder os = new ModelA();
 		for (Class<? extends Part> type : os.getSupportedTypes()) {
-			for(Part part : os.getViableOptions(type)) {
+			for (Part part : os.getViableOptions(type)) {
 				os.add(part);
 			}
 		}
 		return os;
 	}
-	
-	public Order makeOrder(){
+
+	public Order makeOrder() {
 		cmcSystem.logInUser(1);
 		OrderBuilder spec = makeOrderSpec();
 		Order order = new Order(spec);
 		return order;
 	}
 
-	
 	/**
 	 * Test for the main success scenario
 	 */
@@ -70,9 +66,11 @@ public class ScenarioOrderNewCar {
 		// log in as a garage holder
 		cmcSystem.logInUser(1);
 		User currentUser = cmcSystem.getLoggedInUser();
-		List<Order> unfinishedOrders = cmcSystem.getScheduledOrdersForUser(currentUser);
-		List<Order> finishedOrders = cmcSystem.getFinishedOrdersForUser(currentUser);
-		assertFalse(unfinishedOrders.isEmpty());
+		List<Order> unfinishedOrders = cmcSystem
+				.getScheduledOrdersForUser(currentUser);
+		List<Order> finishedOrders = cmcSystem
+				.getFinishedOrdersForUser(currentUser);
+//		assertFalse(unfinishedOrders.isEmpty()); // kunt ge niet weten op dit moment
 		assertTrue(finishedOrders.isEmpty());
 		int nUnfinishedOrders = unfinishedOrders.size();
 		OrderBuilder orderSpec = makeOrderSpec();
@@ -84,15 +82,16 @@ public class ScenarioOrderNewCar {
 	}
 
 	// will make different test scenario where all tasks on a assembly line are
-	// performed 
-//	@Test
-//	public void advanceAssemblyLine() {
-//		orderNewCar_MainSuccesScenario();
-//		PartsSet cpSet = cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
-//		for (Part cp : cpSet){
-//			cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
-//		}
-//		assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
-//	}
+	// performed
+	// @Test
+	// public void advanceAssemblyLine() {
+	// orderNewCar_MainSuccesScenario();
+	// PartsSet cpSet =
+	// cmcSystem.getAssemblyLine().getWorkstations()[0].getPendingTasks();
+	// for (Part cp : cpSet){
+	// cmcSystem.getAssemblyLine().getWorkstations()[0].install(cp, 1);
+	// }
+	// assertTrue(cmcSystem.getAssemblyLine().getWorkstations()[0].isReady());
+	// }
 
 }
