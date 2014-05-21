@@ -63,7 +63,7 @@ public class ScenarioAdvanceAssemblyLine {
 		// get the new time
 		int ntime = line.getCurrentTime().getTime();
 		
-		assertFalse(ntime == time);
+		assertEquals(ntime, time);
 	}
 
 }
