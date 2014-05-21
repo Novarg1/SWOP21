@@ -145,14 +145,8 @@ public class TestCMCSystem {
 		unfinishedOrders = cmcSystem.getScheduledOrdersForUser(garageholder);
 		assertFalse(unfinishedOrders.isEmpty());
 		assertTrue(finishedOrders.isEmpty());
-		User dummyUser = new User("dummy") {
-			
-			@Override
-			public String getRole() {
-				// TODO Auto-generated method stub
-				return "Dummy";
-			}
-		};
+		cmcSystem.logInUser(0);
+		User dummyUser = cmcSystem.getLoggedInUser();
 		assertFalse(cmcSystem.getFinishedOrdersForUser(dummyUser).contains(order));
 		assertFalse(cmcSystem.getFinishedOrdersForUser(garageholder).contains(order));
 		

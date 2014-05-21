@@ -53,7 +53,7 @@ public class CMCSystem {
 		List<Order> result = scheduler.getPendingOrders();
 		Iterator<Order> it = result.iterator();
 		while(it.hasNext()) {
-			if(!it.next().getClient().equals(user)) {
+			if(!it.next().getClient().getUserName().equals(user.getUserName())) {
 				it.remove();
 			}
 		}
@@ -70,7 +70,7 @@ public class CMCSystem {
 	public List<Order> getFinishedOrdersForUser(User user) {
 		List<Order> list = new LinkedList<Order>();
 		for (Order o : scheduler.getFinishedOrders())
-			if (o.getClient() == user)
+			if (o.getClient().getUserName() == user.getUserName())
 				list.add(o);
 		return list;
 	}

@@ -32,8 +32,8 @@ public class ScenarioManageAssemblyLineStatus {
 	@Test
 	public void test() {
 		Assemblyline l = system.getAssemblyLine(0);
-		l.setStatus(Status.MAINTENANCE, 1);
-		assertEquals(Status.MAINTENANCE, l.getStatus());
+		l.setStatus(Status.BROKEN, 1);
+		assertEquals(Status.BROKEN, l.getStatus());
 	}
 
 }
