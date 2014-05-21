@@ -28,41 +28,43 @@ public class TestCarSpecification {
 	public void test() {
 		OrderBuilder spec = new ModelA();
 		
-		assertTrue(spec.getViableOptions(Body.class).size() == 2);
-		assertTrue(spec.getViableOptions(Color.class).size() == 4);
-		assertTrue(spec.getViableOptions(Engine.class).size() == 2);
-		assertTrue(spec.getViableOptions(Gearbox.class).size() == 3);
-		assertTrue(spec.getViableOptions(Airco.class).size() == 2);
-		assertTrue(spec.getViableOptions(Seats.class).size() == 3);
-		assertTrue(spec.getViableOptions(Wheels.class).size() == 3);
-		assertTrue(spec.getViableOptions(Spoiler.class).size() == 0);
 		
-		assertTrue(!spec.containsPart(Body.class));
-		assertTrue(!spec.containsPart(Color.class));
-		assertTrue(!spec.containsPart(Engine.class));
-		assertTrue(!spec.containsPart(Gearbox.class));
-		assertTrue(!spec.containsPart(Airco.class));
-		assertTrue(!spec.containsPart(Seats.class));
-		assertTrue(!spec.containsPart(Wheels.class));
-		assertTrue(!spec.containsPart(Spoiler.class));
+		
+		assertEquals(spec.getViableOptions(Body.class).size(), 2);
+		assertEquals(spec.getViableOptions(Color.class).size(), 4);
+		assertEquals(spec.getViableOptions(Engine.class).size(), 2);
+		assertEquals(spec.getViableOptions(Gearbox.class).size(), 3);
+		assertEquals(spec.getViableOptions(Airco.class).size(), 2);
+		assertEquals(spec.getViableOptions(Seats.class).size(), 3);
+		assertEquals(spec.getViableOptions(Wheels.class).size(), 3);
+		assertEquals(spec.getViableOptions(Spoiler.class).size(), 0);
+		
+		assertFalse(spec.containsPart(Body.class));
+		assertFalse(spec.containsPart(Color.class));
+		assertFalse(spec.containsPart(Engine.class));
+		assertFalse(spec.containsPart(Gearbox.class));
+		assertFalse(spec.containsPart(Airco.class));
+		assertFalse(spec.containsPart(Seats.class));
+		assertFalse(spec.containsPart(Wheels.class));
+		assertFalse(spec.containsPart(Spoiler.class));
 		
 		spec.add((Part) spec.getViableOptions(Body.class).toArray()[0]);
-		assertTrue(!spec.isValid());
+		assertFalse(spec.isValid());
 
 		spec.add((Part) spec.getViableOptions(Color.class).toArray()[0]);
-		assertTrue(!spec.isValid());
+		assertFalse(spec.isValid());
 		
 		spec.add(Engine.PERFORMANCE_25DL_V6);
-		assertTrue(!spec.isValid());
+		assertFalse(spec.isValid());
 
 		spec.add((Part) spec.getViableOptions(Gearbox.class).toArray()[0]);
-		assertTrue(!spec.isValid());
+		assertFalse(spec.isValid());
 		
 		spec.add((Part) spec.getViableOptions(Airco.class).toArray()[0]);
-		assertTrue(!spec.isValid());
+		assertFalse(spec.isValid());
 
 		spec.add((Part) spec.getViableOptions(Seats.class).toArray()[0]);
-		assertTrue(!spec.isValid());
+		assertFalse(spec.isValid());
 
 		spec.add((Part) spec.getViableOptions(Wheels.class).toArray()[0]);
 		
@@ -77,7 +79,7 @@ public class TestCarSpecification {
 		assertTrue(spec.containsPart(Airco.class));
 		assertTrue(spec.containsPart(Seats.class));
 		assertTrue(spec.containsPart(Wheels.class));
-		assertTrue(!spec.containsPart(Spoiler.class));
+		assertFalse(spec.containsPart(Spoiler.class));
 	}
 
 }

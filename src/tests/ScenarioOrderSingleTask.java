@@ -44,10 +44,11 @@ public class ScenarioOrderSingleTask {
 	private boolean checkOrderHasBeenPlaced(Order o)
 	{
 		List<Order> orders = system.getScheduledOrdersForUser(system.getLoggedInUser());
+		boolean placed = false;
 		for(Order order : orders)
 			if(order == o)
-				return true;
-		return false;
+				placed = true;
+		return placed;
 	}
 	
 	private boolean checkExpectedProductionTimeForOrder(Order o)
@@ -61,8 +62,8 @@ public class ScenarioOrderSingleTask {
 		
 		system.getScheduler().placeOrder(task);
 		
-		assert(checkOrderHasBeenPlaced(task));
-		assert(checkExpectedProductionTimeForOrder(task));
+		assertTrue(checkOrderHasBeenPlaced(task));
+		assertTrue(checkExpectedProductionTimeForOrder(task));
 	}
 
 }
