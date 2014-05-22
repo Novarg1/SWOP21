@@ -2,12 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Set;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import company.CMCSystem;
@@ -16,7 +12,6 @@ import dao.OrderDAOImpl;
 
 import user.User;
 import util.Timestamp;
-import vehicle.assemblytasks.Task;
 import vehicle.order.*;
 import vehicle.parts.Part;
 
@@ -33,7 +28,7 @@ public class TestOrder {
 	private Order orderB;
 	private Order orderC;
 	private Order orderX;
-	private Order orderY;
+//	private Order orderY;
 	private User user;
 	
 	@Before
@@ -117,7 +112,12 @@ public class TestOrder {
 	
 	@Test
 	public void customOrderTest(){
-		CustomOrderBuilder co;
+		CustomOrderBuilder spec = new CustomSeats();
+		spec.setClient(user);
+		spec.setDeadline(Timestamp.beginningOfDay(3));
+		Timestamp beginDay3 = Timestamp.beginningOfDay(3);
+		Order specialOrder = makeOrder(spec);
+		assertTrue(specialOrder.getDeadline().compareTo(beginDay3) == 0);
 	}
 
 }

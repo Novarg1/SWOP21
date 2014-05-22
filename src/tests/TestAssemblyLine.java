@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import util.Timestamp;
 import vehicle.order.ModelA;
@@ -28,6 +30,7 @@ import dao.OrderDAOImpl;
  * @author Wonne Joosen
  *
  */
+@RunWith(JUnit4.class)
 public class TestAssemblyLine {
 	
 	/**
@@ -113,13 +116,19 @@ public class TestAssemblyLine {
 		assertFalse(assemblyLine.getWorkstations()[0].isReady());
 	}
 	
-	@Test (expected = IllegalStateException.class)
+	@Test
 	public void advanceAssemblyLineTest_broken(){
-		assemblyLine.setStatus(Status.BROKEN, 1);
-		cmcSystem.logInUser(1);
-		Order order1 = makeOrder(new ModelC());
-		schedule.placeOrder(order1);
-		assemblyLine.advance(order1);
+		Throwable e = null;
+		try {
+			cmcSystem.logInUser(1);
+			Order order1 = makeOrder(new ModelC());
+			schedule.placeOrder(order1);
+			assemblyLine.setStatus(Status.BROKEN, 1);
+			assemblyLine.advance(order1);
+		} catch (Throwable ex) {
+			e = ex;
+		}
+		assertTrue(e instanceof IllegalStateException);
 	}
 	
 	@Test (expected = IllegalStateException.class)
@@ -175,7 +184,7 @@ public class TestAssemblyLine {
 	public void checkMaintenanceTest(){
 		advanceDayTest_Succes();
 		assemblyLine.setStatus(Status.MAINTENANCE, 10);
-		assertTrue(assemblyLine.getStatus() == Status.OPERATIONAL);
+		assertEquals(assemblyLine.getStatus(),Status.OPERATIONAL);
 	}
 	
 	@Test
@@ -191,6 +200,8 @@ public class TestAssemblyLine {
 		assertEquals(assemblyLine.getClass().getName(), name);
 	}
 	
+	//TODO: de ene keer slaagt deze test, de andere keer weer niet wegen niet geldige orderspecificaties.
+	// Ik snap niet goed waarom
 	@Test
 	public void hasWorkstationTest(){
 		cmcSystem.logInUser(1);
