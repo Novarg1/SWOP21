@@ -1,10 +1,8 @@
 package company.workstations;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Set;
 
@@ -19,14 +17,12 @@ import vehicle.order.Order;
 public abstract class Workstation extends Observable implements Cloneable {
 
 	private Order current = null;
-	private Map<Task, Integer> log = new HashMap<>();
-	
+
 	/**
 	 * Sets the current order in this workstation to the given order.
 	 */
 	public void setOrder(Order current) {
 		this.current = current;
-		log.clear();
 	}
 
 	/**
@@ -34,35 +30,6 @@ public abstract class Workstation extends Observable implements Cloneable {
 	 */
 	public Order getOrder() {
 		return current;
-	}
-
-	/**
-	 * performs the given task.
-	 * 
-	 * @param task
-	 *            the task that was performed.
-	 * @param time
-	 *            the time it took to perform the given task.
-	 * @throws IllegalArgumentException
-	 *             if the given task cannot be performed in this workstation or
-	 *             if the given time is negative.
-	 * @throws IllegalStateException
-	 *             if there is currently no order being assembled in this
-	 *             workstation.
-	 */
-	public void perform(Task task, int time) {
-		if (current == null) {
-			throw new IllegalStateException("No car in this workstation");
-		}
-		if (!getPendingTasks().contains(task)) {
-			throw new IllegalArgumentException("invalid task");
-		}
-		if (time < 0) {
-			throw new IllegalArgumentException("invalid time");
-		}
-		task.perform();
-		log.put(task, time);
-		notifyObservers();
 	}
 
 	/**
@@ -79,8 +46,10 @@ public abstract class Workstation extends Observable implements Cloneable {
 	 */
 	public int getWorktime() {
 		int result = 0;
-		for (int time : log.values()) {
-			result += time;
+		for (Task task : this.getAllTasks()) {
+			if (task.isPerformed()) {
+				result += task.getTime();
+			}
 		}
 		return result;
 	}
@@ -90,34 +59,48 @@ public abstract class Workstation extends Observable implements Cloneable {
 	 *         car. If no car is present, returns an empty set.
 	 */
 	public Set<Task> getPendingTasks() {
+		Set<Task> tasks = this.getAllTasks();
+		if (tasks == null) {
+			return Collections.emptySet();
+		}
+		Iterator<Task> it = tasks.iterator();
+		while (it.hasNext()) {
+			if (it.next().isPerformed()) {
+				it.remove();
+			}
+		}
+		return tasks;
+	}
+
+	/**
+	 * @return a set containing all tasks for the current order, finished or
+	 *         not, that can be performed in this workstation, or an empty set
+	 *         if there is no current order in this workstation.
+	 */
+	public Set<Task> getAllTasks() {
 		if (current == null) {
 			return Collections.emptySet();
 		}
-		Set<Task> pendingTasks = new HashSet<>();
+		Set<Task> tasks = new HashSet<>();
 		for (Task task : current.getTasks()) {
 			if (task.getResponsibleWorkstation().equals(this.getClass())) {
-				pendingTasks.add(task);
+				tasks.add(task);
 			}
 		}
-		return pendingTasks;
+		return tasks;
 	}
 
 	@Override
 	public String toString() {
 		return this.getClass().getName();
 	}
-	
+
 	@Override
 	public Workstation clone() {
 		try {
-			Workstation clone = (Workstation) super.clone();
-			clone.log = new HashMap<>();
-			for(Entry<Task, Integer> entry : this.log.entrySet()) {
-				clone.log.put(entry.getKey().clone(), entry.getValue());
-			}
-			return clone;
+			return (Workstation) super.clone();
 		} catch (CloneNotSupportedException e) {
-			e.printStackTrace(); //unreachable
+			e.printStackTrace(); // unreachable
 			return null;
 		}
 	}

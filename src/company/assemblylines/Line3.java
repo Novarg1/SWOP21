@@ -1,6 +1,6 @@
 package company.assemblylines;
 
-import company.workstations.AccessoiresPost;
+import company.workstations.AccessoriesPost;
 import company.workstations.BodyPost;
 import company.workstations.CargoPost;
 import company.workstations.CertificationPost;
@@ -14,7 +14,7 @@ public class Line3 extends Assemblyline {
 				new BodyPost(),
 				new DriveTrainPost(),
 				new CargoPost(),
-				new AccessoiresPost(),
+				new AccessoriesPost(),
 				new CertificationPost()
 		}, day);
 	}

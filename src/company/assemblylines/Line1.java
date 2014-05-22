@@ -1,7 +1,7 @@
 package company.assemblylines;
 
 import vehicle.order.ModelC;
-import company.workstations.AccessoiresPost;
+import company.workstations.AccessoriesPost;
 import company.workstations.BodyPost;
 import company.workstations.DriveTrainPost;
 import company.workstations.Workstation;
@@ -12,7 +12,7 @@ public class Line1 extends Assemblyline {
 		super(new Workstation[] {
 				new BodyPost(), 
 				new DriveTrainPost(),
-				new AccessoiresPost() 
+				new AccessoriesPost() 
 		}, day);
 		super.ignore(ModelC.class);
 	}

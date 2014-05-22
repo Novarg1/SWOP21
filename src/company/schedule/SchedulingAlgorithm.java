@@ -95,13 +95,17 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
-	 * Performs all pending tasks of the given workstation.
-	 * 
-	 * @param ws
+	 * Performs all pending tasks of the given workstation and makes sure the
+	 * total time taken equals the expected time.
 	 */
 	private void performTasks(Workstation ws) {
-		for (Task task : ws.getPendingTasks()) {
-			task.perform();
+		Task[] tasks = (Task[]) ws.getPendingTasks().toArray();
+		for (int i = 0; i < tasks.length - 1; i++) {
+			tasks[i].perform(ws, 0);
+		}
+		if (tasks.length > 0) {
+			tasks[tasks.length - 1].perform(ws, ws.getOrder()
+					.getBuildingTimeFor(ws.getClass()));
 		}
 	}
 
@@ -137,6 +141,22 @@ public abstract class SchedulingAlgorithm {
 		pending.remove(order);
 		schedule.get(assemblyline).add(order);
 		return true;
+	}
+
+	/**
+	 * Checks whether the given order can be assembled on an assemblyline for
+	 * which this algorithm is scheduling.
+	 * 
+	 * @return true if one or more of this algorithm's assemblylines supports
+	 *         the given order.
+	 */
+	protected boolean canBeAssembled(Order order) {
+		for (Assemblyline ass : schedule.keySet()) {
+			if (ass.supports(order)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 package vehicle.parts;
 
-import company.workstations.AccessoiresPost;
+import company.workstations.AccessoriesPost;
 import company.workstations.Workstation;
 
 public enum Airco implements Part {
@@ -9,6 +9,6 @@ public enum Airco implements Part {
 
 	@Override
 	public Class<? extends Workstation> getResponsibleWorkstation() {
-		return AccessoiresPost.class;
+		return AccessoriesPost.class;
 	}
 }
