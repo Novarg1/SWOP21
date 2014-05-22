@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import user.User;
 import util.Timestamp;
 import vehicle.order.ModelA;
 import vehicle.order.ModelB;
@@ -37,7 +36,6 @@ public class TestAssemblyLine {
 	 */
 	private Scheduler schedule;
 	private Assemblyline assemblyLine;	
-	private Assemblyline assemblyLine2;
 	private CMCSystem cmcSystem;
 
 
@@ -58,7 +56,6 @@ public class TestAssemblyLine {
 		cmcSystem = new CMCSystem(new OrderDAOImpl());
 		schedule = cmcSystem.getScheduler();
 		assemblyLine = cmcSystem.getAssemblyLine(0);
-		assemblyLine2 = cmcSystem.getAssemblyLine(2);
 	}
 
 	/**
