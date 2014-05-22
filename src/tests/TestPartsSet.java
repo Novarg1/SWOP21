@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import company.workstations.AccessoiresPost;
+
 import vehicle.parts.*;
 
 
@@ -35,6 +37,7 @@ public class TestPartsSet {
 	private Gearbox gearbox = Gearbox.AUTOMATIC;
 	private Seats seats = Seats.LEATHER_BLACK;
 	private Wheels wheels = Wheels.STANDARD;
+	private Spoiler spoiler = Spoiler.HIGH;
 
 
 	/**
@@ -51,8 +54,9 @@ public class TestPartsSet {
 	 */
 	@Before
 	public void setUpMutableFixture() {
-		emptyPartsSet = new PartsSet();
 		regularPartsSet = new PartsSet();
+		emptyPartsSet = new PartsSet();
+
 	}
 
 	/**
@@ -62,7 +66,7 @@ public class TestPartsSet {
 	 */
 	@BeforeClass
 	public static void setUpImmutableFixture() {
-		
+
 	}
 	
 	@Test
@@ -110,9 +114,17 @@ public class TestPartsSet {
 	@Test
 	public void toStringTest(){
 		emptyPartsSet.add(airco);
-		emptyPartsSet.add(body);
-		String stringRepresentation = airco.getClass().getName()+ ": "+ airco + "\n" + body.getClass().getName()+ ": " + body + "\n";
+		String stringRepresentation = airco.getClass().getName()+ ": "+ airco + "\n";
 		assertEquals(emptyPartsSet.toString(), stringRepresentation);
+		emptyPartsSet.clear();
+	}
+	
+	@Test
+	public void spoilerTest(){
+		addTest();
+		regularPartsSet.add(spoiler);
+		assertTrue(regularPartsSet.contains(Spoiler.class));
+		assertEquals(spoiler.getResponsibleWorkstation(), AccessoiresPost.class);
 	}
 
 }
