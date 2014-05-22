@@ -10,6 +10,8 @@ import org.junit.Test;
 import user.User;
 import vehicle.order.Order;
 import company.CMCSystem;
+import company.assemblylines.Assemblyline;
+import company.workstations.Workstation;
 import controllers.SystemController;
 import dao.OrderDAO;
 import dao.OrderDAOImpl;
@@ -32,41 +34,35 @@ public class TestSystemController {
 	@Before
 	public void setUp() throws Exception {
 		// log in the shop holder
-		controller.logInUser(3);
+		controller.logInUser(1);
 	}
 	
 	private boolean checkScheduledOrders(List<Order> orders, User user)
 	{
+		int ndao = 0;
+		int ncon = 0;
+		for(Order order : orders)
+			if(order.getClient().getUserName() == user.getUserName())
+				++ndao;
 		for(Order order : dao.getAllPendingOrders())
-			if(order.getClient() == user)
-			{
-				boolean checked = false;
-
-				for(Order userOrder : orders)
-					if(userOrder == order)
-						checked = true;
-				
-				if(checked == false)
-					return false;
-			}
-		return true;
+			if(order.getClient().getUserName() == user.getUserName())
+				++ncon;
+		
+		return ndao == ncon;
 	}
 	
 	private boolean checkFinishedOrders(List<Order> orders, User user)
 	{
+		int ndao = 0;
+		int ncon = 0;
+		for(Order order : orders)
+			if(order.getClient().getUserName() == user.getUserName())
+				++ndao;
 		for(Order order : dao.getAllFinishedOrders())
-			if(order.getClient() == user)
-			{
-				boolean checked = false;
-
-				for(Order userOrder : orders)
-					if(userOrder == order)
-						checked = true;
-				
-				if(checked == false)
-					return false;
-			}
-		return true;
+			if(order.getClient().getUserName() == user.getUserName())
+				++ncon;
+		
+		return ndao == ncon;
 	}
 
 	@Test
@@ -74,16 +70,31 @@ public class TestSystemController {
 		User user = controller.getLoggedInUser();
 		
 		// assert the shop holder was logged in
-		assertEquals("ShopHolder", user.getRole());
+		assertEquals("GarageHolder", user.getRole());
 		
 		// check the scheduled orders
-		assert(checkScheduledOrders(controller.getScheduledOrdersFor(user), user));
+		assertTrue(checkScheduledOrders(controller.getScheduledOrdersFor(user), user));
 		
 		// check the finished orders
-		assert(checkFinishedOrders(controller.getFinishedOrdersFor(user), user));
+		assertTrue(checkFinishedOrders(controller.getFinishedOrdersFor(user), user));
 		
 		// check all finished orders
 		assertEquals(dao.getAllFinishedOrders().size(), controller.getAllFinishedOrders().size());
+		
+		// check the scheduler
+		assertEquals(system.getScheduler(), controller.getScheduler());
+		
+		// check the workstations access
+		assertEquals(((Assemblyline)system.getScheduler().getAssemblyLines().toArray()[0]).getWorkstations()[0],
+						controller.getWorkstationsForAssemblyLine(0).get(0));
+		
+		// check the assembly lines check out
+		assertEquals(system.getAssemblyLine(0).getCurrentTime().getDay(),
+						controller.getAssemblyLine(0).getCurrentTime().getDay());
+		
+		// check the correct workstation gets looked up
+		Workstation w = ((Assemblyline)system.getScheduler().getAssemblyLines().toArray()[0]).getWorkstations()[0];
+		assertEquals(w, controller.selectWorkstationWithId(0, 0));
 	}
 
 }
