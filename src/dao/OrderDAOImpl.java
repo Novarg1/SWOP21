@@ -37,15 +37,6 @@ import vehicle.parts.Wheels;
  */
 public class OrderDAOImpl implements OrderDAO {
 
-	/*
-	 * TODO test code; remove
-	 */
-	public static void main(String[] args) {
-		OrderDAOImpl dao = new OrderDAOImpl();
-		dao.getAllFinishedOrders();
-		dao.getAllPendingOrders();
-	}
-
 	@Override
 	public List<Order> getAllFinishedOrders() {
 		List<Order> orders = new ArrayList<Order>();
