@@ -32,6 +32,6 @@ public class WorkstationController {
 	 * performs the given task in the given time.
 	 */
 	public void perform(Task task, int time) {
-		workstation.perform(task, time);
+		task.perform(workstation, time);
 	}
 }

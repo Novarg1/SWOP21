@@ -3,6 +3,7 @@ package company.schedule;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,42 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
+	 * performs one step in the scheduling process. The implementing method
+	 * should end with, and return the call to the addToSchedule() method of
+	 * this class.
+	 * 
+	 * @return true if the schedule was changed by calling this method.
+	 */
+	private boolean scheduleNext() {
+		if (pending.isEmpty()) {
+			return false;
+		}
+		Order next = pending.get(0);
+		for (int i = 1; !canBeAssembled(next); i++) {
+			if(i >= pending.size()) {
+				return false;
+			}
+			next  = pending.get(i);
+		}
+		List<Assemblyline> assemblylines = super.getSupportingAssemblylines(next);
+		Assemblyline ass = 
+		return super.addToSchedule(next, ass);
+	}
+
+	/**
+	 * Returns the first order in the sorted pending orders that is supported by
+	 * at least one assemblyline, or null if no such order exists.
+	 */
+	private Order getNextSupportedOrder() {
+		for (Order order : this.getSortedPending()) {
+			if (canBeAssembled(order)) {
+				return order;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Keeps the assemblylines, but sets all associated lists of orders to new,
 	 * empty lists.
 	 */
@@ -91,6 +128,17 @@ public abstract class SchedulingAlgorithm {
 		schedule = new HashMap<>();
 		for (Assemblyline key : keys) {
 			schedule.put(key, new LinkedList<Order>());
+		}
+	}
+
+	/**
+	 * Performs all pending tasks of all the workstations on the given
+	 * assemblyline and makes sure the total time taken in each workstation
+	 * equals the expected time.
+	 */
+	private void performTasks(Assemblyline ass) {
+		for (Workstation ws : ass.getWorkstations()) {
+			this.performTasks(ws);
 		}
 	}
 
@@ -110,22 +158,6 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
-	 * @return A set containing all assemblylines for which this algorithm is
-	 *         currently scheduling.
-	 */
-	protected Set<Assemblyline> getAssemblylines() {
-		return new HashSet<>(schedule.keySet());
-	}
-
-	/**
-	 * @return A copy of the list containing all orders that have not (yet) been
-	 *         scheduled.
-	 */
-	protected List<Order> getPending() {
-		return new LinkedList<>(pending);
-	}
-
-	/**
 	 * Adds the given order to the schedule associated with the given
 	 * assemblyline and removes it from the pending orders.
 	 * 
@@ -133,7 +165,7 @@ public abstract class SchedulingAlgorithm {
 	 *         the given order was not contained in the list of pending orders,
 	 *         or if the given assemblyline is not a key in the schedule.
 	 */
-	protected boolean addToSchedule(Order order, Assemblyline assemblyline) {
+	private boolean addToSchedule(Order order, Assemblyline assemblyline) {
 		if (!pending.contains(order)
 				|| !schedule.keySet().contains(assemblyline)) {
 			return false;
@@ -150,22 +182,39 @@ public abstract class SchedulingAlgorithm {
 	 * @return true if one or more of this algorithm's assemblylines supports
 	 *         the given order.
 	 */
-	protected boolean canBeAssembled(Order order) {
-		for (Assemblyline ass : schedule.keySet()) {
-			if (ass.supports(order)) {
-				return true;
-			}
-		}
-		return false;
+	private boolean canBeAssembled(Order order) {
+		return !this.getSupportingAssemblylines(order).isEmpty();
 	}
 
 	/**
-	 * performs one step in the scheduling process. The implementing method
-	 * should end with, and return the call to the addToSchedule() method of
-	 * this class.
-	 * 
-	 * @return true if the schedule was changed by calling this method.
+	 * returns a set containing all assemblylines for which this algorithm is
+	 * scheduling that support the given order.
 	 */
-	protected abstract boolean scheduleNext();
+	private List<Assemblyline> getSupportingAssemblylines(Order order) {
+		List<Assemblyline> result = new LinkedList<>(schedule.keySet());
+		Iterator<Assemblyline> it = result.iterator();
+		while (it.hasNext()) {
+			if (!it.next().supports(order)) {
+				it.remove();
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @return A copy of the list containing all orders that have not (yet) been
+	 *         scheduled.
+	 */
+	protected List<Order> getPending() {
+		return new LinkedList<>(pending);
+	}
+
+	/**
+	 * determines the order in which the pending orders must be processed.
+	 * 
+	 * @return a list containing the orders in the order they should be
+	 *         processed.
+	 */
+	protected abstract List<Order> getSortedPending();
 
 }
