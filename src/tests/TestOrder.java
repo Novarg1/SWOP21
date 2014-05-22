@@ -114,5 +114,10 @@ public class TestOrder {
 		Timestamp deadline = orderA.getDeadline();
 		assertEquals(deadline, null);
 	}
+	
+	@Test
+	public void customOrderTest(){
+		CustomOrderBuilder co;
+	}
 
 }
