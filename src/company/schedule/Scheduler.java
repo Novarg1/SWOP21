@@ -189,12 +189,12 @@ public class Scheduler implements Observer {
 	 * @return the current day
 	 */
 	public int getDay() {
+		int day = -1;
 		for (Assemblyline ass : assemblyLines) {
-			return ass.getCurrentTime().getDay();
+			day = ass.getCurrentTime().getDay();
 		}
-		// should be unreachable
-		throw new IllegalStateException(
-				"A scheduler should have at least one assemblyline");
+		return day;
+//		if(day == -1) throw exception ?
 	}
 	
 	/**
