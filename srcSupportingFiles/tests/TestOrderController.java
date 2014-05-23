@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import user.User;
 import vehicle.order.ModelA;
 import vehicle.order.Order;
 import vehicle.order.OrderBuilder;
@@ -66,5 +67,18 @@ public class TestOrderController {
 		
 		assertTrue(expect == expectL);
 	}
+	
+//	@Test
+//	public void placeOrderTest(){
+//		system.logInUser(1);
+//		User user = system.getLoggedInUser();
+//		OrderController orderController = new OrderController(new SystemController(system));
+//		OrderBuilder os = makeOrderSpec();
+//		int expectedDOD = orderController.placeOrder(os);
+//		List<Order> orders = system.getScheduledOrdersForUser(user);
+//		Order order = orders.get(orders.size()-1);
+//		assertEquals(expectedDOD,orderController.getExpectedDeliveryDayFor(order));
+//	}
+	
 
 }

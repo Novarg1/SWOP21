@@ -25,9 +25,10 @@ public class Order implements Cloneable {
 	 *             if the given orderspecification is not valid.
 	 */
 	public Order(OrderBuilder builder) {
-		if (builder == null || !builder.isValid()) {
+		if (builder == null)
+			throw new IllegalArgumentException("specification is null");
+		if(!builder.isValid())
 			throw new IllegalArgumentException("invalid specification");
-		}
 		this.client = builder.getClient();
 		this.tasks = builder.getTasks();
 		this.buildtimes = builder.getBuildTimePerWorkstation();

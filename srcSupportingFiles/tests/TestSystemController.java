@@ -97,4 +97,11 @@ public class TestSystemController {
 		assertEquals(w, controller.selectWorkstationWithId(0, 0));
 	}
 
+	@Test
+	public void constructorTest(){
+		SystemController sysctrl = new SystemController(system);
+		assertTrue(sysctrl.getScheduler().equals(system.getScheduler()));
+		SystemController sysctrl2 = new SystemController();
+		assertTrue(sysctrl2.getAllFinishedOrders().isEmpty());
+	}
 }
