@@ -96,6 +96,15 @@ public class Timestamp implements Comparable<Timestamp> {
 	}
 
 	/**
+	 * Checks whether this timestamp is at the beginning of a day.
+	 * 
+	 * @return true if the time of this timestamp equals 0.
+	 */
+	public boolean isAtBeginning() {
+		return this.time == 0;
+	}
+	
+	/**
 	 * inspector that calculates that the day should be finished if we add
 	 * additional time to this day
 	 * 
