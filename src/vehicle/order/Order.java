@@ -35,14 +35,6 @@ public class Order implements Cloneable {
 		this.type = builder.getClass();
 	}
 
-//	/**
-//	 * creates a clone of the given order.
-//	 */
-//	private Order(Order other) {
-//		this.client = other.client;
-//		//TODO
-//	}
-
 	/**
 	 * @return the client associated with this order.
 	 */

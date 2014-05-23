@@ -250,18 +250,28 @@ public abstract class Assemblyline extends Observable implements Observer,
 		return this.getClass().getName();
 	}
 
+	/**
+	 * Returns a copy of this assemblyline. The workstations will be cloned as
+	 * well and the observer-observable relation will be set for the clones. The
+	 * clone of the assemblyline will not have observers.
+	 * 
+	 */
 	@Override
 	public Assemblyline clone() {
 		try {
 			Assemblyline clone = (Assemblyline) super.clone();
 			clone.ignored = new HashSet<>(this.ignored);
 			clone.workstations = new Workstation[this.workstations.length];
-			for(int i = 0; i < this.workstations.length; i++) {
-				clone.workstations[i] = this.workstations[i].clone();
+			for (int i = 0; i < this.workstations.length; i++) {
+				Workstation wsClone = this.workstations[i].clone();
+				wsClone.deleteObservers();
+				wsClone.addObserver(clone);
+				clone.workstations[i] = wsClone;
 			}
+			this.deleteObservers();
 			return clone;
 		} catch (CloneNotSupportedException e) {
-			e.printStackTrace(); //unreachable
+			e.printStackTrace(); // unreachable
 			return null;
 		}
 	}
