@@ -77,12 +77,22 @@ public class Timestamp implements Comparable<Timestamp> {
 	}
 
 	/**
-	 * inspector for the overtime
+	 * inspector for the overtime of the day before
 	 * 
 	 * @return overtime of the day before
 	 */
 	public int getOverTime() {
 		return overtime;
+	}
+
+	/**
+	 * checks whether this timestamp has exceeded the working hours of the day.
+	 * 
+	 * @return true if the next day will have to adjust its working hours
+	 *         because of overtime in this day.
+	 */
+	public boolean isInOvertime() {
+		return this.getNextDay().getOverTime() > 0;
 	}
 
 	/**
@@ -114,7 +124,7 @@ public class Timestamp implements Comparable<Timestamp> {
 	public Timestamp increaseTime(int timeToIncrease) {
 		return new Timestamp(day, time + timeToIncrease, overtime);
 	}
-	
+
 	@Override
 	public int compareTo(Timestamp other) {
 		if (this.day < other.day

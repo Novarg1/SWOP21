@@ -2,6 +2,7 @@ package company.schedule;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,7 @@ import company.workstations.Workstation;
  */
 public abstract class SchedulingAlgorithm {
 
+	private Set<Assemblyline> originalAssemblylines;
 	private List<Order> pending = Collections.emptyList();
 	private Map<Assemblyline, List<Order>> schedule = Collections.emptyMap();
 
@@ -38,12 +40,8 @@ public abstract class SchedulingAlgorithm {
 		if (als == null) {
 			throw new IllegalArgumentException("invalid set of assemblylines");
 		}
-		this.schedule = new HashMap<>();
-		for (Assemblyline al : als) {
-			Assemblyline clone = al.clone();
-			clone.deleteObservers();
-			this.schedule.put(clone, new LinkedList<Order>());
-		}
+		this.originalAssemblylines = new HashSet<>(als);
+		this.resetSchedule();
 	}
 
 	/**
@@ -86,9 +84,10 @@ public abstract class SchedulingAlgorithm {
 	 * calculates the estimated time of completion of the given order
 	 * 
 	 * @param order
+	 * @param pending2
 	 * @return
 	 */
-	public Timestamp getETA(Order order) {
+	public Timestamp getETA(Order order, List<Order> pending) {
 		throw new IllegalStateException("not implemented"); // TODO
 	}
 
@@ -124,14 +123,13 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
-	 * Keeps the assemblylines, but sets all associated lists of orders to new,
-	 * empty lists.
+	 * sets a new schedule with the clones of the originalAssemblylines as keys
+	 * and empty lists as values.
 	 */
 	private void resetSchedule() {
-		Set<Assemblyline> keys = schedule.keySet();
 		schedule = new HashMap<>();
-		for (Assemblyline key : keys) {
-			schedule.put(key, new LinkedList<Order>());
+		for (Assemblyline key : originalAssemblylines) {
+			schedule.put(key.clone(), new LinkedList<Order>());
 		}
 	}
 
@@ -142,15 +140,24 @@ public abstract class SchedulingAlgorithm {
 	 */
 	private void performAllTasks() {
 		for (Assemblyline al : schedule.keySet()) {
-			for (Workstation ws : al.getWorkstations()) {
-				Task[] tasks = (Task[]) ws.getPendingTasks().toArray();
-				for (int i = 0; i < tasks.length - 1; i++) {
-					tasks[i].perform(ws, 0);
-				}
-				if (tasks.length > 0) {
-					tasks[tasks.length - 1].perform(ws, ws.getOrder()
-							.getBuildingTimeFor(ws.getClass()));
-				}
+			performTasks(al);
+		}
+	}
+
+	/**
+	 * Performs all pending tasks of all the workstations on the given
+	 * assemblyline and makes sure the total time taken in each workstation
+	 * equals the expected time.
+	 */
+	private static void performTasks(Assemblyline al) {
+		for (Workstation ws : al.getWorkstations()) {
+			Task[] tasks = (Task[]) ws.getPendingTasks().toArray();
+			for (int i = 0; i < tasks.length - 1; i++) {
+				tasks[i].perform(ws, 0);
+			}
+			if (tasks.length > 0) {
+				tasks[tasks.length - 1].perform(ws, ws.getOrder()
+						.getBuildingTimeFor(ws.getClass()));
 			}
 		}
 	}
@@ -202,6 +209,24 @@ public abstract class SchedulingAlgorithm {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Checks whether the given order can be completed on the given assemblyline
+	 * without doing overtime.
+	 * 
+	 * @return true if the given order can be put on the given assemblyline and
+	 *         its expected completion time would not exceed this day's work
+	 *         hours.
+	 */
+	private static boolean hasTimeFor(Assemblyline al, Order order) {
+		Assemblyline clone = al.clone();
+		clone.advance(order);
+		while(!clone.isEmpty()) {
+			performTasks(clone);
+			clone.advance(null);
+		}
+		return !clone.getCurrentTime().isInOvertime();
 	}
 
 	/**

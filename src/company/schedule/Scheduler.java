@@ -1,7 +1,9 @@
 package company.schedule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -14,7 +16,7 @@ import util.Timestamp;
 import vehicle.order.Order;
 
 /**
- * Represents the schedule of the company. Contains a list of pending and
+ * Represents the scheduler of the company. Contains a list of pending and
  * finished orders, a set of assemblylines and the algorithms for scheduling the
  * pending orders.
  */
@@ -22,7 +24,7 @@ public class Scheduler implements Observer {
 
 	private LinkedList<Order> finished;
 	private LinkedList<Order> pending;
-	private Set<Assemblyline> assemblyLines;
+	private Set<Assemblyline> assemblylines;
 	private SchedulingAlgorithm algorithm;
 	private static final SchedulingAlgorithm DEFAULT_ALGORITHM = new FIFO();
 
@@ -57,9 +59,9 @@ public class Scheduler implements Observer {
 		this.finished = new LinkedList<>(finished);
 		this.algorithm = DEFAULT_ALGORITHM;
 
-		this.assemblyLines = new HashSet<>();
+		this.assemblylines = new HashSet<>();
 		for (Assemblyline ass : assemblylines) {
-			this.assemblyLines.add(ass);
+			this.assemblylines.add(ass);
 			ass.addObserver(this);
 		}
 	}
@@ -67,15 +69,27 @@ public class Scheduler implements Observer {
 	/**
 	 * notifies this scheduler that one of his assemblylines has changed. This
 	 * method handles the changes.
+	 * 
+	 * @param obs
+	 *            the assemblyline that notified this schedule. this parameter
+	 *            will be ignored though.
+	 * @param obj
+	 *            this parameter will be ignored.
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
-		try {
-			Assemblyline ass = (Assemblyline) obs;
-		} catch (ClassCastException e) {
-
+		if (this.shouldStartNewDay()) {
+			this.startNewDay();
 		}
-		// TODO
+		for (Assemblyline al : assemblylines) {
+			Order next = algorithm.getNextFor(al, pending);
+			if (this.getETA(next).getDay() == al.getCurrentTime().getDay()) {
+				Order completed = al.advance(next);
+				if (completed != null) {
+					finished.add(completed);
+				}
+			}
+		}
 	}
 
 	/**
@@ -83,12 +97,43 @@ public class Scheduler implements Observer {
 	 *         orders are empty.
 	 */
 	private boolean assemblyLinesAreEmpty() {
-		for (Assemblyline line : assemblyLines) {
+		for (Assemblyline line : assemblylines) {
 			if (!line.isEmpty()) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * checks whether a new day should be started.
+	 * 
+	 * @return true if all assemblylines are empty, there are no more orders
+	 *         scheduled for this day, and there is at least one order scheduled
+	 *         for the next day.
+	 */
+	private boolean shouldStartNewDay() {
+		if (!this.assemblyLinesAreEmpty()) {
+			return false;
+		}
+		Map<Assemblyline, List<Order>> schedule = algorithm.schedule(pending);
+		List<Order> nextOrders = new ArrayList<>();
+		for (List<Order> list : schedule.values()) {
+			if (!list.isEmpty()) {
+				nextOrders.add(list.get(0));
+			}
+		}
+		boolean result = false;
+		for (Order next : nextOrders) {
+			int etaDay = algorithm.getETA(next, pending).getDay();
+			if (etaDay == this.getDay()) {
+				return false;
+			}
+			if (etaDay == this.getDay() + 1) {
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -102,7 +147,7 @@ public class Scheduler implements Observer {
 		if (!assemblyLinesAreEmpty()) {
 			throw new IllegalStateException("assemblylines must be empty");
 		}
-		for (Assemblyline ass : assemblyLines) {
+		for (Assemblyline ass : assemblylines) {
 			ass.startNextDay();
 		}
 	}
@@ -122,7 +167,7 @@ public class Scheduler implements Observer {
 	 */
 	public List<Order> getPendingOrders() {
 		LinkedList<Order> result = new LinkedList<>(pending);
-		for (Assemblyline ass : assemblyLines) {
+		for (Assemblyline ass : assemblylines) {
 			for (Workstation ws : ass.getWorkstations()) {
 				if (ws.getOrder() != null) {
 					result.addFirst(ws.getOrder());
@@ -155,6 +200,7 @@ public class Scheduler implements Observer {
 					"scheduling algorithm can't be null");
 		}
 		this.algorithm = algorithm;
+		this.algorithm.setAssemblylines(this.assemblylines);
 	}
 
 	/**
@@ -163,19 +209,7 @@ public class Scheduler implements Observer {
 	 *         schedule.
 	 */
 	public Timestamp getETA(Order order) {
-		throw new IllegalStateException("not implemented"); // TODO
-	}
-
-	/**
-	 * checks whether the next scheduled order for the given assemblyline is
-	 * scheduled for tomorrow.
-	 * 
-	 * @return true if the next scheduled order for the given assemblyline is
-	 *         scheduled for tomorrow. If there are no orders left, returns
-	 *         false.
-	 */
-	public boolean nextIsTomorrow() {
-		throw new IllegalStateException("not implemented"); // TODO
+		return algorithm.getETA(order, this.pending);
 	}
 
 	/**
@@ -189,19 +223,18 @@ public class Scheduler implements Observer {
 	 * @return the current day
 	 */
 	public int getDay() {
-		for (Assemblyline ass : assemblyLines) {
-			return ass.getCurrentTime().getDay();
+		for (Assemblyline al : assemblylines) {
+			return al.getCurrentTime().getDay();
 		}
 		// should be unreachable
 		throw new IllegalStateException(
 				"A scheduler should have at least one assemblyline");
 	}
-	
+
 	/**
 	 * @return the assembly lines
 	 */
-	public Set<Assemblyline> getAssemblyLines()
-	{
-		return new HashSet<>(assemblyLines);
+	public Set<Assemblyline> getAssemblyLines() {
+		return new HashSet<>(assemblylines);
 	}
 }
