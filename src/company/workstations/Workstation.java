@@ -98,7 +98,11 @@ public abstract class Workstation extends Observable implements Cloneable {
 	@Override
 	public Workstation clone() {
 		try {
-			return (Workstation) super.clone();
+			Workstation clone = (Workstation) super.clone();
+			if(current != null) {
+				clone.current = this.current.clone();
+			}
+			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(); // unreachable
 			return null;

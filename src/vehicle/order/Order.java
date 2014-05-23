@@ -11,11 +11,11 @@ import vehicle.assemblytasks.Task;
 
 public class Order implements Cloneable {
 
-	private final User client;
-	private final Set<Task> tasks;
-	private final Timestamp deadline;
-	private final Map<Class<? extends Workstation>, Integer> buildtimes;
-	private final Class<? extends OrderBuilder> type;
+	private User client;
+	private Set<Task> tasks;
+	private Timestamp deadline;
+	private Map<Class<? extends Workstation>, Integer> buildtimes;
+	private Class<? extends OrderBuilder> type;
 	private Timestamp completionTime = null;
 
 	/**
@@ -129,7 +129,12 @@ public class Order implements Cloneable {
 	@Override
 	public Order clone() {
 		try {
-			return (Order) super.clone();
+			Order clone = (Order) super.clone();
+			clone.tasks = new HashSet<>();
+			for(Task task : this.tasks) {
+				clone.tasks.add(task.clone());
+			}
+			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(); //unreachable
 			return null;

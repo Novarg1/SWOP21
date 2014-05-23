@@ -1,5 +1,6 @@
 package company.schedule;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,9 +29,27 @@ import company.workstations.Workstation;
  */
 public abstract class SchedulingAlgorithm {
 
-	private Set<Assemblyline> originalAssemblylines;
+	/**
+	 * maps the currently used clones of assemblylines to their originals.
+	 */
+	private Map<Assemblyline, Assemblyline> originalAssemblylines;
+	/**
+	 * Maps the currently used clones of orders to their originals.
+	 */
+	private Map<Order, Order> originalOrders;
+	/**
+	 * A list containing clones of the original pending orders.
+	 */
 	private List<Order> pending = Collections.emptyList();
+	/**
+	 * maps clones of the original assemblylines to a sorted list of (cloned)
+	 * orders.
+	 */
 	private Map<Assemblyline, List<Order>> schedule = Collections.emptyMap();
+	/**
+	 * maps original orders to their estimated completion times.
+	 */
+	private Map<Order, Timestamp> etas = Collections.emptyMap();
 
 	/**
 	 * Clones the given assemblylines all individually and keeps the clones for
@@ -40,8 +59,12 @@ public abstract class SchedulingAlgorithm {
 		if (als == null) {
 			throw new IllegalArgumentException("invalid set of assemblylines");
 		}
-		this.originalAssemblylines = new HashSet<>(als);
-		this.resetSchedule();
+		this.originalAssemblylines = new HashMap<>();
+		for (Assemblyline al : als) {
+			originalAssemblylines.put(al.clone(), al);
+		}
+		originalOrders = Collections.emptyMap();
+		pending = Collections.emptyList();
 	}
 
 	/**
@@ -56,12 +79,11 @@ public abstract class SchedulingAlgorithm {
 	 *         as values.
 	 */
 	public Map<Assemblyline, List<Order>> schedule(List<Order> pending) {
-		this.resetSchedule();
-		this.pending = new LinkedList<>(pending);
+		this.initialize(pending);
 		do {
 			this.performAllTasks();
 		} while (scheduleNext());
-		return new HashMap<>(schedule);
+		return this.replaceWithOriginals();
 	}
 
 	/**
@@ -123,14 +145,43 @@ public abstract class SchedulingAlgorithm {
 	}
 
 	/**
-	 * sets a new schedule with the clones of the originalAssemblylines as keys
-	 * and empty lists as values.
+	 * creates new clones of the original assemblylines and clones of the given
+	 * orders and initializes this algorithm for scheduling.
 	 */
-	private void resetSchedule() {
-		schedule = new HashMap<>();
-		for (Assemblyline key : originalAssemblylines) {
-			schedule.put(key.clone(), new LinkedList<Order>());
+	private void initialize(List<Order> pending) {
+		Collection<Assemblyline> original = originalAssemblylines.values();
+		this.originalAssemblylines = new HashMap<>();
+		this.originalOrders = new HashMap<>();
+		this.schedule = new HashMap<>();
+		this.pending = new LinkedList<Order>();
+
+		for (Assemblyline al : original) {
+			Assemblyline clone = al.clone();
+			originalAssemblylines.put(clone, al);
+			schedule.put(clone, new LinkedList<Order>());
 		}
+		for (Order order : pending) {
+			Order clone = order.clone();
+			this.originalOrders.put(clone, order);
+			this.pending.add(clone);
+		}
+	}
+
+	/**
+	 * returns a new schedule in which the clones of assemblylines and orders
+	 * are replaced with their originals.
+	 */
+	private Map<Assemblyline, List<Order>> replaceWithOriginals() {
+		Map<Assemblyline, List<Order>> newSchedule = new HashMap<>();
+		for (Assemblyline clone : schedule.keySet()) {
+			Assemblyline original = originalAssemblylines.get(clone);
+			List<Order> newList = new LinkedList<>();
+			for (Order clonedOrder : schedule.get(clone)) {
+				newList.add(originalOrders.get(clonedOrder));
+			}
+			newSchedule.put(original, newList);
+		}
+		return newSchedule;
 	}
 
 	/**
@@ -222,7 +273,7 @@ public abstract class SchedulingAlgorithm {
 	private static boolean hasTimeFor(Assemblyline al, Order order) {
 		Assemblyline clone = al.clone();
 		clone.advance(order);
-		while(!clone.isEmpty()) {
+		while (!clone.isEmpty()) {
 			performTasks(clone);
 			clone.advance(null);
 		}
