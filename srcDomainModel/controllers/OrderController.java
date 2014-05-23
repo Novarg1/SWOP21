@@ -28,7 +28,6 @@ public class OrderController {
 	 * @return
 	 */
 	public int placeOrder(OrderBuilder specification) {
-		specification.setClient(systemController.getLoggedInUser());
 		Order order = specification.extractOrder();
 		systemController.getScheduler().placeOrder(order);
 		return getExpectedDeliveryDayFor(order);
