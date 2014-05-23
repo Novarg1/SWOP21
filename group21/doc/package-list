@@ -1,0 +1,15 @@
+company
+company.assemblylines
+company.schedule
+company.workstations
+controllers
+dao
+supportingfiles
+tests
+user
+util
+vehicle.assemblytasks
+vehicle.order
+vehicle.parts
+vehicle.restrictions
+view
