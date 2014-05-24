@@ -103,5 +103,7 @@ public class TestSystemController {
 		assertTrue(sysctrl.getScheduler().equals(system.getScheduler()));
 //		SystemController sysctrl2 = new SystemController();
 //		assertTrue(sysctrl2.getAllFinishedOrders().isEmpty());
+		SystemController sysctrl2 = new SystemController();
+		assertEquals(SystemController.class,sysctrl2.getClass());
 	}
 }
