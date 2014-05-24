@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 
 import company.CMCSystem;
 import company.assemblylines.Assemblyline;
-import company.schedule.Scheduler;
 import company.workstations.Workstation;
 import dao.OrderDAOImpl;
 
@@ -28,7 +27,10 @@ import dao.OrderDAOImpl;
  */
 public class TestWorkstation {
 
-	private Scheduler schedule;
+	/**
+	 * Instance variables that may
+	 * change during individual tests.
+	 */
 	private Assemblyline assemblyLine;	
 	private CMCSystem cmcSystem;
 	private Workstation workstation1;
@@ -43,7 +45,6 @@ public class TestWorkstation {
 	@Before
 	public void setUpMutableFixture() {
 		cmcSystem = new CMCSystem(new OrderDAOImpl());
-		schedule = cmcSystem.getScheduler();
 		assemblyLine = cmcSystem.getAssemblyLine(0);
 		workstation1 = assemblyLine.getWorkstations()[0];
 		workstation2 = assemblyLine.getWorkstations()[1];
