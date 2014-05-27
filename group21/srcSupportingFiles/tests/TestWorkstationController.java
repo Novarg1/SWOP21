@@ -40,12 +40,22 @@ public class TestWorkstationController {
 		system.logInUser(1);
 	}
 
+	/**
+	 * Helper method to create an {@link Order} object
+	 * @param os
+	 * @return
+	 */
 	public Order makeOrder(OrderBuilder os){
 		OrderBuilder spec = makeOrderSpec(os);
 		Order order = new Order(spec);
 		return order;
 	}
 	
+	/**
+	 * Helper method to create an order specification
+	 * @param os
+	 * @return an order specification as a {@link OrderBuilder}
+	 */
 	public OrderBuilder makeOrderSpec(OrderBuilder os){
 		for (Class<? extends Part> type : os.getSupportedTypes()) {
 			for(Part part : os.getViableOptions(type)) {
@@ -64,6 +74,9 @@ public class TestWorkstationController {
 		assertEquals(0, controller.getTasksForWorkstation().size());
 	}
 	
+	/**
+	 * Tests the performTask() method
+	 */
 	@Test
 	public void performTaskTest(){
 		system.logInUser(1);
